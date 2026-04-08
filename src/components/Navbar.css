@@ -27,14 +27,14 @@
   align-items: center;
   flex-shrink: 0;
   height: 100%;
-  padding: 2px 0;
+  padding: 1px 0 0;
 }
 
 .navbar-logo-image {
   display: block;
-  height: 36px;
+  height: 40px;
   width: auto;
-  filter: brightness(1.08) contrast(1.06) drop-shadow(0 0 4px rgba(80,140,255,0.16));
+  filter: brightness(1.04) contrast(1.04);
 }
 
 .navbar-links {
@@ -104,7 +104,7 @@
 .navbar-burger span.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 768px) {
-  .navbar-logo-image { height: 28px; }
+  .navbar-logo-image { height: 30px; }
   .navbar-burger { display: flex; }
 
   .navbar-links {
