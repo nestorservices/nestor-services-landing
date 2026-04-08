@@ -1,5 +1,6 @@
 {
-  "outputDirectory": ".",
+  "framework": "vite",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "trailingSlash": false,
   "routes": [
