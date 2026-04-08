@@ -25,27 +25,14 @@
 .navbar-logo {
   display: flex;
   align-items: center;
-  gap: 2px;
-  font-family: var(--font-head);
-  font-size: 18px;
-  font-weight: 700;
+  flex-shrink: 0;
 }
 
-.navbar-logo-n {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  background: var(--blue);
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 800;
-  color: #fff;
-  margin-right: 6px;
+.navbar-logo-image {
+  display: block;
+  height: 34px;
+  width: auto;
 }
-
-.navbar-logo-text { color: var(--white); }
 
 .navbar-links {
   display: flex;
@@ -114,6 +101,7 @@
 .navbar-burger span.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 768px) {
+  .navbar-logo-image { height: 28px; }
   .navbar-burger { display: flex; }
 
   .navbar-links {

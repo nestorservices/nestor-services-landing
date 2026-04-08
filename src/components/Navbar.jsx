@@ -19,8 +19,11 @@ export default function Navbar() {
     <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
       <div className="navbar-inner">
         <Link to="/" className="navbar-logo">
-          <span className="navbar-logo-n">N</span>
-          <span className="navbar-logo-text">estor Services</span>
+          <img
+            src="/nestor-services-logo.png"
+            alt="Nestor Services"
+            className="navbar-logo-image"
+          />
         </Link>
 
         <div className={`navbar-links ${open ? "navbar-links--open" : ""}`}>
@@ -33,7 +36,7 @@ export default function Navbar() {
             Core
           </a>
           <Link to="/blog" className="navbar-link">Blog</Link>
-          <a href="mailto:hello@nestorservices.in" className="navbar-cta">Get in touch</a>
+          <a href="mailto:shashank@nestorservices.in" className="navbar-cta">Get in touch</a>
         </div>
 
         <button className="navbar-burger" onClick={() => setOpen(!open)} aria-label="Menu">

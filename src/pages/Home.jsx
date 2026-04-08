@@ -194,8 +194,11 @@ export default function Home() {
           <div className="footer-inner">
             <div className="footer-brand">
               <div className="footer-logo">
-                <span className="navbar-logo-n">N</span>
-                <span style={{ fontFamily: "var(--font-head)", fontWeight: 700 }}>estor Services</span>
+                <img
+                  src="/nestor-services-logo.png"
+                  alt="Nestor Services"
+                  className="footer-logo-image"
+                />
               </div>
               <p className="footer-tagline">Your Workforce Partner</p>
               <a
@@ -216,7 +219,7 @@ export default function Home() {
               <div className="footer-col">
                 <div className="footer-col-head">Company</div>
                 <Link to="/blog" className="footer-link">Blog</Link>
-                <a href="mailto:hello@nestorservices.in" className="footer-link">Contact</a>
+                <a href="mailto:shashank@nestorservices.in" className="footer-link">Contact</a>
               </div>
             </div>
           </div>

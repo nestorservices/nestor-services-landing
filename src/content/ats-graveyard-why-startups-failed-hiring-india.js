@@ -65,6 +65,6 @@ We are building what comes next.
 
 export const cta = {
   text: "Nestor Hire is currently in active development. If you are an HR leader, founder, or hiring manager who wants to be part of the early access programme — reach out directly.",
-  link: "mailto:hello@nestorservices.in",
+  link: "mailto:shashank@nestorservices.in",
   linkText: "Request Early Access",
 };
