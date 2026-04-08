@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://nestorservices.in/sitemap.xml
+Sitemap: https://www.nestorservices.in/sitemap.xml

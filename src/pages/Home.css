@@ -55,6 +55,23 @@
 
 .btn--sm { padding: 9px 18px; font-size: 13px; }
 
+.inline-link {
+  color: var(--white);
+  text-decoration: underline;
+  text-decoration-color: rgba(255,255,255,0.28);
+  text-underline-offset: 3px;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.inline-link:hover {
+  color: var(--blue);
+  text-decoration-color: rgba(46,124,246,0.5);
+}
+
+.inline-link--muted {
+  color: rgba(255,255,255,0.86);
+}
+
 /* ── HERO ── */
 .hero {
   position: relative;
@@ -303,6 +320,13 @@
 .product-cta:hover { opacity: 0.75; }
 .product-cta--blue { color: var(--blue); }
 .product-cta--teal { color: var(--teal); }
+.product-cta--neutral { color: var(--muted); }
+
+.product-footer-links {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
 
 /* ── WHY ── */
 .why {
@@ -347,6 +371,14 @@
   font-size: 14px;
   color: var(--muted);
   line-height: 1.7;
+  margin-bottom: 18px;
+}
+
+.why-card-link {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--blue);
 }
 
 /* ── BLOG PREVIEW ── */
@@ -535,6 +567,8 @@
   .hero { padding: 120px 0 72px; }
   .hero-actions { flex-direction: column; }
   .product-card { padding: 28px 24px; }
+  .product-card-footer { align-items: flex-start; gap: 12px; }
+  .product-footer-links { flex-direction: column; align-items: flex-start; gap: 8px; }
   .footer-logo-image { height: 32px; }
   .footer-links-group { gap: 32px; }
 }

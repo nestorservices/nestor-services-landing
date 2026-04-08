@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { setCanonical } from "../lib/seo";
 import "./Home.css";
 
 const differentiators = [
@@ -29,6 +30,7 @@ export default function Home() {
     document.title = "Nestor Services — Your Workforce Partner";
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", "Nestor Services powers the full employee lifecycle — from finding the right hire to running every HR operation across their journey.");
+    setCanonical("https://www.nestorservices.in/");
   }, []);
 
   const latestPosts = blogPosts.slice(0, 2);
@@ -49,7 +51,11 @@ export default function Home() {
           </h1>
           <p className="hero-sub">
             Nestor Services powers the full employee lifecycle — from finding the right hire
-            to running every HR operation across their journey.
+            to running every HR operation across their journey. Explore our{" "}
+            <Link to="/blog" className="inline-link">
+              hiring and HR insights
+            </Link>{" "}
+            for a closer look at the thinking behind the platform.
           </p>
           <div className="hero-actions">
             <a href="https://hire.nestorservices.in" className="btn btn--blue" target="_blank" rel="noopener noreferrer">
@@ -61,7 +67,10 @@ export default function Home() {
             <div className="hero-founder-avatar">SM</div>
             <p className="hero-founder-text">
               Founded by <strong>Shashank Malviya</strong> — 15 years in HRM across
-              Country Delight, Housing.com, WNS and more.
+              Country Delight, Housing.com, WNS and more.{" "}
+              <Link to="/blog" className="inline-link inline-link--muted">
+                Learn more from the founder's desk
+              </Link>
             </p>
           </div>
         </div>
@@ -92,7 +101,15 @@ export default function Home() {
               </ul>
               <div className="product-card-footer">
                 <span className="product-audience">For employers & recruiters</span>
-                <span className="product-cta product-cta--blue">Enter Nestor Hire →</span>
+                <div className="product-footer-links">
+                  <Link
+                    to={`/blog/${blogPosts[0].slug}`}
+                    className="product-cta product-cta--neutral"
+                  >
+                    Learn more →
+                  </Link>
+                  <span className="product-cta product-cta--blue">Enter Nestor Hire →</span>
+                </div>
               </div>
             </a>
 
@@ -118,9 +135,17 @@ export default function Home() {
               </ul>
               <div className="product-card-footer">
                 <span className="product-audience">For HR & admin teams</span>
-                <a href="https://core.nestorservices.in/login" className="product-cta product-cta--teal" target="_blank" rel="noopener noreferrer">
-                  Sign in to Core →
-                </a>
+                <div className="product-footer-links">
+                  <Link
+                    to="/blog"
+                    className="product-cta product-cta--neutral"
+                  >
+                    Learn more →
+                  </Link>
+                  <a href="https://core.nestorservices.in/login" className="product-cta product-cta--teal" target="_blank" rel="noopener noreferrer">
+                    Sign in to Core →
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -139,6 +164,9 @@ export default function Home() {
                 <div className="why-icon">{d.icon}</div>
                 <h3 className="why-card-title">{d.title}</h3>
                 <p className="why-card-body">{d.body}</p>
+                <Link to="/blog" className="why-card-link">
+                  Learn more →
+                </Link>
               </div>
             ))}
           </div>
@@ -224,7 +252,7 @@ export default function Home() {
             </div>
           </div>
           <div className="footer-bottom">
-            <span>© 2026 Nestor Services · nestorservices.in</span>
+            <span>© 2026 Nestor Services · www.nestorservices.in</span>
           </div>
         </div>
       </footer>

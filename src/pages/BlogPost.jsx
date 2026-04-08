@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { setCanonical } from "../lib/seo";
 import "./BlogPost.css";
 
 const contentRegistry = {
@@ -42,6 +43,7 @@ export default function BlogPost() {
   const [articleCta, setArticleCta] = useState(null);
 
   const post = blogPosts.find((p) => p.slug === slug);
+  const relatedPosts = blogPosts.filter((entry) => entry.slug !== slug).slice(0, 2);
 
   useEffect(() => {
     if (!post) {
@@ -52,6 +54,7 @@ export default function BlogPost() {
     document.title = `${post.title} — Nestor Services Blog`;
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", post.excerpt);
+    setCanonical(`https://www.nestorservices.in/blog/${post.slug}`);
 
     const loader = contentRegistry[slug];
     if (loader) {
@@ -117,6 +120,50 @@ export default function BlogPost() {
                   </a>
                 </div>
               )}
+
+              <div className="bp-ecosystem-grid">
+                <div className="bp-cta-box bp-cta-box--ecosystem">
+                  <p className="bp-cta-label">Nestor Hire</p>
+                  <p className="bp-cta-text">
+                    Explore live roles and candidate experience on the higher-traffic Nestor Hire platform.
+                  </p>
+                  <a href="https://hire.nestorservices.in" className="bp-cta-btn">
+                    Explore roles →
+                  </a>
+                </div>
+
+                <div className="bp-cta-box bp-cta-box--ecosystem">
+                  <p className="bp-cta-label">Nestor Services</p>
+                  <p className="bp-cta-text">
+                    Visit the homepage to understand how Nestor Hire and Nestor Core connect.
+                  </p>
+                  <a href="https://www.nestorservices.in/" className="bp-cta-btn bp-cta-btn--secondary">
+                    About Nestor Services →
+                  </a>
+                </div>
+              </div>
+
+              {relatedPosts.length > 0 ? (
+                <div className="bp-related">
+                  <h2 className="bp-heading">Related reading</h2>
+                  <div className="bp-related-list">
+                    {relatedPosts.map((entry) => (
+                      <Link key={entry.slug} to={`/blog/${entry.slug}`} className="bp-related-link">
+                        {entry.title} →
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <div className="bp-related">
+                  <h2 className="bp-heading">Continue reading</h2>
+                  <div className="bp-related-list">
+                    <Link to="/blog" className="bp-related-link">
+                      Browse all articles →
+                    </Link>
+                  </div>
+                </div>
+              )}
             </>
           ) : (
             <div className="bp-loading">Loading article...</div>
@@ -130,10 +177,10 @@ export default function BlogPost() {
             ← All articles
           </Link>
           <a
-            href="https://nestorservices.in"
+            href="https://www.nestorservices.in/"
             className="bp-home-link"
           >
-            nestorservices.in →
+            www.nestorservices.in →
           </a>
         </div>
       </div>

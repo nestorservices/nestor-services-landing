@@ -154,11 +154,16 @@
   padding: 0 24px 80px;
 }
 
+.blog-cta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
 .blog-cta-box {
   background: #F4F7FD;
   border-radius: 12px;
   padding: 48px 48px;
-  text-align: center;
   border: 1px solid #E0E8F5;
 }
 
@@ -194,4 +199,20 @@
 
 .blog-cta-btn:hover {
   background: #1a63d4;
+}
+
+.blog-cta-btn--secondary {
+  background: #ffffff;
+  color: #2E7CF6;
+  border: 1px solid #C9DAF8;
+}
+
+.blog-cta-btn--secondary:hover {
+  background: #F8FBFF;
+}
+
+@media (max-width: 900px) {
+  .blog-cta-grid {
+    grid-template-columns: 1fr;
+  }
 }

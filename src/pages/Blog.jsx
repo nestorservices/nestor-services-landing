@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { setCanonical } from "../lib/seo";
 import "./Blog.css";
 
 export default function Blog() {
@@ -13,7 +14,10 @@ export default function Blog() {
         "Insights on HR technology, hiring in India, and the future of recruitment from the team at Nestor Services."
       );
     }
+    setCanonical("https://www.nestorservices.in/blog");
   }, []);
+
+  const featuredArticle = blogPosts[0];
 
   return (
     <div className="blog-page">
@@ -68,20 +72,49 @@ export default function Blog() {
 
       <section className="blog-cta-section">
         <div className="blog-container">
-          <div className="blog-cta-box">
-            <h3 className="blog-cta-title">Want to stay updated?</h3>
-            <p className="blog-cta-sub">
-              We publish when we have something worth saying. Follow Shashank on
-              LinkedIn for real-time insights.
-            </p>
-            <a
-              href="https://www.linkedin.com/in/shashankmalviya/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="blog-cta-btn"
-            >
-              Follow on LinkedIn →
-            </a>
+          <div className="blog-cta-grid">
+            <div className="blog-cta-box">
+              <h3 className="blog-cta-title">Explore roles with Nestor Hire</h3>
+              <p className="blog-cta-sub">
+                See active opportunities and experience the higher-traffic side
+                of the Nestor ecosystem.
+              </p>
+              <a
+                href="https://hire.nestorservices.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="blog-cta-btn"
+              >
+                Explore roles →
+              </a>
+            </div>
+
+            <div className="blog-cta-box">
+              <h3 className="blog-cta-title">About Nestor Services</h3>
+              <p className="blog-cta-sub">
+                Return to the main site to see how Nestor Hire and Nestor Core
+                fit together.
+              </p>
+              <a
+                href="https://www.nestorservices.in/"
+                className="blog-cta-btn blog-cta-btn--secondary"
+              >
+                Visit homepage →
+              </a>
+            </div>
+
+            <div className="blog-cta-box">
+              <h3 className="blog-cta-title">Start with our key article</h3>
+              <p className="blog-cta-sub">
+                New here? Begin with the article that frames our point of view on hiring in India.
+              </p>
+              <Link
+                to={`/blog/${featuredArticle.slug}`}
+                className="blog-cta-btn blog-cta-btn--secondary"
+              >
+                Read featured article →
+              </Link>
+            </div>
           </div>
         </div>
       </section>
