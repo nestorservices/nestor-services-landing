@@ -1,51 +1,8 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
-  "redirects": [
-    {
-      "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.nestorservices.in" }],
-      "destination": "https://nestorservices.in/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/:path*",
-      "has": [
-        { "type": "host", "value": "nestorservices.in" },
-        { "type": "header", "key": "x-forwarded-proto", "value": "http" }
-      ],
-      "destination": "https://nestorservices.in/:path*",
-      "permanent": true
-    },
-    {
-      "source": "/index.php",
-      "destination": "https://nestorservices.in/",
-      "permanent": true
-    },
-    {
-      "source": "/about.php",
-      "destination": "https://nestorservices.in/",
-      "permanent": true
-    },
-    {
-      "source": "/contact.php",
-      "destination": "https://nestorservices.in/",
-      "permanent": true
-    },
-    {
-      "source": "/service.php",
-      "destination": "https://nestorservices.in/",
-      "permanent": true
-    },
-    {
-      "source": "/thinking",
-      "destination": "https://nestorservices.in/blog",
-      "permanent": true
-    },
-    {
-      "source": "/thinking/author/nestorservices",
-      "destination": "https://nestorservices.in/blog",
-      "permanent": true
-    }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
