@@ -26,13 +26,14 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  height: 100%;
 }
 
 .navbar-logo-image {
   display: block;
-  height: 32px;
+  height: 36px;
   width: auto;
-  filter: brightness(1.08) contrast(1.06);
+  filter: brightness(1.12) contrast(1.1) drop-shadow(0 0 6px rgba(80,140,255,0.25));
 }
 
 .navbar-links {
@@ -102,7 +103,7 @@
 .navbar-burger span.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 768px) {
-  .navbar-logo-image { height: 30px; }
+  .navbar-logo-image { height: 28px; }
   .navbar-burger { display: flex; }
 
   .navbar-links {
