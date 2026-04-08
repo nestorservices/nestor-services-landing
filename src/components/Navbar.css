@@ -30,8 +30,9 @@
 
 .navbar-logo-image {
   display: block;
-  height: 34px;
+  height: 32px;
   width: auto;
+  filter: brightness(1.08) contrast(1.06);
 }
 
 .navbar-links {
@@ -101,7 +102,7 @@
 .navbar-burger span.open:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
 @media (max-width: 768px) {
-  .navbar-logo-image { height: 28px; }
+  .navbar-logo-image { height: 30px; }
   .navbar-burger { display: flex; }
 
   .navbar-links {
