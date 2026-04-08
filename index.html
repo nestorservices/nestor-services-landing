@@ -1,604 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Nestor Services — Your Workforce Partner</title>
-<link rel="canonical" href="https://nestorservices.in/"/>
-<link rel="preconnect" href="https://fonts.googleapis.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
-<style>
-*{box-sizing:border-box;margin:0;padding:0;}
-:root{
-  --navy:#07111F;
-  --navy2:#0C1C30;
-  --blue:#2563EB;
-  --blue2:#3B82F6;
-  --blue3:#60A5FA;
-  --blue4:#BFDBFE;
-  --teal:#0891B2;
-  --teal2:#06B6D4;
-  --teal3:#22D3EE;
-  --teal4:#A5F3FC;
-  --white:#FFFFFF;
-}
-
-html, body {
-  height: 100%;
-  margin: 0;
-}
-
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--navy);
-  -webkit-font-smoothing: antialiased;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-x: hidden;
-  position: relative;
-}
-
-/* ══ BACKGROUND ══ */
-.bg-base {
-  position: fixed; inset: 0; z-index: 0;
-  background:
-    radial-gradient(ellipse 55% 50% at 92% 8%,  rgba(37,99,235,0.13)  0%, transparent 60%),
-    radial-gradient(ellipse 55% 55% at 8%  92%, rgba(8,145,178,0.12)  0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 50% 50%, rgba(7,17,31,0.0)     0%, transparent 100%),
-    #07111F;
-  pointer-events: none;
-}
-
-.bg-grid {
-  position: fixed; inset: 0; z-index: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
-  background-size: 60px 60px;
-  pointer-events: none;
-}
-
-.bg-orb {
-  position: fixed; border-radius: 50%; pointer-events: none; z-index: 0;
-}
-.orb-1 {
-  width: 360px; height: 360px;
-  background: radial-gradient(circle, rgba(37,99,235,0.07) 0%, transparent 70%);
-  top: -80px; right: 8%;
-  animation: floatOrb 9s ease-in-out infinite;
-}
-.orb-2 {
-  width: 440px; height: 440px;
-  background: radial-gradient(circle, rgba(8,145,178,0.07) 0%, transparent 70%);
-  bottom: -110px; left: 4%;
-  animation: floatOrb 11s ease-in-out infinite reverse;
-}
-
-@keyframes floatOrb {
-  0%, 100% { transform: translateY(0px); }
-  50%       { transform: translateY(-22px); }
-}
-
-/* ══ PORTAL SHELL ══ */
-.portal {
-  position: relative; z-index: 10;
-  width: 100%; max-width: 980px;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: fadeUp .65s ease both;
-}
-
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ══ MASTHEAD ══ */
-.masthead {
-  display: flex; flex-direction: column; align-items: center;
-  text-align: center;
-  margin-bottom: 52px;
-}
-
-.ns-logo-wrap {
-  padding-top: 40px;
-  margin-bottom: 20px;
-}
-
-.masthead-headline {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 900;
-  font-size: clamp(28px, 4.5vw, 44px);
-  letter-spacing: -0.045em;
-  color: #fff;
-  line-height: 1.15;
-  margin-bottom: 12px;
-}
-
-.masthead-headline em {
-  font-style: normal;
-  /* diagonal split: blue-left → teal-right */
-  background: linear-gradient(120deg, var(--blue3) 0%, var(--teal3) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.masthead-sub {
-  font-size: 15px;
-  color: rgba(255,255,255,0.48);
-  line-height: 1.68;
-  max-width: 460px;
-  font-weight: 300;
-}
-
-/* ══ PRODUCT CARDS ══ */
-.products {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  width: 100%;
-}
-
-.pcard {
-  border-radius: 22px;
-  padding: 32px 30px 26px;
-  display: flex;
-  flex-direction: column;
-  text-decoration: none;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-  transition: transform .26s cubic-bezier(.25,.46,.45,.94), box-shadow .26s, border-color .26s, background .26s;
-}
-
-.pcard::after {
-  content: '';
-  position: absolute; inset: 0;
-  border-radius: 22px;
-  opacity: 0;
-  transition: opacity .26s;
-  pointer-events: none;
-}
-
-/* — Hire — */
-.card-hire {
-  background: rgba(37,99,235,0.055);
-  border: 1px solid rgba(37,99,235,0.18);
-}
-.card-hire::after {
-  background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(37,99,235,0.13) 0%, transparent 70%);
-}
-.card-hire:hover {
-  background: rgba(37,99,235,0.09);
-  border-color: rgba(37,99,235,0.44);
-  transform: translateY(-5px);
-  box-shadow: 0 22px 60px rgba(37,99,235,0.22), 0 0 0 1px rgba(37,99,235,0.2);
-}
-.card-hire:hover::after { opacity: 1; }
-
-/* — Core — */
-.card-core {
-  background: rgba(8,145,178,0.055);
-  border: 1px solid rgba(8,145,178,0.18);
-}
-.card-core::after {
-  background: radial-gradient(ellipse 80% 55% at 50% 0%, rgba(8,145,178,0.14) 0%, transparent 70%);
-}
-.card-core:hover {
-  background: rgba(8,145,178,0.09);
-  border-color: rgba(8,145,178,0.44);
-  transform: translateY(-5px);
-  box-shadow: 0 22px 60px rgba(8,145,178,0.2), 0 0 0 1px rgba(8,145,178,0.2);
-}
-.card-core:hover::after { opacity: 1; }
-
-/* card icon */
-.ci {
-  width: 52px; height: 52px; border-radius: 14px;
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 20px; flex-shrink: 0;
-}
-.ci-hire { background: rgba(37,99,235,0.14); border: 1px solid rgba(37,99,235,0.26); }
-.ci-core { background: rgba(8,145,178,0.14); border: 1px solid rgba(8,145,178,0.26); }
-.ci svg  { width: 24px; height: 24px; }
-
-/* eyebrow */
-.eyebrow {
-  font-size: 10px; font-weight: 700;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  font-family: 'DM Sans', sans-serif;
-  margin-bottom: 6px;
-}
-.eb-hire   { color: var(--blue3); }
-.eb-core   { color: var(--teal3); }
-
-/* product name */
-.pname {
-  display: flex; align-items: baseline; gap: 5px;
-  margin-bottom: 10px;
-}
-.pn-nestor {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 900; font-size: 22px;
-  letter-spacing: -0.035em; color: #fff; line-height: 1;
-}
-.pn-hire { color: var(--blue3);  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -0.035em; line-height: 1; }
-.pn-core { color: var(--teal3); font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: -0.035em; line-height: 1; }
-
-/* desc */
-.pdesc {
-  font-size: 13.5px; line-height: 1.68;
-  color: rgba(255,255,255,0.52);
-  font-family: 'DM Sans', sans-serif; font-weight: 300;
-  flex: 1; margin-bottom: 22px;
-}
-
-/* pills */
-.ppills { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 24px; }
-.pp {
-  font-size: 11px; font-weight: 500;
-  padding: 4px 11px; border-radius: 100px;
-  font-family: 'DM Sans', sans-serif;
-}
-.pp-hire { background: rgba(37,99,235,0.12); color: var(--blue4);  border: 1px solid rgba(37,99,235,0.22); }
-.pp-core { background: rgba(8,145,178,0.12); color: var(--teal4); border: 1px solid rgba(8,145,178,0.22); }
-
-/* CTA row */
-.pcta {
-  display: flex; align-items: center; justify-content: space-between;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255,255,255,0.07);
-}
-.pcta-lbl { font-size: 11.5px; color: rgba(255,255,255,0.3); font-family: 'DM Sans', sans-serif; }
-
-.cta-btn {
-  display: inline-flex; align-items: center; gap: 7px;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 12.5px; font-weight: 700;
-  padding: 9px 18px; border-radius: 10px;
-  border: none; cursor: pointer;
-  transition: all .2s;
-  text-decoration: none;
-}
-.cta-hire { background: var(--blue); color: #fff; }
-.cta-hire:hover { background: var(--blue2); box-shadow: 0 4px 20px rgba(37,99,235,0.42); }
-.cta-core { background: var(--teal); color: #fff; }
-.cta-core:hover { background: var(--teal2); box-shadow: 0 4px 20px rgba(8,145,178,0.42); }
-.cta-btn svg { width: 13px; height: 13px; transition: transform .2s; }
-.cta-btn:hover svg { transform: translateX(3px); }
-
-/* restricted badge */
-.lock-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  font-size: 10.5px; font-weight: 600;
-  padding: 3px 9px; border-radius: 100px;
-  background: rgba(8,145,178,0.1);
-  color: var(--teal4);
-  border: 1px solid rgba(8,145,178,0.22);
-  font-family: 'DM Sans', sans-serif;
-  margin-top: 5px;
-}
-.lock-badge svg { width: 10px; height: 10px; }
-
-/* ══ FOOTER ══ */
-.pfooter {
-  position: relative; z-index: 10;
-  margin-top: 32px;
-  font-size: 12px;
-  color: rgba(255,255,255,0.2);
-  font-family: 'DM Sans', sans-serif;
-  animation: fadeUp .65s ease .2s both;
-}
-.pfooter a { color: rgba(255,255,255,0.2); text-decoration: none; }
-.pfooter a:hover { color: rgba(255,255,255,0.45); }
-
-/* ══ MODAL ══ */
-.modal-bg {
-  display: none;
-  position: fixed; inset: 0; z-index: 500;
-  background: rgba(7,17,31,0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  align-items: center; justify-content: center;
-}
-.modal-bg.open { display: flex; }
-
-.modal-box {
-  background: #0C1C30;
-  border: 1px solid rgba(8,145,178,0.22);
-  border-radius: 24px;
-  width: 100%; max-width: 400px;
-  margin: 20px;
-  padding: 36px 32px;
-  box-shadow: 0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(8,145,178,0.12);
-  animation: mIn .22s ease both;
-  position: relative;
-}
-
-@keyframes mIn {
-  from { opacity: 0; transform: scale(0.96) translateY(10px); }
-  to   { opacity: 1; transform: scale(1)    translateY(0);    }
-}
-
-.modal-close {
-  position: absolute; top: 16px; right: 16px;
-  width: 30px; height: 30px; border-radius: 50%;
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.45);
-  display: flex; align-items: center; justify-content: center;
-  cursor: pointer; font-size: 17px;
-  transition: background .18s;
-}
-.modal-close:hover { background: rgba(255,255,255,0.11); }
-
-/* modal brand */
-.modal-brand {
-  display: flex; align-items: center; gap: 11px;
-  margin-bottom: 24px;
-}
-.modal-brand-icon {
-  width: 40px; height: 40px; border-radius: 11px;
-  background: rgba(8,145,178,0.14);
-  border: 1px solid rgba(8,145,178,0.28);
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.modal-brand-icon svg { width: 20px; height: 20px; }
-.modal-brand-name {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 900; font-size: 17px;
-  letter-spacing: -0.025em; color: #fff;
-  display: flex; gap: 5px; align-items: baseline; line-height: 1;
-}
-.modal-brand-name span { color: var(--teal3); }
-.modal-brand-sub {
-  font-size: 9px; font-weight: 300; letter-spacing: 0.2em;
-  text-transform: uppercase; color: rgba(255,255,255,0.28);
-  margin-top: 3px; font-family: 'DM Sans', sans-serif;
-}
-
-.modal-title {
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-weight: 800; font-size: 19px;
-  letter-spacing: -0.02em; color: #fff;
-  margin-bottom: 4px;
-}
-.modal-sub {
-  font-size: 13px; color: rgba(255,255,255,0.38);
-  font-family: 'DM Sans', sans-serif; line-height: 1.55;
-  margin-bottom: 22px;
-}
-
-/* modal fields */
-.mfields { display: flex; flex-direction: column; gap: 13px; }
-.mfield { display: flex; flex-direction: column; gap: 5px; }
-.mlabel { font-size: 11.5px; font-weight: 600; color: rgba(255,255,255,0.5); }
-.minput {
-  height: 47px; padding: 0 14px;
-  background: rgba(255,255,255,0.055);
-  border: 1.5px solid rgba(255,255,255,0.1);
-  border-radius: 11px;
-  font-family: 'DM Sans', sans-serif; font-size: 14px; color: #fff;
-  outline: none; width: 100%;
-  transition: border-color .2s, background .2s;
-}
-.minput:focus {
-  border-color: rgba(8,145,178,0.62);
-  background: rgba(255,255,255,0.08);
-  box-shadow: 0 0 0 3px rgba(8,145,178,0.1);
-}
-.minput::placeholder { color: rgba(255,255,255,0.2); }
-
-.pw-wrap-m { position: relative; }
-.pw-wrap-m .minput { padding-right: 44px; }
-.pw-eye-m {
-  position: absolute; right: 13px; top: 50%; transform: translateY(-50%);
-  background: none; border: none; cursor: pointer;
-  color: rgba(255,255,255,0.28); display: flex; align-items: center;
-  transition: color .15s;
-}
-.pw-eye-m:hover { color: rgba(255,255,255,0.5); }
-.pw-eye-m svg { width: 15px; height: 15px; }
-
-.msub-btn {
-  width: 100%; height: 48px;
-  background: var(--teal); color: #fff;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 14px; font-weight: 700;
-  border: none; border-radius: 11px; cursor: pointer;
-  transition: all .2s; margin-top: 4px;
-  display: flex; align-items: center; justify-content: center; gap: 7px;
-}
-.msub-btn:hover { background: var(--teal2); box-shadow: 0 8px 26px rgba(8,145,178,0.38); }
-.msub-btn svg { width: 14px; height: 14px; }
-
-.mfooter {
-  text-align: center; margin-top: 16px;
-  font-size: 12px; color: rgba(255,255,255,0.22);
-  font-family: 'DM Sans', sans-serif;
-}
-
-@media (max-width: 680px) {
-  html, body { overflow: auto; height: auto; }
-  .products { grid-template-columns: 1fr; }
-  .masthead { margin-bottom: 36px; }
-  .ns-logo-wrap { padding-top: 24px; }
-  .masthead-headline { font-size: 26px; }
-  .pcard { padding: 24px 22px 22px; }
-}
-</style>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Nestor Services — Your Workforce Partner</title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2113.3">
+  <style type="text/css">
+    body {background-color: #090e17}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; background-color: #090e17; min-height: 14.0px}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px Helvetica; color: #000000; -webkit-text-stroke: #000000; min-height: 14.0px}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 25.2px; font: 15.0px 'Helvetica Light'; color: #ffffff; color: rgba(255, 255, 255, 0.48); -webkit-text-stroke: rgba(255, 255, 255, 0.48)}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #0000e9; -webkit-text-stroke: #0000e9; background-color: #1d48e6; background-color: rgba(29, 72, 230, 0.055); min-height: 14.0px}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #0000e9; -webkit-text-stroke: #0000e9; min-height: 14.0px}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Helvetica; color: #4f91f8; -webkit-text-stroke: #4f91f8}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.0px; font: 22.0px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p10 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.0px; font: 22.0px Helvetica; color: #4f91f8; -webkit-text-stroke: #4f91f8}
+    p.p11 {margin: 0.0px 0.0px 22.0px 0.0px; line-height: 22.7px; font: 13.5px 'Helvetica Light'; color: #ffffff; color: rgba(255, 255, 255, 0.52); -webkit-text-stroke: rgba(255, 255, 255, 0.52)}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Helvetica; color: #b2d2fe; -webkit-text-stroke: #b2d2fe; background-color: #1d48e6; background-color: rgba(29, 72, 230, 0.12)}
+    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.5px Helvetica; color: #ffffff; color: rgba(255, 255, 255, 0.3); -webkit-text-stroke: rgba(255, 255, 255, 0.3)}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.5px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #1d48e6}
+    p.p15 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.5px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff; min-height: 16.0px}
+    p.p16 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; color: #0000e9; -webkit-text-stroke: #0000e9; background-color: #137fa2; background-color: rgba(19, 127, 162, 0.055); min-height: 14.0px}
+    p.p17 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.0px Helvetica; color: #25cae9; -webkit-text-stroke: #25cae9}
+    p.p18 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.0px; font: 22.0px Helvetica; color: #25cae9; -webkit-text-stroke: #25cae9}
+    p.p19 {margin: 0.0px 0.0px 0.0px 0.0px; font: 11.0px Helvetica; color: #97f1fb; -webkit-text-stroke: #97f1fb; background-color: #137fa2; background-color: rgba(19, 127, 162, 0.12)}
+    p.p20 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.5px Helvetica; color: #97f1fb; -webkit-text-stroke: #97f1fb; min-height: 12.0px}
+    p.p21 {margin: 0.0px 0.0px 0.0px 0.0px; font: 10.5px Helvetica; color: #97f1fb; -webkit-text-stroke: #97f1fb}
+    p.p22 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.5px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #137fa2}
+    span.s1 {font-kerning: none}
+    span.s2 {font-kerning: none; background-color: #090e17}
+    span.s3 {font-kerning: none; background-color: rgba(29, 72, 230, 0.055)}
+    span.s4 {font: 22.0px Helvetica; font-kerning: none; color: #ffffff; -webkit-text-stroke: 0px #ffffff}
+    span.s5 {font: 22.0px Helvetica; font-kerning: none}
+    span.s6 {font: 13.5px 'Helvetica Light'; font-kerning: none; color: rgba(255, 255, 255, 0.52); -webkit-text-stroke: 0px rgba(255, 255, 255, 0.52)}
+    span.s7 {font: 11.5px Helvetica; font-kerning: none; color: rgba(255, 255, 255, 0.3); -webkit-text-stroke: 0px rgba(255, 255, 255, 0.3)}
+    span.s8 {font-kerning: none; background-color: rgba(19, 127, 162, 0.055)}
+    span.s9 {font-kerning: none; background-color: rgba(19, 127, 162, 0.1)}
+  </style>
 </head>
 <body>
-
-<div class="bg-base"></div>
-<div class="bg-grid"></div>
-<div class="bg-orb orb-1"></div>
-<div class="bg-orb orb-2"></div>
-
-<!-- ══ PORTAL ══ -->
-<div class="portal">
-
-  <!-- MASTHEAD -->
-  <div class="masthead">
-    <div class="ns-logo-wrap">
-      <svg xmlns="http://www.w3.org/2000/svg"
-           viewBox="2.00 0 492.00 70.00"
-           width="280" height="39"
-           role="img" aria-label="Nestor Services — Your Workforce Partner">
-        <path fill="#FFFFFF" d="M42.781,51.000 L32.172,51.000 L14.453,24.484 L14.453,51.000 L3.844,51.000 L3.844,8.000 L14.453,8.000 L32.172,34.641 L32.172,8.000 L42.781,8.000 Z M83.453,32.875 C83.453,33.875 83.391,34.918 83.266,36.000 L59.281,36.000 C59.445,38.242 60.141,39.953 61.359,41.141 C62.578,42.320 64.070,42.906 65.844,42.906 C68.488,42.906 70.328,41.746 71.359,39.422 L82.656,39.422 C82.070,41.727 81.023,43.793 79.516,45.625 C78.004,47.461 76.113,48.898 73.844,49.938 C71.570,50.980 69.031,51.500 66.219,51.500 C62.832,51.500 59.816,50.773 57.172,49.312 C54.523,47.844 52.457,45.750 50.969,43.031 C49.477,40.312 48.734,37.137 48.734,33.500 C48.734,29.867 49.469,26.688 50.938,23.969 C52.406,21.250 54.461,19.164 57.109,17.703 C59.754,16.234 62.789,15.500 66.219,15.500 C69.562,15.500 72.535,16.211 75.141,17.625 C77.742,19.043 79.781,21.062 81.250,23.688 C82.719,26.312 83.453,29.375 83.453,32.875 Z M72.609,30.125 C72.609,28.250 71.988,26.758 70.750,25.641 C69.508,24.527 67.957,23.969 66.094,23.969 C64.320,23.969 62.820,24.508 61.594,25.578 C60.375,26.641 59.625,28.156 59.344,30.125 Z M102.922,51.500 C99.898,51.500 97.211,50.980 94.859,49.938 C92.504,48.898 90.645,47.477 89.281,45.672 C87.914,43.859 87.148,41.836 86.984,39.594 L97.469,39.594 C97.582,40.824 98.133,41.820 99.125,42.578 C100.125,43.328 101.348,43.703 102.797,43.703 C104.117,43.703 105.141,43.445 105.859,42.922 C106.586,42.391 106.953,41.711 106.953,40.875 C106.953,39.867 106.430,39.121 105.391,38.641 C104.359,38.152 102.688,37.617 100.375,37.031 C97.895,36.438 95.828,35.820 94.172,35.172 C92.523,34.516 91.098,33.484 89.891,32.078 C88.691,30.672 88.094,28.777 88.094,26.391 C88.094,24.383 88.641,22.547 89.734,20.891 C90.836,19.227 92.453,17.914 94.578,16.953 C96.703,15.984 99.234,15.500 102.172,15.500 C106.516,15.500 109.938,16.586 112.438,18.750 C114.938,20.906 116.375,23.773 116.750,27.344 L106.953,27.344 C106.785,26.117 106.254,25.148 105.359,24.438 C104.473,23.719 103.305,23.359 101.859,23.359 C100.617,23.359 99.664,23.605 99.000,24.094 C98.344,24.574 98.016,25.230 98.016,26.062 C98.016,27.074 98.539,27.836 99.594,28.344 C100.656,28.844 102.301,29.340 104.531,29.828 C107.094,30.516 109.176,31.184 110.781,31.828 C112.395,32.477 113.812,33.523 115.031,34.969 C116.258,36.418 116.895,38.359 116.938,40.797 C116.938,42.852 116.363,44.688 115.219,46.312 C114.082,47.930 112.453,49.199 110.328,50.125 C108.203,51.039 105.734,51.500 102.922,51.500 Z M143.125,42.031 L143.125,51.000 L137.734,51.000 C133.891,51.000 130.891,50.047 128.734,48.141 C126.586,46.227 125.516,43.102 125.516,38.766 L125.516,24.781 L121.297,24.781 L121.297,16.000 L125.516,16.000 L125.516,8.000 L136.125,8.000 L136.125,16.000 L143.062,16.000 L143.062,24.781 L136.125,24.781 L136.125,39.031 C136.125,40.094 136.367,40.859 136.859,41.328 C137.359,41.797 138.188,42.031 139.344,42.031 Z M164.594,51.500 C161.207,51.500 158.160,50.773 155.453,49.312 C152.742,47.844 150.613,45.750 149.062,43.031 C147.508,40.312 146.734,37.137 146.734,33.500 C146.734,29.906 147.520,26.742 149.094,24.000 C150.664,21.262 152.812,19.164 155.531,17.703 C158.258,16.234 161.320,15.500 164.719,15.500 C168.102,15.500 171.160,16.234 173.891,17.703 C176.617,19.164 178.770,21.262 180.344,24.000 C181.914,26.742 182.703,29.906 182.703,33.500 C182.703,37.094 181.906,40.262 180.312,43.000 C178.719,45.742 176.547,47.844 173.797,49.312 C171.047,50.773 167.977,51.500 164.594,51.500 Z M164.594,42.344 C166.613,42.344 168.336,41.586 169.766,40.062 C171.191,38.531 171.906,36.344 171.906,33.500 C171.906,30.656 171.211,28.477 169.828,26.953 C168.441,25.422 166.738,24.656 164.719,24.656 C162.645,24.656 160.926,25.414 159.562,26.922 C158.207,28.422 157.531,30.617 157.531,33.500 C157.531,36.344 158.195,38.531 159.531,40.062 C160.875,41.586 162.562,42.344 164.594,42.344 Z M199.453,21.672 C200.691,19.766 202.238,18.262 204.094,17.156 C205.957,16.055 208.023,15.500 210.297,15.500 L210.297,26.688 L207.375,26.688 C204.727,26.688 202.742,27.273 201.422,28.438 C200.109,29.605 199.453,31.648 199.453,34.562 L199.453,51.000 L188.844,51.000 L188.844,16.000 L199.453,16.000 Z M225.000,51.000"/>
-        <path fill="#60A5FA" d="M244.594,51.000 C241.406,51.000 238.551,50.496 236.031,49.484 C233.508,48.465 231.492,46.961 229.984,44.969 C228.484,42.969 227.691,40.562 227.609,37.750 L238.891,37.750 C239.055,39.305 239.613,40.492 240.562,41.312 C241.508,42.125 242.750,42.531 244.281,42.531 C245.852,42.531 247.094,42.184 248.000,41.484 C248.906,40.777 249.359,39.797 249.359,38.547 C249.359,37.508 249.000,36.648 248.281,35.969 C247.562,35.281 246.672,34.719 245.609,34.281 C244.555,33.844 243.062,33.340 241.125,32.766 C238.312,31.934 236.016,31.094 234.234,30.250 C232.461,29.406 230.938,28.168 229.656,26.531 C228.375,24.887 227.734,22.734 227.734,20.078 C227.734,16.152 229.195,13.074 232.125,10.844 C235.062,8.617 238.883,7.500 243.594,7.500 C248.395,7.500 252.258,8.637 255.188,10.906 C258.125,13.168 259.695,16.309 259.906,20.328 L248.438,20.328 C248.352,18.984 247.832,17.922 246.875,17.141 C245.926,16.359 244.711,15.969 243.234,15.969 C241.953,15.969 240.914,16.305 240.125,16.969 C239.344,17.625 238.953,18.578 238.953,19.828 C238.953,21.195 239.613,22.262 240.938,23.031 C242.258,23.793 244.328,24.609 247.141,25.484 C249.941,26.414 252.223,27.297 253.984,28.141 C255.742,28.977 257.266,30.199 258.547,31.812 C259.828,33.418 260.469,35.480 260.469,38.000 C260.469,40.406 259.836,42.594 258.578,44.562 C257.316,46.523 255.484,48.086 253.078,49.250 C250.680,50.418 247.852,51.000 244.594,51.000 Z M299.453,32.875 C299.453,33.875 299.391,34.918 299.266,36.000 L275.281,36.000 C275.445,38.242 276.141,39.953 277.359,41.141 C278.578,42.320 280.070,42.906 281.844,42.906 C284.488,42.906 286.328,41.746 287.359,39.422 L298.656,39.422 C298.070,41.727 297.023,43.793 295.516,45.625 C294.004,47.461 292.113,48.898 289.844,49.938 C287.570,50.980 285.031,51.500 282.219,51.500 C278.832,51.500 275.816,50.773 273.172,49.312 C270.523,47.844 268.457,45.750 266.969,43.031 C265.477,40.312 264.734,37.137 264.734,33.500 C264.734,29.867 265.469,26.688 266.938,23.969 C268.406,21.250 270.461,19.164 273.109,17.703 C275.754,16.234 278.789,15.500 282.219,15.500 C285.562,15.500 288.535,16.211 291.141,17.625 C293.742,19.043 295.781,21.062 297.250,23.688 C298.719,26.312 299.453,29.375 299.453,32.875 Z M288.609,30.125 C288.609,28.250 287.988,26.758 286.750,25.641 C285.508,24.527 283.957,23.969 282.094,23.969 C280.320,23.969 278.820,24.508 277.594,25.578 C276.375,26.641 275.625,28.156 275.344,30.125 Z M315.453,21.672 C316.691,19.766 318.238,18.262 320.094,17.156 C321.957,16.055 324.023,15.500 326.297,15.500 L326.297,26.688 L323.375,26.688 C320.727,26.688 318.742,27.273 317.422,28.438 C316.109,29.605 315.453,31.648 315.453,34.562 L315.453,51.000 L304.844,51.000 L304.844,16.000 L315.453,16.000 Z M347.406,40.609 L354.906,16.000 L366.188,16.000 L353.922,51.000 L340.828,51.000 L328.562,16.000 L339.906,16.000 Z M376.172,13.000 C374.316,13.000 372.801,12.461 371.625,11.375 C370.445,10.281 369.859,8.930 369.859,7.312 C369.859,5.668 370.445,4.297 371.625,3.203 C372.801,2.109 374.316,1.562 376.172,1.562 C377.992,1.562 379.492,2.109 380.672,3.203 C381.848,4.297 382.438,5.668 382.438,7.312 C382.438,8.930 381.848,10.281 380.672,11.375 C379.492,12.461 377.992,13.000 376.172,13.000 Z M381.453,16.000 L381.453,51.000 L370.844,51.000 L370.844,16.000 Z M386.734,33.500 C386.734,29.867 387.469,26.688 388.938,23.969 C390.406,21.250 392.453,19.164 395.078,17.703 C397.703,16.234 400.707,15.500 404.094,15.500 C408.438,15.500 412.062,16.648 414.969,18.938 C417.883,21.219 419.801,24.438 420.719,28.594 L409.422,28.594 C408.473,25.887 406.633,24.531 403.906,24.531 C401.969,24.531 400.422,25.309 399.266,26.859 C398.109,28.402 397.531,30.617 397.531,33.500 C397.531,36.387 398.109,38.605 399.266,40.156 C400.422,41.699 401.969,42.469 403.906,42.469 C406.633,42.469 408.473,41.117 409.422,38.406 L420.719,38.406 C419.801,42.469 417.875,45.668 414.938,48.000 C412.008,50.336 408.395,51.500 404.094,51.500 C400.707,51.500 397.703,50.773 395.078,49.312 C392.453,47.844 390.406,45.750 388.938,43.031 C387.469,40.312 386.734,37.137 386.734,33.500 Z M459.453,32.875 C459.453,33.875 459.391,34.918 459.266,36.000 L435.281,36.000 C435.445,38.242 436.141,39.953 437.359,41.141 C438.578,42.320 440.070,42.906 441.844,42.906 C444.488,42.906 446.328,41.746 447.359,39.422 L458.656,39.422 C458.070,41.727 457.023,43.793 455.516,45.625 C454.004,47.461 452.113,48.898 449.844,49.938 C447.570,50.980 445.031,51.500 442.219,51.500 C438.832,51.500 435.816,50.773 433.172,49.312 C430.523,47.844 428.457,45.750 426.969,43.031 C425.477,40.312 424.734,37.137 424.734,33.500 C424.734,29.867 425.469,26.688 426.938,23.969 C428.406,21.250 430.461,19.164 433.109,17.703 C435.754,16.234 438.789,15.500 442.219,15.500 C445.562,15.500 448.535,16.211 451.141,17.625 C453.742,19.043 455.781,21.062 457.250,23.688 C458.719,26.312 459.453,29.375 459.453,32.875 Z M448.609,30.125 C448.609,28.250 447.988,26.758 446.750,25.641 C445.508,24.527 443.957,23.969 442.094,23.969 C440.320,23.969 438.820,24.508 437.594,25.578 C436.375,26.641 435.625,28.156 435.344,30.125 Z M478.922,51.500 C475.898,51.500 473.211,50.980 470.859,49.938 C468.504,48.898 466.645,47.477 465.281,45.672 C463.914,43.859 463.148,41.836 462.984,39.594 L473.469,39.594 C473.582,40.824 474.133,41.820 475.125,42.578 C476.125,43.328 477.348,43.703 478.797,43.703 C480.117,43.703 481.141,43.445 481.859,42.922 C482.586,42.391 482.953,41.711 482.953,40.875 C482.953,39.867 482.430,39.121 481.391,38.641 C480.359,38.152 478.688,37.617 476.375,37.031 C473.895,36.438 471.828,35.820 470.172,35.172 C468.523,34.516 467.098,33.484 465.891,32.078 C464.691,30.672 464.094,28.777 464.094,26.391 C464.094,24.383 464.641,22.547 465.734,20.891 C466.836,19.227 468.453,17.914 470.578,16.953 C472.703,15.984 475.234,15.500 478.172,15.500 C482.516,15.500 485.938,16.586 488.438,18.750 C490.938,20.906 492.375,23.773 492.750,27.344 L482.953,27.344 C482.785,26.117 482.254,25.148 481.359,24.438 C480.473,23.719 479.305,23.359 477.859,23.359 C476.617,23.359 475.664,23.605 475.000,24.094 C474.344,24.574 474.016,25.230 474.016,26.062 C474.016,27.074 474.539,27.836 475.594,28.344 C476.656,28.844 478.301,29.340 480.531,29.828 C483.094,30.516 485.176,31.184 486.781,31.828 C488.395,32.477 489.812,33.523 491.031,34.969 C492.258,36.418 492.895,38.359 492.938,40.797 C492.938,42.852 492.363,44.688 491.219,46.312 C490.082,47.930 488.453,49.199 486.328,50.125 C484.203,51.039 481.734,51.500 478.922,51.500 Z M496.000,51.000"/>
-        <path fill="#FFFFFF" opacity="0.32" d="M6.484,62.000 L3.953,66.469 L3.953,69.000 L2.703,69.000 L2.703,66.469 L0.172,62.000 L1.562,62.000 L3.328,65.438 L5.109,62.000 Z M11.312,69.000 C10.602,69.000 9.945,68.852 9.344,68.547 C8.750,68.246 8.273,67.828 7.922,67.297 C7.578,66.766 7.406,66.168 7.406,65.500 C7.406,64.836 7.578,64.234 7.922,63.703 C8.273,63.164 8.750,62.746 9.344,62.453 C9.945,62.152 10.602,62.000 11.312,62.000 C12.031,62.000 12.688,62.152 13.281,62.453 C13.883,62.746 14.359,63.164 14.703,63.703 C15.047,64.234 15.219,64.836 15.219,65.500 C15.219,66.168 15.047,66.766 14.703,67.297 C14.359,67.828 13.883,68.246 13.281,68.547 C12.688,68.852 12.031,69.000 11.312,69.000 Z M11.312,67.938 C11.820,67.938 12.273,67.840 12.672,67.641 C13.066,67.445 13.375,67.156 13.594,66.781 C13.820,66.406 13.938,65.980 13.938,65.500 C13.938,65.012 13.820,64.586 13.594,64.219 C13.375,63.844 13.066,63.562 12.672,63.375 C12.273,63.180 11.820,63.078 11.312,63.078 C10.801,63.078 10.348,63.180 9.953,63.375 C9.555,63.562 9.242,63.844 9.016,64.219 C8.797,64.586 8.688,65.012 8.688,65.500 C8.688,65.980 8.797,66.406 9.016,66.781 C9.242,67.156 9.555,67.445 9.953,67.641 C10.348,67.840 10.801,67.938 11.312,67.938 Z M18.062,62.000 L18.062,66.359 C18.062,66.883 18.211,67.273 18.516,67.531 C18.828,67.793 19.254,67.922 19.797,67.922 C20.348,67.922 20.773,67.793 21.078,67.531 C21.379,67.273 21.531,66.883 21.531,66.359 L21.531,62.000 L22.781,62.000 L22.781,66.406 C22.781,66.969 22.645,67.449 22.375,67.844 C22.102,68.230 21.738,68.523 21.281,68.719 C20.832,68.906 20.332,69.000 19.781,69.000 C19.227,69.000 18.727,68.906 18.281,68.719 C17.832,68.523 17.473,68.230 17.203,67.844 C16.941,67.449 16.812,66.969 16.812,66.406 L16.812,62.000 Z M28.797,69.000 L27.031,65.984 L26.078,65.984 L26.078,69.000 L24.828,69.000 L24.828,62.000 L27.469,62.000 C28.051,62.000 28.547,62.094 28.953,62.281 C29.359,62.461 29.660,62.699 29.859,63.000 C30.066,63.293 30.172,63.621 30.172,63.984 C30.172,64.422 30.023,64.820 29.734,65.172 C29.441,65.516 29.000,65.750 28.406,65.875 L30.297,69.000 Z M26.078,65.016 L27.469,65.016 C27.938,65.016 28.289,64.930 28.531,64.750 C28.770,64.562 28.891,64.312 28.891,64.000 C28.891,63.688 28.770,63.445 28.531,63.266 C28.301,63.090 27.945,63.000 27.469,63.000 L26.078,63.000 Z M44.781,62.000 L42.516,69.000 L41.094,69.000 L39.484,63.703 L37.781,69.000 L36.375,69.000 L34.203,62.000 L35.547,62.000 L37.125,67.703 L38.844,62.000 L40.250,62.000 L41.844,67.672 L43.438,62.000 Z M49.312,69.000 C48.602,69.000 47.945,68.852 47.344,68.547 C46.750,68.246 46.273,67.828 45.922,67.297 C45.578,66.766 45.406,66.168 45.406,65.500 C45.406,64.836 45.578,64.234 45.922,63.703 C46.273,63.164 46.750,62.746 47.344,62.453 C47.945,62.152 48.602,62.000 49.312,62.000 C50.031,62.000 50.688,62.152 51.281,62.453 C51.883,62.746 52.359,63.164 52.703,63.703 C53.047,64.234 53.219,64.836 53.219,65.500 C53.219,66.168 53.047,66.766 52.703,67.297 C52.359,67.828 51.883,68.246 51.281,68.547 C50.688,68.852 50.031,69.000 49.312,69.000 Z M49.312,67.938 C49.820,67.938 50.273,67.840 50.672,67.641 C51.066,67.445 51.375,67.156 51.594,66.781 C51.820,66.406 51.938,65.980 51.938,65.500 C51.938,65.012 51.820,64.586 51.594,64.219 C51.375,63.844 51.066,63.562 50.672,63.375 C50.273,63.180 49.820,63.078 49.312,63.078 C48.801,63.078 48.348,63.180 47.953,63.375 C47.555,63.562 47.242,63.844 47.016,64.219 C46.797,64.586 46.688,65.012 46.688,65.500 C46.688,65.980 46.797,66.406 47.016,66.781 C47.242,67.156 47.555,67.445 47.953,67.641 C48.348,67.840 48.801,67.938 49.312,67.938 Z M58.797,69.000 L57.031,65.984 L56.078,65.984 L56.078,69.000 L54.828,69.000 L54.828,62.000 L57.469,62.000 C58.051,62.000 58.547,62.094 58.953,62.281 C59.359,62.461 59.660,62.699 59.859,63.000 C60.066,63.293 60.172,63.621 60.172,63.984 C60.172,64.422 60.023,64.820 59.734,65.172 C59.441,65.516 59.000,65.750 58.406,65.875 L60.297,69.000 Z M56.078,65.016 L57.469,65.016 C57.938,65.016 58.289,64.930 58.531,64.750 C58.770,64.562 58.891,64.312 58.891,64.000 C58.891,63.688 58.770,63.445 58.531,63.266 C58.301,63.090 57.945,63.000 57.469,63.000 L56.078,63.000 Z M66.031,69.000 L63.078,65.875 L63.078,69.000 L61.828,69.000 L61.828,62.000 L63.078,62.000 L63.078,65.188 L66.047,62.000 L67.625,62.000 L64.297,65.500 L67.672,69.000 Z M73.328,62.000 L73.328,63.000 L70.078,63.000 L70.078,65.016 L72.609,65.016 L72.609,65.984 L70.078,65.984 L70.078,69.000 L68.828,69.000 L68.828,62.000 Z M78.312,69.000 C77.602,69.000 76.945,68.852 76.344,68.547 C75.750,68.246 75.273,67.828 74.922,67.297 C74.578,66.766 74.406,66.168 74.406,65.500 C74.406,64.836 74.578,64.234 74.922,63.703 C75.273,63.164 75.750,62.746 76.344,62.453 C76.945,62.152 77.602,62.000 78.312,62.000 C79.031,62.000 79.688,62.152 80.281,62.453 C80.883,62.746 81.359,63.164 81.703,63.703 C82.047,64.234 82.219,64.836 82.219,65.500 C82.219,66.168 82.047,66.766 81.703,67.297 C81.359,67.828 80.883,68.246 80.281,68.547 C79.688,68.852 79.031,69.000 78.312,69.000 Z M78.312,67.938 C78.820,67.938 79.273,67.840 79.672,67.641 C80.066,67.445 80.375,67.156 80.594,66.781 C80.820,66.406 80.938,65.980 80.938,65.500 C80.938,65.012 80.820,64.586 80.594,64.219 C80.375,63.844 80.066,63.562 79.672,63.375 C79.273,63.180 78.820,63.078 78.312,63.078 C77.801,63.078 77.348,63.180 76.953,63.375 C76.555,63.562 76.242,63.844 76.016,64.219 C75.797,64.586 75.688,65.012 75.688,65.500 C75.688,65.980 75.797,66.406 76.016,66.781 C76.242,67.156 76.555,67.445 76.953,67.641 C77.348,67.840 77.801,67.938 78.312,67.938 Z M87.797,69.000 L86.031,65.984 L85.078,65.984 L85.078,69.000 L83.828,69.000 L83.828,62.000 L86.469,62.000 C87.051,62.000 87.547,62.094 87.953,62.281 C88.359,62.461 88.660,62.699 88.859,63.000 C89.066,63.293 89.172,63.621 89.172,63.984 C89.172,64.422 89.023,64.820 88.734,65.172 C88.441,65.516 88.000,65.750 87.406,65.875 L89.297,69.000 Z M85.078,65.016 L86.469,65.016 C86.938,65.016 87.289,64.930 87.531,64.750 C87.770,64.562 87.891,64.312 87.891,64.000 C87.891,63.688 87.770,63.445 87.531,63.266 C87.301,63.090 86.945,63.000 86.469,63.000 L85.078,63.000 Z M90.406,65.500 C90.406,64.836 90.578,64.234 90.922,63.703 C91.273,63.164 91.750,62.746 92.344,62.453 C92.945,62.152 93.602,62.000 94.312,62.000 C95.125,62.000 95.848,62.188 96.484,62.562 C97.117,62.930 97.578,63.445 97.859,64.109 L96.359,64.109 C96.160,63.766 95.883,63.512 95.531,63.344 C95.176,63.168 94.770,63.078 94.312,63.078 C93.801,63.078 93.348,63.180 92.953,63.375 C92.555,63.562 92.242,63.844 92.016,64.219 C91.797,64.586 91.688,65.016 91.688,65.516 C91.688,65.996 91.797,66.422 92.016,66.797 C92.242,67.164 92.555,67.445 92.953,67.641 C93.348,67.840 93.801,67.938 94.312,67.938 C94.770,67.938 95.176,67.855 95.531,67.688 C95.883,67.512 96.160,67.246 96.359,66.891 L97.859,66.891 C97.578,67.570 97.117,68.090 96.484,68.453 C95.848,68.820 95.125,69.000 94.312,69.000 C93.594,69.000 92.938,68.855 92.344,68.562 C91.750,68.262 91.273,67.844 90.922,67.312 C90.578,66.781 90.406,66.180 90.406,65.500 Z M101.078,63.000 L101.078,65.000 L103.719,65.000 L103.719,66.000 L101.078,66.000 L101.078,68.000 L104.047,68.000 L104.047,69.000 L99.828,69.000 L99.828,62.000 L104.047,62.000 L104.047,63.000 Z M114.172,64.000 C114.172,64.344 114.078,64.668 113.891,64.969 C113.711,65.273 113.422,65.523 113.016,65.719 C112.609,65.906 112.094,66.000 111.469,66.000 L110.078,66.000 L110.078,69.000 L108.828,69.000 L108.828,62.000 L111.469,62.000 C112.051,62.000 112.547,62.090 112.953,62.266 C113.359,62.445 113.660,62.684 113.859,62.984 C114.066,63.289 114.172,63.625 114.172,64.000 Z M111.469,65.000 C111.945,65.000 112.301,64.914 112.531,64.734 C112.770,64.559 112.891,64.312 112.891,64.000 C112.891,63.336 112.414,63.000 111.469,63.000 L110.078,63.000 L110.078,65.000 Z M120.438,67.000 L117.234,67.000 L116.688,69.000 L115.375,69.000 L118.109,62.000 L119.562,62.000 L122.297,69.000 L120.984,69.000 Z M120.078,66.000 L118.844,63.203 L117.578,66.000 Z M127.797,69.000 L126.031,65.984 L125.078,65.984 L125.078,69.000 L123.828,69.000 L123.828,62.000 L126.469,62.000 C127.051,62.000 127.547,62.094 127.953,62.281 C128.359,62.461 128.660,62.699 128.859,63.000 C129.066,63.293 129.172,63.621 129.172,63.984 C129.172,64.422 129.023,64.820 128.734,65.172 C128.441,65.516 128.000,65.750 127.406,65.875 L129.297,69.000 Z M125.078,65.016 L126.469,65.016 C126.938,65.016 127.289,64.930 127.531,64.750 C127.770,64.562 127.891,64.312 127.891,64.000 C127.891,63.688 127.770,63.445 127.531,63.266 C127.301,63.090 126.945,63.000 126.469,63.000 L125.078,63.000 Z M135.766,62.000 L135.766,63.000 L133.734,63.000 L133.734,69.000 L132.469,69.000 L132.469,63.000 L130.422,63.000 L130.422,62.000 Z M143.109,69.000 L141.859,69.000 L138.078,63.781 L138.078,69.000 L136.828,69.000 L136.828,62.000 L138.078,62.000 L141.859,67.203 L141.859,62.000 L143.109,62.000 Z M146.078,63.000 L146.078,65.000 L148.719,65.000 L148.719,66.000 L146.078,66.000 L146.078,68.000 L149.047,68.000 L149.047,69.000 L144.828,69.000 L144.828,62.000 L149.047,62.000 L149.047,63.000 Z M154.797,69.000 L153.031,65.984 L152.078,65.984 L152.078,69.000 L150.828,69.000 L150.828,62.000 L153.469,62.000 C154.051,62.000 154.547,62.094 154.953,62.281 C155.359,62.461 155.660,62.699 155.859,63.000 C156.066,63.293 156.172,63.621 156.172,63.984 C156.172,64.422 156.023,64.820 155.734,65.172 C155.441,65.516 155.000,65.750 154.406,65.875 L156.297,69.000 Z M152.078,65.016 L153.469,65.016 C153.938,65.016 154.289,64.930 154.531,64.750 C154.770,64.562 154.891,64.312 154.891,64.000 C154.891,63.688 154.770,63.445 154.531,63.266 C154.301,63.090 153.945,63.000 153.469,63.000 L152.078,63.000 Z M157.000,69.000"/>
-      </svg>
-    </div>
-    </div>
-    <h1 class="masthead-headline">One company.<br/><em>Two powerful platforms.</em></h1>
-    <p class="masthead-sub">Nestor Services powers the full employee lifecycle — from finding the right hire to running every HR operation across their journey.</p>
-  </div>
-
-  <!-- PRODUCT CARDS -->
-  <div class="products">
-
-    <!-- NESTOR HIRE -->
-    <a href="https://hire.nestorservices.in/" class="pcard card-hire">
-      <div class="ci ci-hire">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.8">
-          <circle cx="11" cy="11" r="8"/>
-          <path d="m21 21-4.35-4.35"/>
-          <path d="M11 8v6M8 11h6"/>
-        </svg>
-      </div>
-      <div class="eyebrow eb-hire">Recruitment Platform</div>
-      <div class="pname">
-        <span class="pn-nestor">NESTOR</span>
-        <span class="pn-hire">HIRE</span>
-      </div>
-      <p class="pdesc">AI-powered recruitment that finds the right candidate — not just any candidate. Our Talent Advisors combine 15 years of hiring expertise with intelligent fitment matching built for India.</p>
-      <div class="ppills">
-        <span class="pp pp-hire">AI Fitment Scoring</span>
-        <span class="pp pp-hire">Talent Advisors</span>
-        <span class="pp pp-hire">Kanban Pipeline</span>
-        <span class="pp pp-hire">CTC & Notice Signals</span>
-      </div>
-      <div class="pcta">
-        <span class="pcta-lbl">For employers &amp; recruiters</span>
-        <span class="cta-btn cta-hire">
-          Enter Nestor Hire
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </span>
-      </div>
-    </a>
-
-    <!-- NESTOR CORE -->
-    <a href="https://core.nestorservices.in/login" class="pcard card-core" onclick="openModal(event)">
-      <div class="ci ci-core">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-          <circle cx="9" cy="7" r="4"/>
-          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
-          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-        </svg>
-      </div>
-      <div class="eyebrow eb-core">HR Operations</div>
-      <div class="pname">
-        <span class="pn-nestor">NESTOR</span>
-        <span class="pn-core">CORE</span>
-      </div>
-      <p class="pdesc">A single operating layer for HR and admin teams. Employee records, payroll processing, attendance, leave approvals, and statutory compliance — all in one workspace, across companies.</p>
-      <div class="ppills">
-        <span class="pp pp-core">Payroll Processing</span>
-        <span class="pp pp-core">Attendance &amp; Leave</span>
-        <span class="pp pp-core">Employee Records</span>
-        <span class="pp pp-core">Compliance Controls</span>
-      </div>
-      <div class="pcta">
-        <div>
-          <div class="pcta-lbl">For HR &amp; admin teams</div>
-          <div class="lock-badge">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-            Restricted access
-          </div>
-        </div>
-        <span class="cta-btn cta-core">
-          Sign in
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </span>
-      </div>
-    </a>
-
-  </div>
-</div>
-
-<div class="pfooter">
-  © 2026 Nestor Services &nbsp;·&nbsp; <a href="https://nestorservices.in/">nestorservices.in</a>
-</div>
-
-<!-- ══ NESTOR CORE MODAL ══ -->
-<div class="modal-bg" id="modal" onclick="bgClose(event)">
-  <div class="modal-box">
-
-    <button class="modal-close" onclick="closeModal()">×</button>
-
-    <!-- brand -->
-    <div class="modal-brand">
-      <div class="modal-brand-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="#22D3EE" stroke-width="1.8"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      </div>
-      <div>
-        <div class="modal-brand-name">NESTOR <span>CORE</span></div>
-        <div class="modal-brand-sub">HR Operations Cloud</div>
-      </div>
-    </div>
-
-    <div class="modal-title">Sign in to your workspace</div>
-    <div class="modal-sub">Access payroll, attendance, leave, and employee operations</div>
-
-    <div class="mfields">
-      <div class="mfield">
-        <div class="mlabel">Work Email</div>
-        <input class="minput" type="email" placeholder="admin@yourcompany.com" value="admin@hrsaas.com"/>
-      </div>
-      <div class="mfield">
-        <div class="mlabel">Password</div>
-        <div class="pw-wrap-m">
-          <input class="minput" type="password" placeholder="Password" value="admin123" id="mpw"/>
-          <button class="pw-eye-m" onclick="toggleMPw()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-          </button>
-        </div>
-      </div>
-      <button class="msub-btn">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>
-        Sign in to Nestor Core
-      </button>
-    </div>
-
-    <div class="mfooter">Use your company admin credentials · Access is restricted</div>
-  </div>
-</div>
-
-<script>
-function openModal(e) {
-  e.preventDefault();
-  document.getElementById('modal').classList.add('open');
-}
-function closeModal() {
-  document.getElementById('modal').classList.remove('open');
-}
-function bgClose(e) {
-  if (e.target === document.getElementById('modal')) closeModal();
-}
-function toggleMPw() {
-  const p = document.getElementById('mpw');
-  p.type = p.type === 'password' ? 'text' : 'password';
-}
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
-</script>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p1"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p2"><span class="s1"></span><br></p>
+<p class="p3"><span class="s1"></span><br></p>
+<h1 style="margin: 0.0px 0.0px 12.0px 0.0px; line-height: 41.4px; font: 36.0px Helvetica; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s2"><b>One company.</b></span><span class="s1"><b><br>
+</b></span><span class="s2"><b>Two powerful platforms.</b></span></h1>
+<p class="p5"><span class="s2">Nestor Services powers the full employee lifecycle — from finding the right hire to running every HR operation across their journey.</span></p>
+<p class="p6"><span class="s1"><a href="https://hire.nestorservices.in/"></a></span><br></p>
+<p class="p7"><span class="s1"><a href="https://hire.nestorservices.in/"></a></span><br></p>
+<p class="p8"><span class="s3"><a href="https://hire.nestorservices.in/"><b>RECRUITMENT PLATFORM</b><span class="s1"><b></b></span></a></span></p>
+<p class="p9"><span class="s3"><a href="https://hire.nestorservices.in/"><b>NESTOR</b><span class="s4"><b></b></span></a></span></p>
+<p class="p10"><span class="s3"><a href="https://hire.nestorservices.in/"><b>HIRE</b><span class="s5"><b></b></span></a></span></p>
+<p class="p11"><span class="s3"><a href="https://hire.nestorservices.in/">AI-powered recruitment that finds the right candidate — not just any candidate. Our Talent Advisors combine 15 years of hiring expertise with intelligent fitment matching built for India.<span class="s6"></span></a></span></p>
+<p class="p12"><span class="s1"><a href="https://hire.nestorservices.in/">AI Fitment Scoring</a></span></p>
+<p class="p12"><span class="s1"><a href="https://hire.nestorservices.in/">Talent Advisors</a></span></p>
+<p class="p12"><span class="s1"><a href="https://hire.nestorservices.in/">Kanban Pipeline</a></span></p>
+<p class="p12"><span class="s1"><a href="https://hire.nestorservices.in/">CTC &amp; Notice Signals</a></span></p>
+<p class="p13"><span class="s3"><a href="https://hire.nestorservices.in/">For employers &amp; recruiters<span class="s7"></span></a></span></p>
+<p class="p14"><span class="s1"><a href="https://hire.nestorservices.in/"><b>Enter Nestor Hire</b></a></span></p>
+<p class="p15"><span class="s1"><a href="https://hire.nestorservices.in/"><b></b></a></span><br></p>
+<p class="p16"><span class="s1"><a href="https://core.nestorservices.in/"></a></span><br></p>
+<p class="p7"><span class="s1"><a href="https://core.nestorservices.in/"></a></span><br></p>
+<p class="p17"><span class="s8"><a href="https://core.nestorservices.in/"><b>HR OPERATIONS</b><span class="s1"><b></b></span></a></span></p>
+<p class="p9"><span class="s8"><a href="https://core.nestorservices.in/"><b>NESTOR</b><span class="s4"><b></b></span></a></span></p>
+<p class="p18"><span class="s8"><a href="https://core.nestorservices.in/"><b>CORE</b><span class="s5"><b></b></span></a></span></p>
+<p class="p11"><span class="s8"><a href="https://core.nestorservices.in/">A single operating layer for HR and admin teams. Employee records, payroll processing, attendance, leave approvals, and statutory compliance — all in one workspace, across companies.<span class="s6"></span></a></span></p>
+<p class="p19"><span class="s1"><a href="https://core.nestorservices.in/">Payroll Processing</a></span></p>
+<p class="p19"><span class="s1"><a href="https://core.nestorservices.in/">Attendance &amp; Leave</a></span></p>
+<p class="p19"><span class="s1"><a href="https://core.nestorservices.in/">Employee Records</a></span></p>
+<p class="p19"><span class="s1"><a href="https://core.nestorservices.in/">Compliance Controls</a></span></p>
+<p class="p13"><span class="s8"><a href="https://core.nestorservices.in/">For HR &amp; admin teams<span class="s7"></span></a></span></p>
+<p class="p20"><span class="s1"><a href="https://core.nestorservices.in/"><b></b></a></span><br></p>
+<p class="p21"><span class="s9"><a href="https://core.nestorservices.in/"><b>Restricted access<span class="Apple-converted-space"> </span></b><span class="s1"><b></b></span></a></span></p>
+<p class="p22"><span class="s1"><a href="https://core.nestorservices.in/"><b>Sign in</b></a></span></p>
+<p class="p15"><span class="s1"><a href="https://core.nestorservices.in/"><b></b></a></span><br></p>
 </body>
 </html>
