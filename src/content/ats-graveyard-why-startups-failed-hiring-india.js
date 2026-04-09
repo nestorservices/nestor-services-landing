@@ -48,6 +48,8 @@ The irony is precise. If an organisation applied the same rigour to its hiring p
 
 Instead, hiring remains the last unoptimised function in most Indian companies. A necessary inconvenience, not a strategic advantage.
 
+[IMAGE:ai-hiring-comparison]
+
 ## Why Nestor Hire is different
 
 I spent fifteen years inside the HR function. Across startups, mid-size firms, and large organisations. I have used — and tested — most of what the market has built.

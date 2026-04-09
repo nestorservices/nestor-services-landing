@@ -28,6 +28,22 @@ function renderContent(text) {
           </h1>
         );
       }
+      if (block.startsWith("[IMAGE:")) {
+        const name = block.replace("[IMAGE:", "").replace("]", "");
+        return (
+          <img
+            key={i}
+            src={`/images/${name}.png`}
+            alt={name}
+            style={{
+              width: "100%",
+              borderRadius: "8px",
+              margin: "32px 0",
+              display: "block",
+            }}
+          />
+        );
+      }
       return (
         <p key={i} className="bp-para">
           {block}
