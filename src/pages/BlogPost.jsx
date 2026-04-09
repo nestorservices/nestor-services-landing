@@ -5,6 +5,8 @@ import { setCanonical } from "../lib/seo";
 import "./BlogPost.css";
 
 const contentRegistry = {
+  "why-ai-hiring-tools-in-india-are-mostly-fake": () =>
+    import("../content/why-ai-hiring-tools-in-india-are-mostly-fake.js"),
   "ats-graveyard-why-startups-failed-hiring-india": () =>
     import("../content/ats-graveyard-why-startups-failed-hiring-india.js"),
 };
