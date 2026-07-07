@@ -27,9 +27,14 @@ const coreFeatures = ["Payroll Processing", "Attendance & Leave", "Employee Reco
 
 export default function Home() {
   useEffect(() => {
-    document.title = "Nestor Services — Your Workforce Partner";
+    document.title = "Nestor Services — Recruitment, HR Operations & Workforce Solutions";
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", "Nestor Services powers the full employee lifecycle — from finding the right hire to running every HR operation across their journey.");
+    if (meta) {
+      meta.setAttribute(
+        "content",
+        "Nestor Services helps companies in India hire talent, run HR operations, manage payroll support, and improve workforce workflows."
+      );
+    }
     setCanonical("https://www.nestorservices.in/");
   }, []);
 
