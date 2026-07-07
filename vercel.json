@@ -1,8 +1,19 @@
 {
   "framework": "vite",
   "outputDirectory": "dist",
-  "cleanUrls": true,
+  "cleanUrls": false,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/sitemap.xml",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/xml; charset=utf-8"
+        }
+      ]
+    }
+  ],
   "redirects": [
     {
       "source": "/:path*",
@@ -14,16 +25,18 @@
       ],
       "destination": "https://www.nestorservices.in/:path*",
       "permanent": true
+    },
+    {
+      "source": "/invoice",
+      "destination": "https://invoice-creation-app.vercel.app",
+      "permanent": false
+    },
+    {
+      "source": "/invoice/:path*",
+      "destination": "https://invoice-creation-app.vercel.app/:path*",
+      "permanent": false
     }
   ],
   "rewrites": [
-    {
-      "source": "/blog",
-      "destination": "/"
-    },
-    {
-      "source": "/blog/:slug",
-      "destination": "/"
-    }
   ]
 }

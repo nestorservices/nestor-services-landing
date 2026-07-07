@@ -8,13 +8,31 @@
   </url>
   <url>
     <loc>https://www.nestorservices.in/blog</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://www.nestorservices.in/blog/what-happens-after-you-apply</loc>
+    <lastmod>2026-04-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.nestorservices.in/blog/why-ai-hiring-tools-in-india-are-mostly-fake</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
     <loc>https://www.nestorservices.in/blog/ats-graveyard-why-startups-failed-hiring-india</loc>
-    <lastmod>2026-04-08</lastmod>
+    <lastmod>2026-04-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.nestorservices.in/blog/recruitment-agency-two-team-problem</loc>
+    <lastmod>2026-04-25</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
