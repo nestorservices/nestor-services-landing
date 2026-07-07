@@ -18,6 +18,10 @@ const DESCRIPTION =
 const BLOG_INDEX_TITLE = "Nestor Services Blog — Hiring, Recruitment & Workforce Insights";
 const BLOG_INDEX_DESCRIPTION =
   "Read Nestor Services articles on hiring in India, recruitment, HR operations, and practical workforce insights from the team behind Nestor Hire.";
+const ENTITY_PAGES_MODULE = await import(
+  pathToFileURL(path.join(projectRoot, "src", "content", "entityPages.js")).href
+);
+const entityPages = ENTITY_PAGES_MODULE.entityPages || [];
 
 const blogPostsModule = await import(
   pathToFileURL(path.join(projectRoot, "src", "data", "blogPosts.js")).href
@@ -546,10 +550,175 @@ ${relatedMarkup}
   };
 }
 
+function buildEntityPageBody(page) {
+  const sectionsHtml = page.sections
+    .map((section) => {
+      if (section.items) {
+        return `
+        <article class="entity-page-card">
+          <h2 class="entity-page-card-title">${escapeHtml(section.title)}</h2>
+          <ul class="entity-page-list">
+            ${section.items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+          </ul>
+        </article>`;
+      }
+      return `
+        <article class="entity-page-card">
+          <h2 class="entity-page-card-title">${escapeHtml(section.title)}</h2>
+          <p class="entity-page-body">${escapeHtml(section.body)}</p>
+        </article>`;
+    })
+    .join("\n");
+
+  return `
+<main class="entity-page" data-prerendered="entity-page">
+  <section class="entity-page-hero">
+    <div class="container">
+      <div class="entity-page-eyebrow">${escapeHtml(page.heroLabel)}</div>
+      <h1 class="entity-page-title">${escapeHtml(page.heroTitle)}</h1>
+      <p class="entity-page-intro">${escapeHtml(page.intro)}</p>
+      <div class="entity-page-actions">
+        <a href="${escapeHtml(page.cta.href)}" class="entity-page-cta">${escapeHtml(page.cta.label)}</a>
+        <a href="/" class="entity-page-link">Back to Nestor Services</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="entity-page-content">
+    <div class="container">
+      <div class="entity-page-grid">
+        ${sectionsHtml}
+      </div>
+    </div>
+  </section>
+</main>`;
+}
+
+function buildEntityPageJsonLd(page) {
+  return page.schema;
+}
+
+function buildEntityPageCss() {
+  return `
+  <style id="entity-page-prerender-styles">
+    .entity-page {
+      min-height: 100vh;
+      background: #ffffff;
+      color: #0a1628;
+      font-family: var(--font-body);
+    }
+    .entity-page-hero {
+      background: #0a1628;
+      padding: 96px 24px 72px;
+    }
+    .entity-page-eyebrow {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 18px;
+    }
+    .entity-page-title {
+      font-family: var(--font-head);
+      font-size: clamp(34px, 5vw, 56px);
+      color: #ffffff;
+      line-height: 1.1;
+      margin: 0 0 18px;
+    }
+    .entity-page-intro {
+      max-width: 760px;
+      color: #8ba5c9;
+      font-size: 18px;
+      line-height: 1.75;
+      margin: 0 0 28px;
+    }
+    .entity-page-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .entity-page-cta,
+    .entity-page-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 44px;
+      padding: 11px 20px;
+      border-radius: 8px;
+      font-family: var(--font-head);
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .entity-page-cta {
+      background: var(--blue);
+      color: #ffffff;
+    }
+    .entity-page-link {
+      color: #ffffff;
+      border: 1px solid var(--border-2);
+    }
+    .entity-page-content {
+      padding: 72px 24px 96px;
+    }
+    .entity-page-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 20px;
+    }
+    .entity-page-card {
+      background: #0f1e35;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .entity-page-card-title {
+      font-family: var(--font-head);
+      font-size: 24px;
+      line-height: 1.2;
+      color: #ffffff;
+      margin: 0 0 16px;
+    }
+    .entity-page-list {
+      margin: 0;
+      padding-left: 20px;
+      color: #dce8fb;
+      line-height: 1.8;
+    }
+    .entity-page-body {
+      color: #dce8fb;
+      line-height: 1.8;
+    }
+    @media (max-width: 860px) {
+      .entity-page-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>`;
+}
+
 async function writePage(relativePath, html) {
   const outputPath = path.join(distDir, relativePath);
   await fs.mkdir(path.dirname(outputPath), { recursive: true });
   await fs.writeFile(outputPath, html, "utf8");
+}
+
+function buildPageHtml(baseShellHtml, page) {
+  const jsonLd = buildEntityPageJsonLd(page);
+  let html = buildShellPage({
+    baseHtml: baseShellHtml,
+    title: page.metaTitle,
+    description: page.metaDescription,
+    canonical: page.canonical,
+    jsonLd,
+    bodyHtml: buildEntityPageBody(page),
+    bodyDataAttr: `data-prerendered-entity="${escapeHtml(page.slug)}"`,
+  });
+
+  html = html.replace("</head>", `${buildEntityPageCss()}\n  </head>`);
+  return html;
 }
 
 async function run() {
@@ -589,6 +758,11 @@ async function run() {
       bodyDataAttr: `data-prerendered-blog-post="${escapeHtml(post.slug)}"`,
     });
     await writePage(path.join("blog", post.slug, "index.html"), articleHtml);
+  }
+
+  for (const page of entityPages) {
+    const entityHtml = buildPageHtml(baseShellHtml, page);
+    await writePage(path.join(page.slug, "index.html"), entityHtml);
   }
 }
 
