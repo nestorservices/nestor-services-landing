@@ -5,6 +5,8 @@ import { setCanonical } from "../lib/seo";
 import "./BlogPost.css";
 
 const contentRegistry = {
+  "why-job-application-went-unanswered": () =>
+    import("../content/why-job-application-went-unanswered.js"),
   "what-happens-after-you-apply": () =>
     import("../content/what-happens-after-you-apply.js"),
   "why-ai-hiring-tools-in-india-are-mostly-fake": () =>
@@ -15,6 +17,14 @@ const contentRegistry = {
     import("../content/recruitment-agency-two-team-problem.js"),
 };
 const CTA_FALLBACK = "https://hire.nestorservices.in/jobs";
+
+function parseImageToken(token) {
+  const raw = String(token || "").trim();
+  const [namePart, altPart] = raw.split("|", 2);
+  const name = namePart.trim();
+  const alt = altPart?.trim() || name.replace(/-/g, " ");
+  return { name, alt };
+}
 
 function resolveSafeReturnTo(raw) {
   const value = String(raw || "").trim();
@@ -66,14 +76,16 @@ function renderContent(text, onImageClick) {
         );
       }
       if (block.startsWith("[IMAGE:")) {
-        const name = block.replace("[IMAGE:", "").replace("]", "");
+        const { name, alt } = parseImageToken(
+          block.replace("[IMAGE:", "").replace("]", ""),
+        );
         return (
           <img
             key={i}
             src={`/images/${name}.png`}
-            alt={name}
+            alt={alt}
             className="bp-article-image"
-            onClick={() => onImageClick(`/images/${name}.png`, name)}
+            onClick={() => onImageClick(`/images/${name}.png`, alt)}
           />
         );
       }

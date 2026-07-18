@@ -84,10 +84,17 @@ function renderInlineHtml(value) {
   return escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
 }
 
-function renderImageHtml(name) {
-  const imageName = normalizeWhitespace(name);
-  const alt = imageName.replace(/-/g, " ");
-  return `<img src="/images/${escapeHtml(imageName)}.png" alt="${escapeHtml(alt)}" class="bp-article-image" />`;
+function parseImageToken(value) {
+  const raw = normalizeWhitespace(value);
+  const [namePart, altPart] = raw.split("|", 2);
+  const name = normalizeWhitespace(namePart);
+  const alt = normalizeWhitespace(altPart || name.replace(/-/g, " "));
+  return { name, alt };
+}
+
+function renderImageHtml(value) {
+  const { name, alt } = parseImageToken(value);
+  return `<img src="/images/${escapeHtml(name)}.png" alt="${escapeHtml(alt)}" class="bp-article-image" />`;
 }
 
 function renderContentHtml(content) {
@@ -130,7 +137,9 @@ function extractLeadParagraph(content) {
 
 function extractImageName(content) {
   const match = String(content || "").match(/\[IMAGE:([^\]]+)\]/);
-  return match ? match[1].trim() : "";
+  if (!match) return "";
+  const { name } = parseImageToken(match[1]);
+  return name;
 }
 
 async function loadArticleModule(slug) {

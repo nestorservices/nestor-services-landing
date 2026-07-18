@@ -3,6 +3,21 @@
 
 export const blogPosts = [
   {
+    slug: "why-job-application-went-unanswered",
+    title: "Why Your Job Application Went Unanswered — And Why That’s Not a Verdict on You",
+    excerpt:
+      "Silence after applying usually reflects volume, bandwidth, and hiring workflow — not a final verdict on your profile.",
+    author: "Shashank Malviya",
+    date: "2026-07-18",
+    readTime: "7 min read",
+    tag: "Candidate Experience",
+    tagColor: "#10B981",
+    metaTitle:
+      "Why Your Job Application Went Unanswered — And Why It’s Not a Verdict on You",
+    metaDescription:
+      "Applied to jobs and never heard back? Here’s what really happens behind the scenes in hiring, why silence is often about volume, and how candidates should follow up.",
+  },
+  {
     slug: "what-happens-after-you-apply",
     title: "What Actually Happens After You Apply on Nestor Hire",
     excerpt:
