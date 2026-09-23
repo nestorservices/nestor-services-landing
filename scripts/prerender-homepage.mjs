@@ -92,9 +92,13 @@ function parseImageToken(value) {
   return { name, alt };
 }
 
+function resolveImagePath(name) {
+  return /\.(svg|png|jpe?g|webp)$/i.test(name) ? name : `${name}.png`;
+}
+
 function renderImageHtml(value) {
   const { name, alt } = parseImageToken(value);
-  return `<img src="/images/${escapeHtml(name)}.png" alt="${escapeHtml(alt)}" class="bp-article-image" />`;
+  return `<img src="/images/${escapeHtml(resolveImagePath(name))}" alt="${escapeHtml(alt)}" class="bp-article-image" />`;
 }
 
 function renderContentHtml(content) {
@@ -106,6 +110,20 @@ function renderContentHtml(content) {
 
   return blocks
     .map((block) => {
+      const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+      const isUnorderedList = lines.length > 0 && lines.every((line) => line.startsWith("- "));
+      const isOrderedList = lines.length > 0 && lines.every((line) => /^\d+\. /.test(line));
+      if (isUnorderedList || isOrderedList) {
+        const tag = isUnorderedList ? "ul" : "ol";
+        const marker = isUnorderedList ? /^- / : /^\d+\. /;
+        const items = lines
+          .map((line) => `<li>${renderInlineHtml(line.replace(marker, ""))}</li>`)
+          .join("");
+        return `<${tag} class="bp-list">${items}</${tag}>`;
+      }
+      if (block.startsWith("### ")) {
+        return `<h3 class="bp-subheading">${renderInlineHtml(block.slice(4))}</h3>`;
+      }
       if (block.startsWith("[IMAGE:") && block.endsWith("]")) {
         return renderImageHtml(block.replace("[IMAGE:", "").replace("]", ""));
       }
@@ -135,11 +153,11 @@ function extractLeadParagraph(content) {
   return "";
 }
 
-function extractImageName(content) {
+function extractImagePath(content) {
   const match = String(content || "").match(/\[IMAGE:([^\]]+)\]/);
   if (!match) return "";
   const { name } = parseImageToken(match[1]);
-  return name;
+  return resolveImagePath(name);
 }
 
 async function loadArticleModule(slug) {
@@ -163,6 +181,7 @@ function buildShellPage({
   bodyHtml,
   jsonLd,
   bodyDataAttr,
+  social,
 }) {
   let html = baseHtml;
 
@@ -179,6 +198,25 @@ function buildShellPage({
     `<link rel="canonical" href="${escapeHtml(canonical)}" />`,
     `<link rel="canonical" href="${escapeHtml(canonical)}" />`,
   );
+
+  if (social) {
+    const socialTags = [
+      `<meta property="og:type" content="${escapeHtml(social.type || "website")}" />`,
+      `<meta property="og:url" content="${escapeHtml(canonical)}" />`,
+      `<meta property="og:title" content="${escapeHtml(social.title || title)}" />`,
+      `<meta property="og:description" content="${escapeHtml(social.description || description)}" />`,
+      `<meta name="twitter:card" content="${escapeHtml(social.image ? "summary_large_image" : "summary")}" />`,
+      `<meta name="twitter:title" content="${escapeHtml(social.title || title)}" />`,
+      `<meta name="twitter:description" content="${escapeHtml(social.description || description)}" />`,
+    ];
+    if (social.image) {
+      socialTags.push(`<meta property="og:image" content="${escapeHtml(social.image)}" />`);
+      socialTags.push(`<meta name="twitter:image" content="${escapeHtml(social.image)}" />`);
+    }
+    for (const tag of socialTags) {
+      html = html.replace("</head>", `  ${tag}\n  </head>`);
+    }
+  }
 
   if (jsonLd) {
     const jsonLdTag = `<script type="application/ld+json">${escapeJsonLd(jsonLd)}</script>`;
@@ -388,7 +426,7 @@ async function getArticleData(post) {
   };
 }
 
-function buildBlogPostJsonLd(post, canonical, description, content, imageName) {
+function buildBlogPostJsonLd(post, canonical, description, content, imagePath) {
   const payload = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
@@ -417,8 +455,8 @@ function buildBlogPostJsonLd(post, canonical, description, content, imageName) {
     payload.articleSection = post.tag;
   }
 
-  if (imageName) {
-    payload.image = `https://www.nestorservices.in/images/${imageName}.png`;
+  if (imagePath) {
+    payload.image = `https://www.nestorservices.in/images/${imagePath.replace(/\.svg$/i, ".png")}`;
   }
 
   const lead = extractLeadParagraph(content);
@@ -431,13 +469,13 @@ function buildBlogPostJsonLd(post, canonical, description, content, imageName) {
 
 function buildBlogPostBody(post, content, cta) {
   const canonical = `${BLOG_POST_BASE_URL}${post.slug}`;
-  const description = normalizeDescription(
-    post.metaDescription || post.excerpt || extractLeadParagraph(content),
+  const description = post.metaDescription || normalizeDescription(
+    post.excerpt || extractLeadParagraph(content),
     post.excerpt,
   );
   const date = toLocaleDate(post.date);
   const relatedPosts = blogPosts.filter((entry) => entry.slug !== post.slug).slice(0, 2);
-  const imageName = extractImageName(content);
+  const imagePath = extractImagePath(content);
   const articleBody = renderContentHtml(content);
   const ctaMarkup = cta
     ? `
@@ -460,7 +498,8 @@ function buildBlogPostBody(post, content, cta) {
   return {
     canonical,
     description,
-    jsonLd: buildBlogPostJsonLd(post, canonical, description, content, imageName),
+    imagePath,
+    jsonLd: buildBlogPostJsonLd(post, canonical, description, content, imagePath),
     body: `
 <div class="bp-page" data-prerendered="blog-post">
   <div class="bp-back-wrap">
@@ -765,6 +804,14 @@ async function run() {
       jsonLd: page.jsonLd,
       bodyHtml: page.body,
       bodyDataAttr: `data-prerendered-blog-post="${escapeHtml(post.slug)}"`,
+      social: {
+        type: "article",
+        title: post.ogTitle || post.title,
+        description: post.ogDescription || page.description,
+        image: page.imagePath
+          ? `https://www.nestorservices.in/images/${page.imagePath.replace(/\.svg$/i, ".png")}`
+          : "",
+      },
     });
     await writePage(path.join("blog", post.slug, "index.html"), articleHtml);
   }

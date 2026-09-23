@@ -5,6 +5,8 @@ import { setCanonical } from "../lib/seo";
 import "./BlogPost.css";
 
 const contentRegistry = {
+  "why-your-cv-might-never-get-read": () =>
+    import("../content/why-your-cv-might-never-get-read.js"),
   "why-job-application-went-unanswered": () =>
     import("../content/why-job-application-went-unanswered.js"),
   "what-happens-after-you-apply": () =>
@@ -24,6 +26,10 @@ function parseImageToken(token) {
   const name = namePart.trim();
   const alt = altPart?.trim() || name.replace(/-/g, " ");
   return { name, alt };
+}
+
+function resolveImagePath(name) {
+  return /\.(svg|png|jpe?g|webp)$/i.test(name) ? name : `${name}.png`;
 }
 
 function resolveSafeReturnTo(raw) {
@@ -61,6 +67,29 @@ function renderContent(text, onImageClick) {
     .trim()
     .split("\n\n")
     .map((block, i) => {
+      const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+      const isUnorderedList = lines.length > 0 && lines.every((line) => line.startsWith("- "));
+      const isOrderedList = lines.length > 0 && lines.every((line) => /^\d+\. /.test(line));
+
+      if (isUnorderedList || isOrderedList) {
+        const ListTag = isUnorderedList ? "ul" : "ol";
+        return (
+          <ListTag key={i} className="bp-list">
+            {lines.map((line) => (
+              <li key={line}>
+                {renderInline(line.replace(isUnorderedList ? /^- / : /^\d+\. /, ""))}
+              </li>
+            ))}
+          </ListTag>
+        );
+      }
+      if (block.startsWith("### ")) {
+        return (
+          <h3 key={i} className="bp-subheading">
+            {renderInline(block.replace("### ", ""))}
+          </h3>
+        );
+      }
       if (block.startsWith("## ")) {
         return (
           <h2 key={i} className="bp-heading">
@@ -82,10 +111,10 @@ function renderContent(text, onImageClick) {
         return (
           <img
             key={i}
-            src={`/images/${name}.png`}
+            src={`/images/${resolveImagePath(name)}`}
             alt={alt}
             className="bp-article-image"
-            onClick={() => onImageClick(`/images/${name}.png`, alt)}
+            onClick={() => onImageClick(`/images/${resolveImagePath(name)}`, alt)}
           />
         );
       }

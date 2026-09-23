@@ -3,6 +3,23 @@
 
 export const blogPosts = [
   {
+    slug: "why-your-cv-might-never-get-read",
+    title: "Why Your CV Might Never Get Read — Even If You're Qualified",
+    excerpt:
+      "Applied to dozens of jobs but heard nothing back? Learn how ATS resume parsing, scanned PDFs and complex CV formatting can prevent recruiters from finding your experience.",
+    author: "Shashank Malviya",
+    date: "2026-09-23",
+    readTime: "4 min read",
+    tag: "For Candidates",
+    tagColor: "#10B981",
+    metaTitle: "Why Your CV Might Never Get Read — Even If You're Qualified | Nestor Services",
+    metaDescription:
+      "Applied to dozens of jobs but heard nothing back? Learn how ATS resume parsing, scanned PDFs and complex CV formatting can prevent recruiters from finding your experience.",
+    ogTitle: "Why Your CV Might Never Get Read — Even If You're Qualified",
+    ogDescription:
+      "Your experience may not be the problem. The way your CV is formatted could prevent an ATS from reading it correctly.",
+  },
+  {
     slug: "why-job-application-went-unanswered",
     title: "Why Your Job Application Went Unanswered — And Why That’s Not a Verdict on You",
     excerpt:
