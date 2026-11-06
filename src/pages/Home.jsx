@@ -12,8 +12,8 @@ const differentiators = [
   },
   {
     icon: "◉",
-    title: "Two platforms, one vision",
-    body: "Nestor Hire finds the right people. Nestor Core manages them end to end. Built to work together, used independently.",
+    title: "Three products, one company",
+    body: "Nestor Hire supports recruitment, Nestor Assess provides invitation-based assessments, and Nestor Core supports HR operations.",
   },
   {
     icon: "◐",
@@ -52,7 +52,7 @@ export default function Home() {
           </div>
           <h1 className="hero-title">
             One company.<br />
-            <em className="hero-title-em">Two powerful platforms.</em>
+            <em className="hero-title-em">Three connected products.</em>
           </h1>
           <p className="hero-sub">
             Nestor Services powers the full employee lifecycle — from finding the right hire
@@ -153,6 +153,37 @@ export default function Home() {
                 </div>
               </div>
             </div>
+
+            <div className="product-card product-card--assess">
+              <div className="product-card-header">
+                <div className="product-badge product-badge--assess">NESTOR ASSESS</div>
+                <div className="product-label">Online Assessments</div>
+              </div>
+              <h2 className="product-card-title">
+                Online assessments for candidates invited to complete an assessment.
+              </h2>
+              <p className="product-card-body">
+                Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment.
+              </p>
+              <ul className="product-features">
+                <li className="product-feature product-feature--assess">
+                  <span className="product-feature-dot product-feature-dot--assess" />
+                  Invitation-based candidate access
+                </li>
+                <li className="product-feature product-feature--assess">
+                  <span className="product-feature-dot product-feature-dot--assess" />
+                  Online assessment workspace
+                </li>
+              </ul>
+              <div className="product-card-footer">
+                <span className="product-audience">For invited candidates</span>
+                <div className="product-footer-links">
+                  <a href="/nestor-assess" className="product-cta product-cta--assess">
+                    Learn about Assess →
+                  </a>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -248,6 +279,7 @@ export default function Home() {
                 <div className="footer-col-head">Platforms</div>
                 <a href="https://hire.nestorservices.in" className="footer-link" target="_blank" rel="noopener noreferrer">Nestor Hire</a>
                 <a href="https://core.nestorservices.in/login" className="footer-link" target="_blank" rel="noopener noreferrer">Nestor Core</a>
+                <a href="/nestor-assess" className="footer-link">Nestor Assess</a>
               </div>
               <div className="footer-col">
                 <div className="footer-col-head">Company</div>

@@ -90,6 +90,50 @@ export const entityPages = [
     },
   },
   {
+    slug: "nestor-assess",
+    title: "Nestor Assess",
+    metaTitle: "Nestor Assess | Invitation-Based Online Assessments",
+    metaDescription:
+      "Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment. Access requires an invitation.",
+    canonical: "https://www.nestorservices.in/nestor-assess",
+    heroLabel: "Online assessment platform",
+    heroTitle: "Nestor Assess",
+    intro:
+      "Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment. Assessment access requires an invitation; this is not a public registration page.",
+    sections: [
+      {
+        title: "Invitation-based access",
+        body:
+          "Candidates can open an online assessment using an invitation. Access is not available through public self-registration.",
+      },
+      {
+        title: "Part of Nestor Services",
+        body:
+          "Nestor Assess is an assessment product from Nestor Services, alongside Nestor Hire and Nestor Core.",
+      },
+    ],
+    cta: {
+      label: "Open assessment portal (invitation required)",
+      href: "https://assess.nestorservices.in",
+    },
+    social: { type: "website" },
+    schema: {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      name: "Nestor Assess",
+      description:
+        "Nestor Services' online assessment platform for candidates invited to complete an assessment.",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
+      url: "https://assess.nestorservices.in",
+      publisher: {
+        "@type": "Organization",
+        name: "Nestor Services",
+        url: "https://www.nestorservices.in/",
+      },
+    },
+  },
+  {
     slug: "recruitment-services",
     title: "Recruitment Services",
     metaTitle: "Recruitment Services | Nestor Services",

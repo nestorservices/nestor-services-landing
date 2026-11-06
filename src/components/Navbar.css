@@ -58,6 +58,7 @@
 .navbar-link--product { font-weight: 600; }
 .navbar-link--hire:hover { color: var(--blue); }
 .navbar-link--core:hover { color: var(--teal); }
+.navbar-link--assess:hover { color: #a9bdd8; }
 
 .navbar-pip {
   width: 6px; height: 6px;
@@ -66,6 +67,7 @@
 }
 .navbar-pip--blue { background: var(--blue); }
 .navbar-pip--teal { background: var(--teal); }
+.navbar-pip--assess { background: #a9bdd8; }
 
 .navbar-cta {
   font-family: var(--font-head);

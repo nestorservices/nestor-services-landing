@@ -12,6 +12,7 @@ export default function App() {
   const entityRoutes = [
     "/nestor-hire",
     "/nestor-core",
+    "/nestor-assess",
     "/recruitment-services",
     "/hr-operations-payroll",
   ];
