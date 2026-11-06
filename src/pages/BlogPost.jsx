@@ -1,54 +1,126 @@
-import { useEffect, useState } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
 import { setCanonical } from "../lib/seo";
 import "./BlogPost.css";
 
 const contentRegistry = {
+  "why-your-cv-might-never-get-read": () =>
+    import("../content/why-your-cv-might-never-get-read.js"),
+  "why-job-application-went-unanswered": () =>
+    import("../content/why-job-application-went-unanswered.js"),
+  "what-happens-after-you-apply": () =>
+    import("../content/what-happens-after-you-apply.js"),
   "why-ai-hiring-tools-in-india-are-mostly-fake": () =>
     import("../content/why-ai-hiring-tools-in-india-are-mostly-fake.js"),
   "ats-graveyard-why-startups-failed-hiring-india": () =>
     import("../content/ats-graveyard-why-startups-failed-hiring-india.js"),
+  "recruitment-agency-two-team-problem": () =>
+    import("../content/recruitment-agency-two-team-problem.js"),
 };
+const CTA_FALLBACK = "https://hire.nestorservices.in/jobs";
 
-function renderContent(text) {
+function parseImageToken(token) {
+  const raw = String(token || "").trim();
+  const [namePart, altPart] = raw.split("|", 2);
+  const name = namePart.trim();
+  const alt = altPart?.trim() || name.replace(/-/g, " ");
+  return { name, alt };
+}
+
+function resolveImagePath(name) {
+  return /\.(svg|png|jpe?g|webp)$/i.test(name) ? name : `${name}.png`;
+}
+
+function resolveSafeReturnTo(raw) {
+  const value = String(raw || "").trim();
+  if (!value) return "";
+  if (value.startsWith("/jobs/") || value.startsWith("/apply/")) {
+    return `https://hire.nestorservices.in${value}`;
+  }
+  try {
+    const url = new URL(value);
+    const path = url.pathname || "";
+    const allowedHost = url.hostname === "hire.nestorservices.in";
+    const allowedPath = path.startsWith("/jobs/") || path.startsWith("/apply/");
+    if (!allowedHost || !allowedPath) return "";
+    return `${url.origin}${url.pathname}${url.search || ""}`;
+  } catch {
+    return "";
+  }
+}
+
+function renderInline(text) {
+  return String(text || "")
+    .split(/(\*\*[^*]+\*\*)/g)
+    .filter(Boolean)
+    .map((part, index) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return <strong key={index}>{part.slice(2, -2)}</strong>;
+      }
+      return <span key={index}>{part}</span>;
+    });
+}
+
+function renderContent(text, onImageClick) {
   return text
     .trim()
     .split("\n\n")
     .map((block, i) => {
+      const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
+      const isUnorderedList = lines.length > 0 && lines.every((line) => line.startsWith("- "));
+      const isOrderedList = lines.length > 0 && lines.every((line) => /^\d+\. /.test(line));
+
+      if (isUnorderedList || isOrderedList) {
+        const ListTag = isUnorderedList ? "ul" : "ol";
+        return (
+          <ListTag key={i} className="bp-list">
+            {lines.map((line) => (
+              <li key={line}>
+                {renderInline(line.replace(isUnorderedList ? /^- / : /^\d+\. /, ""))}
+              </li>
+            ))}
+          </ListTag>
+        );
+      }
+      if (block.startsWith("### ")) {
+        return (
+          <h3 key={i} className="bp-subheading">
+            {renderInline(block.replace("### ", ""))}
+          </h3>
+        );
+      }
       if (block.startsWith("## ")) {
         return (
           <h2 key={i} className="bp-heading">
-            {block.replace("## ", "")}
+            {renderInline(block.replace("## ", ""))}
           </h2>
         );
       }
       if (block.startsWith("# ")) {
         return (
           <h1 key={i} className="bp-h1">
-            {block.replace("# ", "")}
+            {renderInline(block.replace("# ", ""))}
           </h1>
         );
       }
       if (block.startsWith("[IMAGE:")) {
-        const name = block.replace("[IMAGE:", "").replace("]", "");
+        const { name, alt } = parseImageToken(
+          block.replace("[IMAGE:", "").replace("]", ""),
+        );
         return (
           <img
             key={i}
-            src={`/images/${name}.png`}
-            alt={name}
-            style={{
-              width: "100%",
-              borderRadius: "8px",
-              margin: "32px 0",
-              display: "block",
-            }}
+            src={`/images/${resolveImagePath(name)}`}
+            alt={alt}
+            className="bp-article-image"
+            onClick={() => onImageClick(`/images/${resolveImagePath(name)}`, alt)}
           />
         );
       }
       return (
         <p key={i} className="bp-para">
-          {block}
+          {renderInline(block)}
         </p>
       );
     });
@@ -57,8 +129,16 @@ function renderContent(text) {
 export default function BlogPost() {
   const { slug } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [articleContent, setArticleContent] = useState(null);
   const [articleCta, setArticleCta] = useState(null);
+  const [lightboxImage, setLightboxImage] = useState(null);
+  const ctaLink = useMemo(() => {
+    const returnTo = new URLSearchParams(location.search || "").get("returnTo");
+    const safeReturnTo = resolveSafeReturnTo(returnTo);
+    if (safeReturnTo) return safeReturnTo;
+    return articleCta?.link || CTA_FALLBACK;
+  }, [articleCta, location.search]);
 
   const post = blogPosts.find((p) => p.slug === slug);
   const relatedPosts = blogPosts.filter((entry) => entry.slug !== slug).slice(0, 2);
@@ -69,9 +149,9 @@ export default function BlogPost() {
       return;
     }
 
-    document.title = `${post.title} — Nestor Services Blog`;
+    document.title = post.metaTitle || `${post.title} — Nestor Services Blog`;
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) meta.setAttribute("content", post.excerpt);
+    if (meta) meta.setAttribute("content", post.metaDescription || post.excerpt);
     setCanonical(`https://www.nestorservices.in/blog/${post.slug}`);
 
     const loader = contentRegistry[slug];
@@ -82,6 +162,15 @@ export default function BlogPost() {
       });
     }
   }, [slug, post, navigate]);
+
+  useEffect(() => {
+    if (!lightboxImage) return undefined;
+    const onKeyDown = (event) => {
+      if (event.key === "Escape") setLightboxImage(null);
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [lightboxImage]);
 
   if (!post) return null;
 
@@ -128,12 +217,12 @@ export default function BlogPost() {
         <div className="bp-container bp-container--narrow">
           {articleContent ? (
             <>
-              {renderContent(articleContent)}
+              {renderContent(articleContent, (src, alt) => setLightboxImage({ src, alt }))}
 
               {articleCta && (
                 <div className="bp-cta-box">
                   <p className="bp-cta-text">{articleCta.text}</p>
-                  <a href={articleCta.link} className="bp-cta-btn">
+                  <a href={ctaLink} className="bp-cta-btn">
                     {articleCta.linkText} →
                   </a>
                 </div>
@@ -188,6 +277,14 @@ export default function BlogPost() {
           )}
         </div>
       </article>
+
+      {lightboxImage && (
+        <div className="bp-lightbox" onClick={() => setLightboxImage(null)} role="presentation">
+          <div className="bp-lightbox-content" onClick={(e) => e.stopPropagation()} role="presentation">
+            <img src={lightboxImage.src} alt={lightboxImage.alt} className="bp-lightbox-image" />
+          </div>
+        </div>
+      )}
 
       <div className="bp-footer-nav">
         <div className="bp-container">
