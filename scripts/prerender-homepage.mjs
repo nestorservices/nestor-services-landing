@@ -307,6 +307,7 @@ function buildHomepageBody() {
   <section class="entity-products" aria-label="Nestor platforms">
     <article class="entity-card">
       <h2>Nestor Hire</h2>
+      <p>For employers &amp; recruiters</p>
       <p>
         Nestor Hire is the recruitment and hiring platform from Nestor Services. It supports talent
         discovery, recruiter workflows, candidate evaluation, and employer hiring coordination.
@@ -315,6 +316,7 @@ function buildHomepageBody() {
     </article>
     <article class="entity-card">
       <h2>Nestor Core</h2>
+      <p>For employers &amp; recruiters</p>
       <p>
         Nestor Core is the HR operations and payroll platform from Nestor Services. It supports HR
         administration, payroll support, employee records, attendance, leave, and workforce management.
@@ -323,11 +325,13 @@ function buildHomepageBody() {
     </article>
     <article class="entity-card">
       <h2>Nestor Assess</h2>
+      <p>For invited candidates</p>
       <p>
         Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment.
         Assessment access requires an invitation.
       </p>
-      <p><a href="/nestor-assess">Learn about Nestor Assess</a></p>
+      <p><a href="https://assess.nestorservices.in" target="_blank" rel="noopener noreferrer">Open your assessment</a></p>
+      <p><a href="/nestor-assess">Learn more</a></p>
     </article>
   </section>
   <section class="entity-summary">
@@ -614,6 +618,10 @@ ${relatedMarkup}
 }
 
 function buildEntityPageBody(page) {
+  if (page.slug === "nestor-assess") {
+    return buildAssessTrustPageBody(page);
+  }
+
   const sectionsHtml = page.sections
     .map((section) => {
       if (section.items) {
@@ -657,8 +665,96 @@ function buildEntityPageBody(page) {
 </main>`;
 }
 
+function buildAssessTrustPageBody(page) {
+  const safetyPoints = page.safetyPoints
+    .map((point) => `<li>${escapeHtml(point)}</li>`)
+    .join("");
+  const expectations = page.expectations
+    .map((item) => `<li>${escapeHtml(item)}</li>`)
+    .join("");
+  const faqs = page.faqs
+    .map(({ question, answer }) => `
+      <details class="assess-trust-faq-item">
+        <summary>${escapeHtml(question)}</summary>
+        <p>${escapeHtml(answer)}</p>
+      </details>`)
+    .join("");
+
+  return `
+<main class="entity-page assess-trust-page" data-prerendered="entity-page">
+  <section class="entity-page-hero assess-trust-hero">
+    <div class="container">
+      <div class="entity-page-eyebrow">${escapeHtml(page.heroLabel)}</div>
+      <h1 class="entity-page-title">${escapeHtml(page.heroTitle)}</h1>
+      <p class="entity-page-intro">${escapeHtml(page.intro)}</p>
+      <div class="entity-page-actions">
+        <a href="${escapeHtml(page.cta.href)}" class="entity-page-cta" target="_blank" rel="noopener noreferrer">${escapeHtml(page.cta.label)}</a>
+        <a href="${escapeHtml(page.trustLink.href)}" class="entity-page-link">${escapeHtml(page.trustLink.label)}</a>
+      </div>
+      <p class="assess-trust-caption">Invitation required</p>
+    </div>
+  </section>
+
+  <section class="entity-page-content assess-trust-content">
+    <div class="container assess-trust-sections">
+      <section class="assess-trust-card" aria-labelledby="invitation-arrives">
+        <p class="assess-trust-kicker">Before you begin</p>
+        <h2 class="entity-page-card-title" id="invitation-arrives">How your invitation reaches you</h2>
+        <p class="entity-page-body">${escapeHtml(page.invitationCopy)}</p>
+      </section>
+
+      <section class="assess-trust-card assess-trust-card--safety" id="invitation-safety" aria-labelledby="check-invitation">
+        <p class="assess-trust-kicker">Stay safe</p>
+        <h2 class="entity-page-card-title" id="check-invitation">Check your invitation is genuine</h2>
+        <ul class="entity-page-list">${safetyPoints}</ul>
+        <p class="assess-trust-official">Official assessment destination: <a href="https://assess.nestorservices.in" target="_blank" rel="noopener noreferrer">assess.nestorservices.in</a></p>
+      </section>
+
+      <section class="assess-trust-card" aria-labelledby="what-to-expect">
+        <p class="assess-trust-kicker">Your assessment</p>
+        <h2 class="entity-page-card-title" id="what-to-expect">What to expect</h2>
+        <ul class="entity-page-list">${expectations}</ul>
+      </section>
+
+      <section class="assess-trust-card" aria-labelledby="part-of-nestor">
+        <p class="assess-trust-kicker">The Nestor ecosystem</p>
+        <h2 class="entity-page-card-title" id="part-of-nestor">Part of Nestor Services</h2>
+        <p class="entity-page-body">${escapeHtml(page.ecosystemCopy)}</p>
+        <nav class="assess-trust-product-links" aria-label="Nestor Services products">
+          <a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a>
+          <a href="https://core.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Core</a>
+          <a href="https://www.nestorservices.in/">Back to Nestor Services</a>
+        </nav>
+      </section>
+
+      <section class="assess-trust-faq" aria-labelledby="assess-faq-title">
+        <p class="assess-trust-kicker">Need a quick answer?</p>
+        <h2 class="entity-page-card-title" id="assess-faq-title">Frequently asked questions</h2>
+        <div class="assess-trust-faq-list">${faqs}
+        </div>
+      </section>
+    </div>
+  </section>
+</main>`;
+}
+
 function buildEntityPageJsonLd(page) {
-  return page.schema;
+  if (!page.faqs) return page.schema;
+  return [
+    page.schema,
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: page.faqs.map(({ question, answer }) => ({
+        "@type": "Question",
+        name: question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: answer,
+        },
+      })),
+    },
+  ];
 }
 
 function buildEntityPageCss() {
@@ -754,10 +850,32 @@ function buildEntityPageCss() {
       color: #dce8fb;
       line-height: 1.8;
     }
+    .assess-trust-hero .entity-page-intro { max-width: 700px; }
+    .assess-trust-caption { margin: 10px 0 0; color: #8ba5c9; font-size: 13px; }
+    .assess-trust-content { background: #060e1f; }
+    .assess-trust-sections { max-width: 900px; display: grid; gap: 20px; }
+    .assess-trust-card, .assess-trust-faq { padding: clamp(24px, 4vw, 36px); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: #0f1e35; }
+    .assess-trust-card--safety { border-color: rgba(46,124,246,.38); background: linear-gradient(140deg,#102747,#0f1e35 68%); }
+    .assess-trust-kicker { margin: 0 0 10px; color: #8ba5c9; font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+    .assess-trust-card .entity-page-card-title, .assess-trust-faq .entity-page-card-title { margin-bottom: 14px; }
+    .assess-trust-card .entity-page-list { display: grid; gap: 10px; }
+    .assess-trust-official { margin: 20px 0 0; padding-top: 16px; border-top: 1px solid rgba(255,255,255,.1); color: #dce8fb; font-size: 14px; }
+    .assess-trust-official a, .assess-trust-product-links a { color: #8db6ff; text-decoration: underline; text-underline-offset: 3px; }
+    .assess-trust-product-links { display: flex; flex-wrap: wrap; gap: 18px 24px; margin-top: 20px; }
+    .assess-trust-faq-list { display: grid; gap: 10px; }
+    .assess-trust-faq-item { border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: rgba(6,14,31,.45); }
+    .assess-trust-faq-item summary { padding: 17px 20px; color: #fff; cursor: pointer; font-family: var(--font-head); font-weight: 600; line-height: 1.5; }
+    .assess-trust-faq-item summary:focus-visible, .assess-trust-page a:focus-visible { outline: 3px solid #8db6ff; outline-offset: 3px; }
+    .assess-trust-faq-item p { margin: 0; padding: 0 20px 18px; color: #dce8fb; line-height: 1.75; }
     @media (max-width: 860px) {
       .entity-page-grid {
         grid-template-columns: 1fr;
       }
+    }
+    @media (max-width: 600px) {
+      .assess-trust-hero { padding-top: 88px; }
+      .assess-trust-content { padding: 44px 18px 64px; }
+      .assess-trust-product-links { flex-direction: column; gap: 14px; }
     }
   </style>`;
 }

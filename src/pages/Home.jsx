@@ -139,7 +139,7 @@ export default function Home() {
                 ))}
               </ul>
               <div className="product-card-footer">
-                <span className="product-audience">For HR & admin teams</span>
+                <span className="product-audience">For employers & recruiters</span>
                 <div className="product-footer-links">
                   <Link
                     to="/blog"
@@ -178,9 +178,17 @@ export default function Home() {
               <div className="product-card-footer">
                 <span className="product-audience">For invited candidates</span>
                 <div className="product-footer-links">
-                  <a href="/nestor-assess" className="product-cta product-cta--assess">
-                    Learn about Assess →
+                  <a
+                    href="https://assess.nestorservices.in"
+                    className="product-cta product-cta--assess"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    Open your assessment →
                   </a>
+                  <Link to="/nestor-assess" className="product-cta product-cta--neutral">
+                    Learn more
+                  </Link>
                 </div>
               </div>
             </div>
