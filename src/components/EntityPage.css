@@ -103,8 +103,131 @@
   line-height: 1.8;
 }
 
+.assess-trust-hero .entity-page-intro {
+  max-width: 700px;
+}
+
+.assess-trust-caption {
+  margin: 10px 0 0;
+  color: #8ba5c9;
+  font-size: 13px;
+}
+
+.assess-trust-content {
+  background: #060e1f;
+}
+
+.assess-trust-sections {
+  max-width: 900px;
+  display: grid;
+  gap: 20px;
+}
+
+.assess-trust-card,
+.assess-trust-faq {
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: #0f1e35;
+}
+
+.assess-trust-card--safety {
+  border-color: rgba(46, 124, 246, 0.38);
+  background: linear-gradient(140deg, #102747, #0f1e35 68%);
+}
+
+.assess-trust-kicker {
+  margin: 0 0 10px;
+  color: #8ba5c9;
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.assess-trust-card .entity-page-card-title,
+.assess-trust-faq .entity-page-card-title {
+  margin-bottom: 14px;
+}
+
+.assess-trust-card .entity-page-list {
+  display: grid;
+  gap: 10px;
+}
+
+.assess-trust-official {
+  margin: 20px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: #dce8fb;
+  font-size: 14px;
+}
+
+.assess-trust-official a,
+.assess-trust-product-links a {
+  color: #8db6ff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.assess-trust-product-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px 24px;
+  margin-top: 20px;
+}
+
+.assess-trust-faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.assess-trust-faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(6, 14, 31, 0.45);
+}
+
+.assess-trust-faq-item summary {
+  padding: 17px 20px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: var(--font-head);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.assess-trust-faq-item summary:focus-visible,
+.assess-trust-page a:focus-visible {
+  outline: 3px solid #8db6ff;
+  outline-offset: 3px;
+}
+
+.assess-trust-faq-item p {
+  margin: 0;
+  padding: 0 20px 18px;
+  color: #dce8fb;
+  line-height: 1.75;
+}
+
 @media (max-width: 860px) {
   .entity-page-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .assess-trust-hero {
+    padding-top: 88px;
+  }
+
+  .assess-trust-content {
+    padding: 44px 18px 64px;
+  }
+
+  .assess-trust-product-links {
+    flex-direction: column;
+    gap: 14px;
   }
 }

@@ -92,30 +92,59 @@ export const entityPages = [
   {
     slug: "nestor-assess",
     title: "Nestor Assess",
-    metaTitle: "Nestor Assess | Invitation-Based Online Assessments",
+    metaTitle: "Nestor Assess | Candidate Invitation and Assessment Access",
     metaDescription:
-      "Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment. Access requires an invitation.",
+      "Nestor Assess is the invitation-only online assessment step for candidates applying to roles through Nestor Services. Check your invitation and access the official assessment portal.",
     canonical: "https://www.nestorservices.in/nestor-assess",
-    heroLabel: "Online assessment platform",
+    heroLabel: "Online assessment · Invitation only",
     heroTitle: "Nestor Assess",
     intro:
-      "Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment. Assessment access requires an invitation; this is not a public registration page.",
-    sections: [
-      {
-        title: "Invitation-based access",
-        body:
-          "Candidates can open an online assessment using an invitation. Access is not available through public self-registration.",
-      },
-      {
-        title: "Part of Nestor Services",
-        body:
-          "Nestor Assess is an assessment product from Nestor Services, alongside Nestor Hire and Nestor Core.",
-      },
-    ],
+      "Nestor Assess is the online assessment step in Nestor Services' hiring process. You'll use it only if you've been invited to complete an assessment for a role you applied to.",
     cta: {
-      label: "Open assessment portal (invitation required)",
+      label: "Open your assessment",
       href: "https://assess.nestorservices.in",
     },
+    trustLink: {
+      label: "How to check your invitation is genuine",
+      href: "#invitation-safety",
+    },
+    invitationCopy:
+      "Nestor Assess access is invitation-only. A recruiter issues a role-specific invitation with a link to the assessment. Check that the message names a role you applied for. Email sender addresses can be spoofed, so confirm unexpected messages with your recruiter through a contact method you already trust.",
+    safetyPoints: [
+      "Nestor Assess is free. Nestor Services does not ask for an assessment payment, fee, or deposit.",
+      "The official assessment portal is assess.nestorservices.in. If a link points to another domain, do not continue; check with your recruiter.",
+      "Never share passwords, one-time passwords, or bank details to take an assessment.",
+      "Do not rely on the displayed sender address alone. If an invitation is unexpected, verify it through a contact method you already trust.",
+    ],
+    expectations: [
+      "A timed online assessment you complete in one sitting, in a normal browser.",
+      "It runs in full screen, and your activity during the test is recorded to keep things fair for everyone.",
+      "A mix of multiple-choice and short written questions relevant to your role.",
+    ],
+    ecosystemCopy:
+      "Nestor Assess is the assessment step within Nestor Services, alongside Nestor Hire (recruitment and hiring, for employers and recruiters) and Nestor Core (HR operations and payroll).",
+    faqs: [
+      {
+        question: "Is Nestor Assess legitimate?",
+        answer:
+          "Nestor Assess is the online assessment platform of Nestor Services. Access is invitation-only for candidates being assessed for a role. Check that the assessment link opens at assess.nestorservices.in and confirm any unexpected invitation with your recruiter through a contact method you already trust. Email sender addresses can be spoofed, so do not rely on the displayed address alone.",
+      },
+      {
+        question: "How do I know my Nestor Assess invitation is real?",
+        answer:
+          "Check that the invitation names a role you applied for and that its assessment link points to https://assess.nestorservices.in. Because sender addresses can be spoofed, verify unexpected messages with your recruiter using a contact method you already trust. Do not open links to other domains.",
+      },
+      {
+        question: "Does Nestor Assess charge a fee?",
+        answer:
+          "Nestor Assess is free. Nestor Services does not ask candidates to pay an assessment fee or deposit, or to share passwords, one-time passwords, or bank details to take an assessment.",
+      },
+      {
+        question: "I received a Nestor Assess link. Is it safe to open?",
+        answer:
+          "Only continue if you were expecting an assessment for a role you applied to and the link opens at https://assess.nestorservices.in. If the message is unexpected, its link goes elsewhere, or it asks for payment or sensitive details, do not continue; verify with your recruiter through a contact method you already trust.",
+      },
+    ],
     social: { type: "website" },
     schema: {
       "@context": "https://schema.org",
