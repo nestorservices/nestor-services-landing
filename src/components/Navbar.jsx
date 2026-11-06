@@ -35,6 +35,10 @@ export default function Navbar() {
             <span className="navbar-pip navbar-pip--teal" />
             Core
           </a>
+          <a href="/nestor-assess" className="navbar-link navbar-link--product navbar-link--assess">
+            <span className="navbar-pip navbar-pip--assess" />
+            Assess
+          </a>
           <Link to="/blog" className="navbar-link">Blog</Link>
           <a href="mailto:shashank@nestorservices.in" className="navbar-cta">Get in touch</a>
         </div>

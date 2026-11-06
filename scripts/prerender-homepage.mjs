@@ -270,6 +270,13 @@ function buildHomepageJsonLd() {
           operatingSystem: "Web",
           url: "https://core.nestorservices.in",
         },
+        {
+          "@type": "SoftwareApplication",
+          name: "Nestor Assess",
+          applicationCategory: "BusinessApplication",
+          operatingSystem: "Web",
+          url: "https://assess.nestorservices.in",
+        },
       ],
     },
     {
@@ -313,6 +320,14 @@ function buildHomepageBody() {
         administration, payroll support, employee records, attendance, leave, and workforce management.
       </p>
       <p><a href="https://core.nestorservices.in">Explore Nestor Core</a></p>
+    </article>
+    <article class="entity-card">
+      <h2>Nestor Assess</h2>
+      <p>
+        Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment.
+        Assessment access requires an invitation.
+      </p>
+      <p><a href="/nestor-assess">Learn about Nestor Assess</a></p>
     </article>
   </section>
   <section class="entity-summary">
@@ -763,6 +778,13 @@ function buildPageHtml(baseShellHtml, page) {
     jsonLd,
     bodyHtml: buildEntityPageBody(page),
     bodyDataAttr: `data-prerendered-entity="${escapeHtml(page.slug)}"`,
+    social: page.social
+      ? {
+          type: page.social.type,
+          title: page.metaTitle,
+          description: page.metaDescription,
+        }
+      : undefined,
   });
 
   html = html.replace("</head>", `${buildEntityPageCss()}\n  </head>`);
