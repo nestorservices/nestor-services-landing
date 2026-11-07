@@ -143,9 +143,9 @@ export default function Home() {
             ))}
           </div>
           <div className="landing-empanelment reveal">
-            <h3>Don&apos;t hire a generalist who can&apos;t be expert at everything. Empanel with Nestor.</h3>
+            <h3>One HR generalist can&apos;t be an expert at everything. Empanel with Nestor.</h3>
             <div className="landing-empanelment-columns">
-              <p>One HR hire rarely covers recruitment, assessment, payroll and operations well. Empanel with us and you get a team that has hired key people across industries, small to large — so you focus on the business and we carry the HR, partly or fully.</p>
+              <p>Recruitment, assessments, payroll and HR operations require different expertise. Instead of expecting one generalist to manage everything, work with Nestor as your extended HR team. You focus on running your business while we handle the people side — as little or as much as you need.</p>
               <ul className="landing-empanelment-checklist">
                 {empanelmentPoints.map((point) => <li key={point}>{point}</li>)}
               </ul>
