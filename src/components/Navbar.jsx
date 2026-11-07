@@ -15,6 +15,10 @@ export default function Navbar() {
 
   useEffect(() => setOpen(false), [location]);
 
+  if (location.pathname === "/") {
+    return <LandingNavbar open={open} setOpen={setOpen} />;
+  }
+
   return (
     <nav className={`navbar ${scrolled ? "navbar--scrolled" : ""}`}>
       <div className="navbar-inner">
@@ -50,5 +54,44 @@ export default function Navbar() {
         </button>
       </div>
     </nav>
+  );
+}
+
+function LandingNavbar({ open, setOpen }) {
+  const closeMenu = () => setOpen(false);
+
+  return (
+    <header className="landing-header">
+      <div className="landing-nav-inner">
+        <Link to="/" className="landing-nav-brand" aria-label="Nestor Services — Your Workforce Partner">
+          <img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" />
+        </Link>
+        <button
+          className={`landing-menu-button${open ? " landing-menu-button--open" : ""}`}
+          type="button"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
+          aria-controls="landing-primary-navigation"
+          onClick={() => setOpen((value) => !value)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+        <nav
+          className={`landing-nav-links${open ? " landing-nav-links--open" : ""}`}
+          id="landing-primary-navigation"
+          aria-label="Primary"
+        >
+          <a href="https://hire.nestorservices.in/jobs">Find a job</a>
+          <a href="#platforms" onClick={closeMenu}>Platforms</a>
+          <a href="#employers" onClick={closeMenu}>For employers</a>
+          <a href="#why" onClick={closeMenu}>Why Nestor</a>
+          <a className="landing-nav-cta" href="mailto:shashank@nestorservices.in?subject=Hiring%20requirement%20-%20Nestor%20Services" onClick={closeMenu}>
+            Discuss a hiring requirement
+          </a>
+        </nav>
+      </div>
+    </header>
   );
 }
