@@ -17,10 +17,8 @@
   margin: 0 auto;
 }
 
-.landing-nav-brand { display: flex; flex: 0 1 auto; flex-direction: column; align-items: flex-start; min-width: 0; }
-.landing-nav-wordmark-crop { position: relative; display: block; width: clamp(380px, 36vw, 430px); max-width: 100%; aspect-ratio: 1096 / 145; overflow: hidden; }
-.landing-nav-wordmark-crop img { position: absolute; top: 0; left: 0; display: block; width: 100%; max-width: none; height: auto; }
-.landing-nav-tagline { margin-top: 2px; color: #a9bfd6; font-size: clamp(.58rem, .75vw, .68rem); font-weight: 600; letter-spacing: .12em; line-height: 1.2; white-space: nowrap; }
+.landing-nav-brand { display: flex; flex: 0 1 auto; align-items: center; min-width: 0; }
+.landing-nav-brand img { display: block; width: clamp(380px, 36vw, 430px); max-width: 100%; height: auto; }
 .landing-nav-links { display: flex; align-items: center; justify-content: flex-end; gap: clamp(12px, 1.6vw, 22px); }
 .landing-nav-links > a { color: #c1cedd; font-size: .87rem; font-weight: 600; white-space: nowrap; transition: color .16s ease, background .16s ease, border-color .16s ease; }
 .landing-nav-links > a:hover { color: #fff; }
@@ -36,7 +34,7 @@
 
 @media (max-width: 1160px) {
   .landing-nav-inner { height: 88px; }
-  .landing-nav-wordmark-crop { width: clamp(290px, 34vw, 360px); }
+  .landing-nav-brand img { width: clamp(290px, 34vw, 360px); }
   .landing-menu-button { display: flex; }
   .landing-nav-links { position: absolute; top: 100%; right: 0; left: 0; display: none; align-items: stretch; flex-direction: column; gap: 0; border-bottom: 1px solid rgba(255, 255, 255, .12); padding: 12px clamp(18px, 5vw, 40px) 20px; background: #0c1a2e; box-shadow: 0 18px 30px rgba(0, 0, 0, .2); }
   .landing-nav-links--open { display: flex; }
@@ -46,7 +44,7 @@
 
 @media (max-width: 600px) {
   .landing-nav-inner { width: calc(100% - 36px); height: 74px; gap: 14px; }
-  .landing-nav-wordmark-crop { width: min(72vw, 285px); max-width: calc(100vw - 100px); }
+  .landing-nav-brand img { width: min(72vw, 285px); max-width: calc(100vw - 100px); }
 }
 
 .navbar {
