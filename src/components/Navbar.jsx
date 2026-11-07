@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { FIRST_ROLE_HREF } from "../data/homepageContent";
 import "./Navbar.css";
 
 export default function Navbar() {
@@ -87,8 +88,8 @@ function LandingNavbar({ open, setOpen }) {
           <a href="#platforms" onClick={closeMenu}>Platforms</a>
           <a href="#employers" onClick={closeMenu}>For employers</a>
           <a href="#why" onClick={closeMenu}>Why Nestor</a>
-          <a className="landing-nav-cta" href="mailto:shashank@nestorservices.in?subject=Hiring%20requirement%20-%20Nestor%20Services" onClick={closeMenu}>
-            Discuss a hiring requirement
+          <a className="landing-nav-cta" href={FIRST_ROLE_HREF} onClick={closeMenu}>
+            Share a role — free
           </a>
         </nav>
       </div>
