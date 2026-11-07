@@ -73,23 +73,34 @@ export const products = [
   },
 ];
 
-export const employerSteps = [
+export const employerTiers = [
   {
-    step: "01 · ALIGN",
-    title: "Clarify the requirement",
-    body: "Discuss the role, team context, and the experience that matters before deciding on a hiring approach.",
+    step: "01 · TRY US",
+    title: "One role, filled free",
+    body: "Share a critical opening. We fill it, fast. See the quality before you commit to anything.",
+    freeLabel: "Free to start",
   },
   {
-    step: "02 · RECRUIT",
-    title: "Recruitment support",
-    body: "Explore per-hire recruitment support or a managed hiring engagement, shaped around the requirement.",
+    step: "02 · SCALE",
+    title: "Per-hire or managed",
+    body: "Pay per successful hire, or let us run all your hiring as your managed recruitment team — with the ATS included.",
   },
   {
-    step: "03 · OPERATE",
-    title: "HR operations support",
-    body: "Discuss support for employee workflows, HR operations, and payroll processes where needed.",
+    step: "03 · PARTNER",
+    title: "Full HR, handled",
+    body: "Empanel for HR end to end — hiring, operations and payroll — partly or fully, with staff on our payroll where you need people on site.",
   },
 ];
+
+export const empanelmentPoints = [
+  "Recruitment, assessment and HR under one partner",
+  "Key hires and volume — right talent, right market price",
+  "Take as little or as much as you need",
+  "Real cost control, no compromise on quality",
+];
+
+export const FIRST_ROLE_HREF = "mailto:shashank@nestorservices.in?subject=Hiring%20requirement%20(free%20first%20role)";
+export const EMPANELMENT_HREF = "mailto:shashank@nestorservices.in?subject=Empanelment%20enquiry";
 
 export const credibility = [
   {
@@ -105,5 +116,3 @@ export const credibility = [
     body: "Based in Gurugram, Nestor Services works with the realities of hiring and workforce operations in India.",
   },
 ];
-
-export const CONTACT_HREF = "mailto:shashank@nestorservices.in?subject=Hiring%20requirement%20-%20Nestor%20Services";

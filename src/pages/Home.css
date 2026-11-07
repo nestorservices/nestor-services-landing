@@ -88,18 +88,21 @@
 .landing-product-links a { color: var(--card-accent); font-size: .85rem; font-weight: 700; }
 .landing-product-links a:hover { color: #fff; }
 
-.landing-step-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
-.landing-step-card { border: 1px solid var(--landing-border); border-radius: 14px; padding: 24px; background: var(--landing-navy-2); }
-.landing-step-number { color: var(--landing-blue-light); font-family: "Plus Jakarta Sans", sans-serif; font-size: .76rem; font-weight: 800; letter-spacing: .1em; }
-.landing-step-card h3 { margin-top: 12px; font-size: 1.07rem; letter-spacing: -.01em; }
-.landing-step-card p { margin-top: 9px; color: var(--landing-muted); font-size: .91rem; }
-.landing-employer-panel { display: grid; grid-template-columns: 1.1fr .9fr; gap: 36px; align-items: center; margin-top: 20px; border: 1px solid var(--landing-border-strong); border-radius: 16px; padding: clamp(24px, 4vw, 40px); background: linear-gradient(145deg, rgba(37, 99, 235, .14), rgba(12, 26, 46, .95) 60%); }
-.landing-employer-panel h3 { max-width: 620px; margin-top: 11px; font-size: clamp(1.35rem, 2.6vw, 1.9rem); }
-.landing-employer-panel > div > p:not(.landing-eyebrow) { max-width: 580px; margin-top: 12px; color: var(--landing-muted); font-size: .94rem; }
-.landing-employer-panel .landing-button { margin-top: 22px; }
-.landing-checklist { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
-.landing-checklist li { display: flex; gap: 11px; color: #e5edf8; font-size: .91rem; }
-.landing-checklist li::before { color: var(--landing-blue-light); content: "✓"; font-weight: 800; }
+.landing-employer-spectrum { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 40px; }
+.landing-employer-tier { border: 1px solid rgba(255, 255, 255, .09); border-radius: 14px; padding: 24px; background: var(--landing-navy-2); }
+.landing-employer-tier--lead { border-color: rgba(255, 255, 255, .17); background: linear-gradient(160deg, rgba(37, 99, 235, .18), rgba(37, 99, 235, .03)); }
+.landing-employer-free { display: inline-block; margin-bottom: 8px; border-radius: 999px; padding: .3em .75em; background: var(--landing-blue); color: #fff; font-family: "Plus Jakarta Sans", sans-serif; font-size: .72rem; font-weight: 700; line-height: 1; letter-spacing: .08em; text-transform: uppercase; }
+.landing-employer-step { color: var(--landing-blue); font-family: "Plus Jakarta Sans", sans-serif; font-size: .78rem; font-weight: 700; line-height: 1; letter-spacing: .1em; }
+.landing-employer-tier h3 { margin: 10px 0 8px; color: var(--landing-text); font-size: 1.12rem; line-height: 1.2; }
+.landing-employer-tier p { margin: 0; color: #94a6bc; font-size: .95rem; }
+.landing-empanelment { margin-top: 22px; border: 1px solid rgba(255, 255, 255, .09); border-radius: 16px; padding: clamp(26px, 4vw, 40px); background: var(--landing-navy-2); }
+.landing-empanelment h3 { margin: 0; color: var(--landing-text); font-size: clamp(1.3rem, 3vw, 1.8rem); line-height: 1.2; }
+.landing-empanelment-columns { display: grid; grid-template-columns: 1.1fr 1fr; gap: 30px; align-items: start; margin-top: 18px; }
+.landing-empanelment-columns > p { margin: 0; color: #94a6bc; }
+.landing-empanelment-checklist { display: grid; gap: 11px; margin: 0; padding: 0; list-style: none; }
+.landing-empanelment-checklist li { display: flex; gap: 10px; color: var(--landing-text); font-size: .97rem; }
+.landing-empanelment-checklist li::before { color: var(--landing-blue-light); content: "✓"; font-weight: 800; }
+.landing-empanelment-cta { margin-top: 22px; }
 
 .landing-band--why { background: var(--landing-navy-2); }
 .landing-credibility-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin-top: 36px; }
@@ -139,10 +142,13 @@
 
 @media (max-width: 820px) {
   .landing-candidate-grid,
-  .landing-step-grid,
+  .landing-employer-spectrum,
   .landing-credibility-grid { grid-template-columns: 1fr; }
   .landing-candidate-card { min-height: 0; }
-  .landing-employer-panel { grid-template-columns: 1fr; gap: 26px; }
+}
+
+@media (max-width: 760px) {
+  .landing-empanelment-columns { grid-template-columns: 1fr; gap: 20px; }
 }
 
 @media (max-width: 640px) {
