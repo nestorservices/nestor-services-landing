@@ -64,7 +64,10 @@ function LandingNavbar({ open, setOpen }) {
     <header className="landing-header">
       <div className="landing-nav-inner">
         <Link to="/" className="landing-nav-brand" aria-label="Nestor Services — Your Workforce Partner">
-          <img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" />
+          <span className="landing-nav-wordmark-crop">
+            <img src="/nestor-services-logo.png" alt="Nestor Services" />
+          </span>
+          <span className="landing-nav-tagline">Your Workforce Partner</span>
         </Link>
         <button
           className={`landing-menu-button${open ? " landing-menu-button--open" : ""}`}

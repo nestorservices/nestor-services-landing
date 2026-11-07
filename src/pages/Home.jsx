@@ -38,11 +38,6 @@ export default function Home() {
       <section className="landing-hero">
         <div className="landing-hero-glow" aria-hidden="true" />
         <div className="landing-wrap">
-          <p className="landing-eyebrow landing-brand-eyebrow">
-            <span>Nestor Services</span>
-            <span className="landing-eyebrow-divider" aria-hidden="true">·</span>
-            Your Workforce Partner · India
-          </p>
           <h1 className="landing-hero-title">
             Whether you&apos;re building a <span>career</span> or building a <span>team</span> — work starts here.
           </h1>

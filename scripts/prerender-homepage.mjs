@@ -302,7 +302,7 @@ function buildHomepageBody() {
   return `
 <header class="landing-header">
   <div class="landing-nav-inner">
-    <a href="/" class="landing-nav-brand" aria-label="Nestor Services — Your Workforce Partner"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /></a>
+    <a href="/" class="landing-nav-brand" aria-label="Nestor Services — Your Workforce Partner"><span class="landing-nav-wordmark-crop"><img src="/nestor-services-logo.png" alt="Nestor Services" /></span><span class="landing-nav-tagline">Your Workforce Partner</span></a>
     <button class="landing-menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="landing-primary-navigation"><span></span><span></span><span></span></button>
     <nav class="landing-nav-links" id="landing-primary-navigation" aria-label="Primary">
       <a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="#platforms">Platforms</a><a href="#employers">For employers</a><a href="#why">Why Nestor</a><a class="landing-nav-cta" href="${escapeHtml(CONTACT_HREF)}">Discuss a hiring requirement</a>
@@ -311,7 +311,6 @@ function buildHomepageBody() {
 </header>
 <main class="landing-home">
   <section class="landing-hero"><div class="landing-hero-glow" aria-hidden="true"></div><div class="landing-wrap">
-    <p class="landing-eyebrow landing-brand-eyebrow"><span>Nestor Services</span><span class="landing-eyebrow-divider" aria-hidden="true">·</span>Your Workforce Partner · India</p>
     <h1 class="landing-hero-title">Whether you&apos;re building a <span>career</span> or building a <span>team</span> — work starts here.</h1>
     <p class="landing-hero-lead">Find roles and understand the hiring process, or discuss recruitment and HR operations support for your business.</p>
     <div class="landing-actions"><a class="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">Find your next role <span aria-hidden="true">→</span></a><a class="landing-button landing-button--secondary" href="#employers">Discuss a hiring requirement</a></div>
