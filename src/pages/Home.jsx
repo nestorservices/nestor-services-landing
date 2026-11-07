@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { candidates, products, employerSteps, credibility, CONTACT_HREF, HOMEPAGE_TITLE, HOMEPAGE_DESCRIPTION } from "../data/homepageContent";
+import { candidates, products, employerTiers, empanelmentPoints, credibility, FIRST_ROLE_HREF, EMPANELMENT_HREF, HOMEPAGE_TITLE, HOMEPAGE_DESCRIPTION } from "../data/homepageContent";
 import { setCanonical } from "../lib/seo";
 import "./Home.css";
 
@@ -49,7 +49,7 @@ export default function Home() {
               Find your next role <span aria-hidden="true">→</span>
             </a>
             <a className="landing-button landing-button--secondary" href="#employers">
-              Discuss a hiring requirement
+              Share a role — free
             </a>
           </div>
           <div className="landing-proofline" aria-label="About Nestor Services">
@@ -132,30 +132,27 @@ export default function Home() {
             <h2>Support that starts with your actual requirement.</h2>
             <p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p>
           </div>
-          <div className="landing-step-grid">
-            {employerSteps.map((item) => (
-              <article className="landing-step-card reveal" key={item.step}>
-                <div className="landing-step-number">{item.step}</div>
+          <div className="landing-employer-spectrum">
+            {employerTiers.map((item, index) => (
+              <article className={`landing-employer-tier${index === 0 ? " landing-employer-tier--lead" : ""}`} key={item.step}>
+                {item.freeLabel && <span className="landing-employer-free">{item.freeLabel}</span>}
+                <div className="landing-employer-step">{item.step}</div>
                 <h3>{item.title}</h3>
                 <p>{item.body}</p>
               </article>
             ))}
           </div>
-          <div className="landing-employer-panel reveal">
-            <div>
-              <p className="landing-eyebrow">A flexible working relationship</p>
-              <h3>Recruitment and HR support, shaped around your team.</h3>
-              <p>Start with the role or operating challenge you need to solve. We can discuss the right scope before any engagement is agreed.</p>
-              <a className="landing-button landing-button--primary" href={CONTACT_HREF}>
-                Discuss a hiring requirement <span aria-hidden="true">→</span>
-              </a>
+          <div className="landing-empanelment reveal">
+            <h3>Don&apos;t hire a generalist who can&apos;t be expert at everything. Empanel with Nestor.</h3>
+            <div className="landing-empanelment-columns">
+              <p>One HR hire rarely covers recruitment, assessment, payroll and operations well. Empanel with us and you get a team that has hired key people across industries, small to large — so you focus on the business and we carry the HR, partly or fully.</p>
+              <ul className="landing-empanelment-checklist">
+                {empanelmentPoints.map((point) => <li key={point}>{point}</li>)}
+              </ul>
             </div>
-            <ul className="landing-checklist">
-              <li>Recruitment services and talent acquisition</li>
-              <li>Per-hire recruitment or managed hiring discussions</li>
-              <li>HR operations and payroll support</li>
-              <li>Scope and engagement agreed to fit the requirement</li>
-            </ul>
+            <div className="landing-empanelment-cta">
+              <a className="landing-button landing-button--primary" href={EMPANELMENT_HREF}>Talk about empanelment</a>
+            </div>
           </div>
         </div>
       </section>
@@ -190,10 +187,10 @@ export default function Home() {
             </div>
             <div className="landing-cta-box landing-cta-box--employer reveal">
               <p className="landing-eyebrow">Employers</p>
-              <h3>Have a hiring requirement?</h3>
+              <h3>Share one role — the first&apos;s on us.</h3>
               <p>Tell us about the role or HR operations support your team needs. We&apos;ll discuss a suitable scope.</p>
-              <a className="landing-button landing-button--primary" href={CONTACT_HREF}>
-                Discuss a hiring requirement <span aria-hidden="true">→</span>
+              <a className="landing-button landing-button--primary" href={FIRST_ROLE_HREF}>
+                Share a role — free <span aria-hidden="true">→</span>
               </a>
             </div>
           </div>
