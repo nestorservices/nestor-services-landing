@@ -1,8 +1,6 @@
 // Article content for: The Two-Team Problem
 
 export const content = `
-# The Two-Team Problem: Why Most Recruitment Agencies Are Designed to Disappoint You
-
 After 15 years in HR across every industry in India, I've watched this pattern repeat without exception. Here's what's actually happening — and what it's costing you.
 
 [IMAGE:recruitment-agency-two-team-problem]

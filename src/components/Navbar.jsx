@@ -31,7 +31,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className={`navbar-links ${open ? "navbar-links--open" : ""}`}>
+        <div className={`navbar-links ${open ? "navbar-links--open" : ""}`} id="product-navigation">
           <a href="https://hire.nestorservices.in" className="navbar-link navbar-link--product navbar-link--hire" target="_blank" rel="noopener noreferrer">
             <span className="navbar-pip navbar-pip--blue" />
             Hire
@@ -48,7 +48,13 @@ export default function Navbar() {
           <a href="mailto:shashank@nestorservices.in" className="navbar-cta">Get in touch</a>
         </div>
 
-        <button className="navbar-burger" onClick={() => setOpen(!open)} aria-label="Menu">
+        <button
+          className="navbar-burger"
+          onClick={() => setOpen(!open)}
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={open}
+          aria-controls="product-navigation"
+        >
           <span className={open ? "open" : ""} />
           <span className={open ? "open" : ""} />
           <span className={open ? "open" : ""} />

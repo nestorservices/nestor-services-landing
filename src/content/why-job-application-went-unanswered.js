@@ -1,6 +1,4 @@
 export const content = `
-# Why Your Job Application Went Unanswered — And Why That’s Not a Verdict on You
-
 **By Shashank Malviya, Founder, Nestor Services**
 15+ years in talent acquisition | MBA, IMT Ghaziabad | Formerly Country Delight, Housing.com, PropEquity, WNS
 
