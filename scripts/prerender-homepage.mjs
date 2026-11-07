@@ -12,9 +12,18 @@ const HOMEPAGE_URL = "https://www.nestorservices.in/";
 const BLOG_URL = "https://www.nestorservices.in/blog";
 const BLOG_POST_BASE_URL = "https://www.nestorservices.in/blog/";
 const NESTOR_LOGO_URL = "https://www.nestorservices.in/nestor-services-logo.png";
-const TITLE = "Nestor Services — Recruitment, HR Operations & Workforce Solutions";
-const DESCRIPTION =
-  "Nestor Services helps companies in India hire talent, run HR operations, manage payroll support, and improve workforce workflows.";
+const HOMEPAGE_CONTENT_MODULE = await import(
+  pathToFileURL(path.join(projectRoot, "src", "data", "homepageContent.js")).href
+);
+const {
+  HOMEPAGE_TITLE: TITLE,
+  HOMEPAGE_DESCRIPTION: DESCRIPTION,
+  candidates,
+  products,
+  employerSteps,
+  credibility,
+  CONTACT_HREF,
+} = HOMEPAGE_CONTENT_MODULE;
 const BLOG_INDEX_TITLE = "Nestor Services Blog — Hiring, Recruitment & Workforce Insights";
 const BLOG_INDEX_DESCRIPTION =
   "Read Nestor Services articles on hiring in India, recruitment, HR operations, and practical workforce insights from the team behind Nestor Hire.";
@@ -291,58 +300,48 @@ function buildHomepageJsonLd() {
 
 function buildHomepageBody() {
   return `
-<main class="entity-home" data-prerendered="true">
-  <section class="entity-hero">
-    <p class="entity-eyebrow">Recruitment and workforce solutions in India</p>
-    <h1>Nestor Services</h1>
-    <p>
-      Nestor Services is a recruitment and workforce solutions company in India that helps businesses
-      hire talent, manage HR operations, and improve workforce workflows across the employee lifecycle.
-    </p>
-    <p>
-      We work across recruitment, hiring workflows, HR operations, payroll support, and workforce
-      management with practical systems built for Indian employers and HR teams.
-    </p>
-  </section>
-  <section class="entity-products" aria-label="Nestor platforms">
-    <article class="entity-card">
-      <h2>Nestor Hire</h2>
-      <p>For employers &amp; recruiters</p>
-      <p>
-        Nestor Hire is the recruitment and hiring platform from Nestor Services. It supports talent
-        discovery, recruiter workflows, candidate evaluation, and employer hiring coordination.
-      </p>
-      <p><a href="https://hire.nestorservices.in">Explore Nestor Hire</a></p>
-    </article>
-    <article class="entity-card">
-      <h2>Nestor Core</h2>
-      <p>For employers &amp; recruiters</p>
-      <p>
-        Nestor Core is the HR operations and payroll platform from Nestor Services. It supports HR
-        administration, payroll support, employee records, attendance, leave, and workforce management.
-      </p>
-      <p><a href="https://core.nestorservices.in">Explore Nestor Core</a></p>
-    </article>
-    <article class="entity-card">
-      <h2>Nestor Assess</h2>
-      <p>For invited candidates</p>
-      <p>
-        Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment.
-        Assessment access requires an invitation.
-      </p>
-      <p><a href="https://assess.nestorservices.in" target="_blank" rel="noopener noreferrer">Open your assessment</a></p>
-      <p><a href="/nestor-assess">Learn more</a></p>
-    </article>
-  </section>
-  <section class="entity-summary">
-    <h2>How Nestor Services helps</h2>
-    <ul>
-      <li>Recruitment and talent hiring support for Indian companies</li>
-      <li>Hiring workflows that connect employers, recruiters, and candidates</li>
-      <li>HR operations support for employee records, attendance, and compliance processes</li>
-      <li>Payroll support and workforce management across the employee journey</li>
-    </ul>
-  </section>
+<header class="landing-header">
+  <div class="landing-nav-inner">
+    <a href="/" class="landing-nav-brand" aria-label="Nestor Services — Your Workforce Partner"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /></a>
+    <button class="landing-menu-button" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="landing-primary-navigation"><span></span><span></span><span></span></button>
+    <nav class="landing-nav-links" id="landing-primary-navigation" aria-label="Primary">
+      <a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="#platforms">Platforms</a><a href="#employers">For employers</a><a href="#why">Why Nestor</a><a class="landing-nav-cta" href="${escapeHtml(CONTACT_HREF)}">Discuss a hiring requirement</a>
+    </nav>
+  </div>
+</header>
+<main class="landing-home">
+  <section class="landing-hero"><div class="landing-hero-glow" aria-hidden="true"></div><div class="landing-wrap">
+    <h1 class="landing-hero-title">Whether you&apos;re building a <span>career</span> or building a <span>team</span> — work starts here.</h1>
+    <p class="landing-hero-lead">Find roles and understand the hiring process, or discuss recruitment and HR operations support for your business.</p>
+    <div class="landing-actions"><a class="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">Find your next role <span aria-hidden="true">→</span></a><a class="landing-button landing-button--secondary" href="#employers">Discuss a hiring requirement</a></div>
+    <div class="landing-proofline" aria-label="About Nestor Services"><div><strong>15+ years</strong><span>in HR and talent acquisition</span></div><div><strong>Founder-led</strong><span>direct and accountable</span></div><div><strong>Gurugram, India</strong><span>working across the Indian market</span></div></div>
+  </div></section>
+  <section class="landing-band" id="candidates"><div class="landing-wrap">
+    <div class="landing-section-head reveal"><p class="landing-eyebrow">Looking for work?</p><h2>Find a role, understand your next step.</h2><p>Start with a live opening, check an assessment invitation, or get practical context on the application process.</p></div>
+    <div class="landing-candidate-grid">${candidates.map((item) => `
+      <article class="landing-candidate-card reveal"><div class="landing-icon" aria-hidden="true">${escapeHtml(item.icon)}</div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p><a class="landing-text-link" href="${escapeHtml(item.href)}"${item.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(item.label)} <span aria-hidden="true">→</span></a></article>`).join("")}
+    </div>
+  </div></section>
+  <section class="landing-band landing-band--products" id="platforms"><div class="landing-wrap">
+    <div class="landing-section-head reveal"><p class="landing-eyebrow">The Nestor platforms</p><h2>Technology and services for work, hiring, and HR.</h2><p>Nestor Services supports employers and candidates with recruitment and talent acquisition services, alongside focused product experiences.</p></div>
+    <div class="landing-product-grid">${products.map((product) => `
+      <article class="landing-product-card landing-product-card--${escapeHtml(product.key)} reveal" style="--card-accent:${escapeHtml(product.accent)}"><div class="landing-product-topline"><span class="landing-product-name" style="--card-accent:${escapeHtml(product.accent)}">${escapeHtml(product.name)}</span><span class="landing-product-category">${escapeHtml(product.category)}</span></div>${product.status ? `<p class="landing-product-status">${escapeHtml(product.status)}</p>` : ""}<h3>${escapeHtml(product.headline)}</h3><p class="landing-product-description">${escapeHtml(product.description)}</p><ul class="landing-feature-list">${product.features.map((feature) => `<li>${escapeHtml(feature)}</li>`).join("")}</ul><div class="landing-product-footer"><span>${escapeHtml(product.audience)}</span><div class="landing-product-links">${product.portalHref ? `<a href="${escapeHtml(product.portalHref)}" target="_blank" rel="noopener noreferrer">${escapeHtml(product.portalLabel)}</a>` : ""}<a href="${escapeHtml(product.href)}"${product.external ? ' target="_blank" rel="noopener noreferrer"' : ""}>${escapeHtml(product.label)} <span aria-hidden="true">→</span></a></div></div></article>`).join("")}
+    </div>
+  </div></section>
+  <section class="landing-band" id="employers"><div class="landing-wrap">
+    <div class="landing-section-head reveal"><p class="landing-eyebrow">For employers and recruiters</p><h2>Support that starts with your actual requirement.</h2><p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p></div>
+    <div class="landing-step-grid">${employerSteps.map((item) => `<article class="landing-step-card reveal"><div class="landing-step-number">${escapeHtml(item.step)}</div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`).join("")}</div>
+    <div class="landing-employer-panel reveal"><div><p class="landing-eyebrow">A flexible working relationship</p><h3>Recruitment and HR support, shaped around your team.</h3><p>Start with the role or operating challenge you need to solve. We can discuss the right scope before any engagement is agreed.</p><a class="landing-button landing-button--primary" href="${escapeHtml(CONTACT_HREF)}">Discuss a hiring requirement <span aria-hidden="true">→</span></a></div><ul class="landing-checklist"><li>Recruitment services and talent acquisition</li><li>Per-hire recruitment or managed hiring discussions</li><li>HR operations and payroll support</li><li>Scope and engagement agreed to fit the requirement</li></ul></div>
+  </div></section>
+  <section class="landing-band landing-band--why" id="why"><div class="landing-wrap">
+    <div class="landing-section-head reveal"><p class="landing-eyebrow">Why Nestor Services</p><h2>Practical experience, with a clear point of contact.</h2></div>
+    <div class="landing-credibility-grid">${credibility.map((item) => `<article class="landing-credibility-card reveal"><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`).join("")}</div>
+  </div></section>
+  <section class="landing-band landing-band--start" id="start"><div class="landing-wrap"><div class="landing-dual-grid">
+    <div class="landing-cta-box landing-cta-box--candidate reveal"><p class="landing-eyebrow">Candidates</p><h3>Looking for your next role?</h3><p>Browse current public openings on Nestor Hire and apply directly to roles that fit.</p><a class="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">Explore roles <span aria-hidden="true">→</span></a></div>
+    <div class="landing-cta-box landing-cta-box--employer reveal"><p class="landing-eyebrow">Employers</p><h3>Have a hiring requirement?</h3><p>Tell us about the role or HR operations support your team needs. We&apos;ll discuss a suitable scope.</p><a class="landing-button landing-button--primary" href="${escapeHtml(CONTACT_HREF)}">Discuss a hiring requirement <span aria-hidden="true">→</span></a></div>
+  </div></div></section>
+  <footer class="landing-footer"><div class="landing-wrap"><div class="landing-footer-top"><div class="landing-footer-brand"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /><a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a></div><nav class="landing-footer-links" aria-label="Footer"><a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a><a href="/nestor-core">Nestor Core</a><a href="/nestor-assess">Nestor Assess</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a></nav></div><p class="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p><div class="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div></div></footer>
 </main>`;
 }
 

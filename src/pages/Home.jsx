@@ -1,304 +1,223 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { blogPosts } from "../data/blogPosts";
+import { candidates, products, employerSteps, credibility, CONTACT_HREF, HOMEPAGE_TITLE, HOMEPAGE_DESCRIPTION } from "../data/homepageContent";
 import { setCanonical } from "../lib/seo";
 import "./Home.css";
 
-const differentiators = [
-  {
-    icon: "◈",
-    title: "Built by an HR insider",
-    body: "15 years inside the function. Every feature exists because a real problem demanded it — not because a developer imagined one.",
-  },
-  {
-    icon: "◉",
-    title: "Three products, one company",
-    body: "Nestor Hire supports recruitment, Nestor Assess provides invitation-based assessments, and Nestor Core supports HR operations.",
-  },
-  {
-    icon: "◐",
-    title: "India-first by design",
-    body: "Not a Western SaaS retrofitted for Indian realities. Built here, for here — with CTC structures, compliance, and hiring dynamics that actually match.",
-  },
-];
-
-const hireFeatures = ["AI Fitment Scoring", "Talent Advisors", "Kanban Pipeline", "CTC & Notice Signals"];
-const coreFeatures = ["Payroll Processing", "Attendance & Leave", "Employee Records", "Compliance Controls"];
-
 export default function Home() {
   useEffect(() => {
-    document.title = "Nestor Services — Recruitment, HR Operations & Workforce Solutions";
+    document.title = HOMEPAGE_TITLE;
+
     const meta = document.querySelector('meta[name="description"]');
-    if (meta) {
-      meta.setAttribute(
-        "content",
-        "Nestor Services helps companies in India hire talent, run HR operations, manage payroll support, and improve workforce workflows."
-      );
-    }
+    if (meta) meta.setAttribute("content", HOMEPAGE_DESCRIPTION);
+    document.querySelector('meta[property="og:title"]')?.setAttribute("content", HOMEPAGE_TITLE);
+    document.querySelector('meta[property="og:description"]')?.setAttribute("content", HOMEPAGE_DESCRIPTION);
+    document.querySelector('meta[property="og:url"]')?.setAttribute("content", "https://www.nestorservices.in/");
     setCanonical("https://www.nestorservices.in/");
+
+    const page = document.querySelector(".landing-home");
+    if (!page || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (!("IntersectionObserver" in window)) return;
+
+    page.classList.add("landing-home--animated");
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.14 });
+
+    page.querySelectorAll(".reveal").forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
   }, []);
 
-  const latestPosts = blogPosts.slice(0, 2);
-
   return (
-    <main className="home">
-      <section className="hero">
-        <div className="hero-grid-lines" aria-hidden="true" />
-        <div className="hero-glow" aria-hidden="true" />
-        <div className="container">
-          <div className="hero-eyebrow">
-            <span className="hero-dot" />
-            Workforce Technology · Built in India
-          </div>
-          <h1 className="hero-title">
-            One company.<br />
-            <em className="hero-title-em">Three connected products.</em>
+    <main className="landing-home">
+      <section className="landing-hero">
+        <div className="landing-hero-glow" aria-hidden="true" />
+        <div className="landing-wrap">
+          <h1 className="landing-hero-title">
+            Whether you&apos;re building a <span>career</span> or building a <span>team</span> — work starts here.
           </h1>
-          <p className="hero-sub">
-            Nestor Services powers the full employee lifecycle — from finding the right hire
-            to running every HR operation across their journey. Explore our{" "}
-            <Link to="/blog" className="inline-link">
-              hiring and HR insights
-            </Link>{" "}
-            for a closer look at the thinking behind the platform.
+          <p className="landing-hero-lead">
+            Find roles and understand the hiring process, or discuss recruitment and HR operations support for your business.
           </p>
-          <div className="hero-actions">
-            <a href="https://hire.nestorservices.in" className="btn btn--blue" target="_blank" rel="noopener noreferrer">
-              Explore Nestor Hire →
+          <div className="landing-actions">
+            <a className="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">
+              Find your next role <span aria-hidden="true">→</span>
             </a>
-            <Link to="/blog" className="btn btn--ghost">Read our thinking</Link>
+            <a className="landing-button landing-button--secondary" href="#employers">
+              Discuss a hiring requirement
+            </a>
           </div>
-          <div className="hero-founder-strip">
-            <div className="hero-founder-avatar">SM</div>
-            <p className="hero-founder-text">
-              Founded by <strong>Shashank Malviya</strong> — 15 years in HRM across
-              Country Delight, Housing.com, WNS and more.{" "}
-              <Link to="/blog" className="inline-link inline-link--muted">
-                Learn more from the founder's desk
-              </Link>
-            </p>
+          <div className="landing-proofline" aria-label="About Nestor Services">
+            <div><strong>15+ years</strong><span>in HR and talent acquisition</span></div>
+            <div><strong>Founder-led</strong><span>direct and accountable</span></div>
+            <div><strong>Gurugram, India</strong><span>working across the Indian market</span></div>
           </div>
         </div>
       </section>
 
-      <section className="products">
-        <div className="container">
-          <div className="products-grid">
-            <a href="https://hire.nestorservices.in" className="product-card product-card--hire" target="_blank" rel="noopener noreferrer">
-              <div className="product-card-header">
-                <div className="product-badge product-badge--blue">NESTOR HIRE</div>
-                <div className="product-label">Recruitment Platform</div>
-              </div>
-              <h2 className="product-card-title">
-                AI-powered recruitment that finds the right candidate — not just any candidate.
-              </h2>
-              <p className="product-card-body">
-                Our Talent Advisors combine 15 years of hiring expertise with intelligent
-                fitment matching built for India's hiring complexity.
-              </p>
-              <ul className="product-features">
-                {hireFeatures.map((f) => (
-                  <li key={f} className="product-feature product-feature--blue">
-                    <span className="product-feature-dot product-feature-dot--blue" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="product-card-footer">
-                <span className="product-audience">For employers & recruiters</span>
-                <div className="product-footer-links">
-                  <Link
-                    to={`/blog/${blogPosts[0].slug}`}
-                    className="product-cta product-cta--neutral"
-                  >
-                    Learn more →
-                  </Link>
-                  <span className="product-cta product-cta--blue">Enter Nestor Hire →</span>
-                </div>
-              </div>
-            </a>
-
-            <div className="product-card product-card--core">
-              <div className="product-card-header">
-                <div className="product-badge product-badge--teal">NESTOR CORE</div>
-                <div className="product-label">HR Operations Cloud</div>
-              </div>
-              <h2 className="product-card-title">
-                A single operating layer for HR and admin teams — across every company you manage.
-              </h2>
-              <p className="product-card-body">
-                Employee records, payroll processing, attendance, leave approvals, and statutory
-                compliance — all in one workspace.
-              </p>
-              <ul className="product-features">
-                {coreFeatures.map((f) => (
-                  <li key={f} className="product-feature product-feature--teal">
-                    <span className="product-feature-dot product-feature-dot--teal" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-              <div className="product-card-footer">
-                <span className="product-audience">For employers & recruiters</span>
-                <div className="product-footer-links">
-                  <Link
-                    to="/blog"
-                    className="product-cta product-cta--neutral"
-                  >
-                    Learn more →
-                  </Link>
-                  <a href="https://core.nestorservices.in/login" className="product-cta product-cta--teal" target="_blank" rel="noopener noreferrer">
-                    Sign in to Core →
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div className="product-card product-card--assess">
-              <div className="product-card-header">
-                <div className="product-badge product-badge--assess">NESTOR ASSESS</div>
-                <div className="product-label">Online Assessments</div>
-              </div>
-              <h2 className="product-card-title">
-                Online assessments for candidates invited to complete an assessment.
-              </h2>
-              <p className="product-card-body">
-                Nestor Assess is Nestor Services' online assessment platform for candidates invited to complete an assessment.
-              </p>
-              <ul className="product-features">
-                <li className="product-feature product-feature--assess">
-                  <span className="product-feature-dot product-feature-dot--assess" />
-                  Invitation-based candidate access
-                </li>
-                <li className="product-feature product-feature--assess">
-                  <span className="product-feature-dot product-feature-dot--assess" />
-                  Online assessment workspace
-                </li>
-              </ul>
-              <div className="product-card-footer">
-                <span className="product-audience">For invited candidates</span>
-                <div className="product-footer-links">
-                  <a
-                    href="https://assess.nestorservices.in"
-                    className="product-cta product-cta--assess"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    Open your assessment →
-                  </a>
-                  <Link to="/nestor-assess" className="product-cta product-cta--neutral">
-                    Learn more
-                  </Link>
-                </div>
-              </div>
-            </div>
+      <section className="landing-band" id="candidates">
+        <div className="landing-wrap">
+          <div className="landing-section-head reveal">
+            <p className="landing-eyebrow">Looking for work?</p>
+            <h2>Find a role, understand your next step.</h2>
+            <p>Start with a live opening, check an assessment invitation, or get practical context on the application process.</p>
           </div>
-        </div>
-      </section>
-
-      <section className="why">
-        <div className="container">
-          <div className="section-label">Why Nestor</div>
-          <h2 className="section-title">
-            Not another HR tool.<br />A different starting point.
-          </h2>
-          <div className="why-grid">
-            {differentiators.map((d) => (
-              <div key={d.title} className="why-card">
-                <div className="why-icon">{d.icon}</div>
-                <h3 className="why-card-title">{d.title}</h3>
-                <p className="why-card-body">{d.body}</p>
-                <Link to="/blog" className="why-card-link">
-                  Learn more →
-                </Link>
-              </div>
+          <div className="landing-candidate-grid">
+            {candidates.map((item) => (
+              <article className="landing-candidate-card reveal" key={item.title}>
+                <div className="landing-icon" aria-hidden="true">{item.icon}</div>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+                {item.external ? (
+                  <a className="landing-text-link" href={item.href} target="_blank" rel="noopener noreferrer">
+                    {item.label} <span aria-hidden="true">→</span>
+                  </a>
+                ) : (
+                  <Link className="landing-text-link" to={item.href}>
+                    {item.label} <span aria-hidden="true">→</span>
+                  </Link>
+                )}
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      <section className="blog-preview">
-        <div className="container">
-          <div className="blog-preview-header">
+      <section className="landing-band landing-band--products" id="platforms">
+        <div className="landing-wrap">
+          <div className="landing-section-head reveal">
+            <p className="landing-eyebrow">The Nestor platforms</p>
+            <h2>Technology and services for work, hiring, and HR.</h2>
+            <p>Nestor Services supports employers and candidates with recruitment and talent acquisition services, alongside focused product experiences.</p>
+          </div>
+          <div className="landing-product-grid">
+            {products.map((product) => (
+              <article className={`landing-product-card landing-product-card--${product.key} reveal`} key={product.key}>
+                <div className="landing-product-topline">
+                  <span className="landing-product-name" style={{ "--card-accent": product.accent }}>{product.name}</span>
+                  <span className="landing-product-category">{product.category}</span>
+                </div>
+                {product.status && <p className="landing-product-status">{product.status}</p>}
+                <h3>{product.headline}</h3>
+                <p className="landing-product-description">{product.description}</p>
+                <ul className="landing-feature-list">
+                  {product.features.map((feature) => <li key={feature}>{feature}</li>)}
+                </ul>
+                <div className="landing-product-footer">
+                  <span>{product.audience}</span>
+                  <div className="landing-product-links">
+                    {product.portalHref && (
+                      <a href={product.portalHref} target="_blank" rel="noopener noreferrer">
+                        {product.portalLabel}
+                      </a>
+                    )}
+                    <Link to={product.href}>{product.label} <span aria-hidden="true">→</span></Link>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-band" id="employers">
+        <div className="landing-wrap">
+          <div className="landing-section-head reveal">
+            <p className="landing-eyebrow">For employers and recruiters</p>
+            <h2>Support that starts with your actual requirement.</h2>
+            <p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p>
+          </div>
+          <div className="landing-step-grid">
+            {employerSteps.map((item) => (
+              <article className="landing-step-card reveal" key={item.step}>
+                <div className="landing-step-number">{item.step}</div>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+          <div className="landing-employer-panel reveal">
             <div>
-              <div className="section-label">From the desk of Nestor</div>
-              <h2 className="section-title section-title--left">
-                Honest perspectives on hiring,<br />HR, and what's broken.
-              </h2>
-            </div>
-            <Link to="/blog" className="btn btn--ghost btn--sm">
-              All articles →
-            </Link>
-          </div>
-
-          <div className="blog-preview-grid">
-            {latestPosts.map((post) => (
-              <Link to={`/blog/${post.slug}`} key={post.slug} className="blog-preview-card">
-                <div className="blog-preview-tag" style={{ color: post.tagColor }}>
-                  {post.tag}
-                </div>
-                <h3 className="blog-preview-title">{post.title}</h3>
-                <p className="blog-preview-excerpt">{post.excerpt}</p>
-                <div className="blog-preview-meta">
-                  <span>{post.author}</span>
-                  <span className="blog-preview-dot">·</span>
-                  <span>{post.readTime}</span>
-                </div>
-                <div className="blog-preview-arrow">Read article <span>→</span></div>
-              </Link>
-            ))}
-
-            <div className="blog-preview-card blog-preview-card--cta">
-              <p className="blog-cta-quote">
-                "The hiring process in India deserves accountability — on all sides."
-              </p>
-              <p className="blog-cta-attr">— Shashank Malviya, Founder</p>
-              <Link to="/blog" className="btn btn--blue btn--sm" style={{ marginTop: "auto" }}>
-                Read all articles →
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <footer className="footer">
-        <div className="container">
-          <div className="footer-inner">
-            <div className="footer-brand">
-              <div className="footer-logo">
-                <img
-                  src="/nestor-services-logo.png"
-                  alt="Nestor Services"
-                  className="footer-logo-image"
-                />
-              </div>
-              <p className="footer-tagline">Your Workforce Partner</p>
-              <a
-                href="https://www.linkedin.com/in/shashankmalviya/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="footer-linkedin"
-              >
-                LinkedIn — 16k+ followers
+              <p className="landing-eyebrow">A flexible working relationship</p>
+              <h3>Recruitment and HR support, shaped around your team.</h3>
+              <p>Start with the role or operating challenge you need to solve. We can discuss the right scope before any engagement is agreed.</p>
+              <a className="landing-button landing-button--primary" href={CONTACT_HREF}>
+                Discuss a hiring requirement <span aria-hidden="true">→</span>
               </a>
             </div>
-            <div className="footer-links-group">
-              <div className="footer-col">
-                <div className="footer-col-head">Platforms</div>
-                <a href="https://hire.nestorservices.in" className="footer-link" target="_blank" rel="noopener noreferrer">Nestor Hire</a>
-                <a href="https://core.nestorservices.in/login" className="footer-link" target="_blank" rel="noopener noreferrer">Nestor Core</a>
-                <a href="/nestor-assess" className="footer-link">Nestor Assess</a>
-              </div>
-              <div className="footer-col">
-                <div className="footer-col-head">Company</div>
-                <Link to="/blog" className="footer-link">Blog</Link>
-                <a href="mailto:shashank@nestorservices.in" className="footer-link">Contact</a>
-              </div>
+            <ul className="landing-checklist">
+              <li>Recruitment services and talent acquisition</li>
+              <li>Per-hire recruitment or managed hiring discussions</li>
+              <li>HR operations and payroll support</li>
+              <li>Scope and engagement agreed to fit the requirement</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-band landing-band--why" id="why">
+        <div className="landing-wrap">
+          <div className="landing-section-head reveal">
+            <p className="landing-eyebrow">Why Nestor Services</p>
+            <h2>Practical experience, with a clear point of contact.</h2>
+          </div>
+          <div className="landing-credibility-grid">
+            {credibility.map((item) => (
+              <article className="landing-credibility-card reveal" key={item.title}>
+                <h3>{item.title}</h3>
+                <p>{item.body}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="landing-band landing-band--start" id="start">
+        <div className="landing-wrap">
+          <div className="landing-dual-grid">
+            <div className="landing-cta-box landing-cta-box--candidate reveal">
+              <p className="landing-eyebrow">Candidates</p>
+              <h3>Looking for your next role?</h3>
+              <p>Browse current public openings on Nestor Hire and apply directly to roles that fit.</p>
+              <a className="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">
+                Explore roles <span aria-hidden="true">→</span>
+              </a>
+            </div>
+            <div className="landing-cta-box landing-cta-box--employer reveal">
+              <p className="landing-eyebrow">Employers</p>
+              <h3>Have a hiring requirement?</h3>
+              <p>Tell us about the role or HR operations support your team needs. We&apos;ll discuss a suitable scope.</p>
+              <a className="landing-button landing-button--primary" href={CONTACT_HREF}>
+                Discuss a hiring requirement <span aria-hidden="true">→</span>
+              </a>
             </div>
           </div>
-          <div className="footer-bottom">
-            <span>© 2026 Nestor Services · www.nestorservices.in</span>
+        </div>
+      </section>
+
+      <footer className="landing-footer">
+        <div className="landing-wrap">
+          <div className="landing-footer-top">
+            <div className="landing-footer-brand">
+              <img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" />
+              <a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a>
+            </div>
+            <nav className="landing-footer-links" aria-label="Footer">
+              <a href="https://hire.nestorservices.in/jobs">Find a job</a>
+              <a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a>
+              <Link to="/nestor-core">Nestor Core</Link>
+              <Link to="/nestor-assess">Nestor Assess</Link>
+              <Link to="/blog">Blog</Link>
+              <Link to="/privacy">Privacy</Link>
+            </nav>
           </div>
+          <p className="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p>
+          <div className="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div>
         </div>
       </footer>
     </main>
