@@ -1,6 +1,4 @@
 export const content = `
-# What Actually Happens After You Apply on Nestor Hire
-
 No black hole. No algorithm scoring you out. Here's exactly what happens to your application — step by step.
 
 [IMAGE:what-happens-after-you-apply]

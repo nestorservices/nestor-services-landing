@@ -64,6 +64,24 @@ function replaceOrInsert(html, pattern, replacement, fallback) {
   return html.replace("</head>", `  ${fallback}\n  </head>`);
 }
 
+function setUniqueMetaTag(html, attribute, name, value) {
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const pattern = new RegExp(`<meta\\s+${attribute}=["']${escapedName}["'][^>]*>`, "gi");
+  const tag = `<meta ${attribute}="${escapeHtml(name)}" content="${escapeHtml(value)}" />`;
+  let inserted = false;
+  const updated = html.replace(pattern, () => {
+    if (inserted) return "";
+    inserted = true;
+    return tag;
+  });
+  return inserted ? updated : updated.replace("</head>", `  ${tag}\n  </head>`);
+}
+
+function removeMetaTag(html, attribute, name) {
+  const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return html.replace(new RegExp(`<meta\\s+${attribute}=["']${escapedName}["'][^>]*>`, "gi"), "");
+}
+
 function normalizeWhitespace(value) {
   return String(value || "").replace(/\s+/g, " ").trim();
 }
@@ -210,19 +228,27 @@ function buildShellPage({
     `<link rel="canonical" href="${escapeHtml(canonical)}" />`,
   );
 
+  const openGraph = {
+    "og:type": social?.type || "website",
+    "og:url": canonical,
+    "og:title": social?.title || title,
+    "og:description": social?.description || description,
+  };
+  for (const [property, value] of Object.entries(openGraph)) {
+    html = setUniqueMetaTag(html, "property", property, value);
+  }
+
   if (social) {
     const socialTags = [
-      `<meta property="og:type" content="${escapeHtml(social.type || "website")}" />`,
-      `<meta property="og:url" content="${escapeHtml(canonical)}" />`,
-      `<meta property="og:title" content="${escapeHtml(social.title || title)}" />`,
-      `<meta property="og:description" content="${escapeHtml(social.description || description)}" />`,
       `<meta name="twitter:card" content="${escapeHtml(social.image ? "summary_large_image" : "summary")}" />`,
       `<meta name="twitter:title" content="${escapeHtml(social.title || title)}" />`,
       `<meta name="twitter:description" content="${escapeHtml(social.description || description)}" />`,
     ];
     if (social.image) {
-      socialTags.push(`<meta property="og:image" content="${escapeHtml(social.image)}" />`);
+      html = setUniqueMetaTag(html, "property", "og:image", social.image);
       socialTags.push(`<meta name="twitter:image" content="${escapeHtml(social.image)}" />`);
+    } else {
+      html = removeMetaTag(html, "property", "og:image");
     }
     for (const tag of socialTags) {
       html = html.replace("</head>", `  ${tag}\n  </head>`);
