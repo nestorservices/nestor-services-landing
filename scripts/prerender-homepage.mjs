@@ -377,6 +377,10 @@ function buildFooterHtml() {
   return `<footer class="landing-footer"><div class="landing-wrap"><div class="landing-footer-top"><div class="landing-footer-brand"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /><a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a></div><nav class="landing-footer-links" aria-label="Footer"><a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a><a href="/nestor-core">Nestor Core</a><a href="/nestor-assess">Nestor Assess</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a></nav></div><p class="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p><div class="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div></div></footer>`;
 }
 
+function buildEntityNavbarHtml() {
+  return `<nav class="navbar "><div class="navbar-inner"><a class="navbar-logo" href="/"><img src="/nestor-services-logo.png" alt="Nestor Services" class="navbar-logo-image"/></a><div class="navbar-links " id="product-navigation"><a href="https://hire.nestorservices.in" class="navbar-link navbar-link--product navbar-link--hire" target="_blank" rel="noopener noreferrer"><span class="navbar-pip navbar-pip--blue"></span>Hire</a><a href="https://core.nestorservices.in/login" class="navbar-link navbar-link--product navbar-link--core" target="_blank" rel="noopener noreferrer"><span class="navbar-pip navbar-pip--teal"></span>Core</a><a href="/nestor-assess" class="navbar-link navbar-link--product navbar-link--assess"><span class="navbar-pip navbar-pip--assess"></span>Assess</a><a class="navbar-link" href="/blog">Blog</a><a href="mailto:shashank@nestorservices.in" class="navbar-cta">Get in touch</a></div><button class="navbar-burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="product-navigation"><span class=""></span><span class=""></span><span class=""></span></button></div></nav>`;
+}
+
 function buildBlogIndexBody(posts) {
   const featuredPost = posts[0];
   const cards = posts
@@ -915,7 +919,9 @@ function buildEntityPageCss() {
     }
     .entity-page-context-link { margin: 28px 0 0; }
     .entity-page-context-link a { color: #8db6ff; font-weight: 600; text-underline-offset: 4px; }
-    .recruitment-approach-hero .entity-page-title { max-width: 900px; }
+    .recruitment-approach-hero .container { min-width: 0; max-width: 100%; }
+    .recruitment-approach-hero .entity-page-title { max-width: min(100%,900px); min-width: 0; overflow-wrap: anywhere; }
+    .recruitment-approach-hero .entity-page-intro { max-width: min(100%,760px); min-width: 0; overflow-wrap: anywhere; }
     .recruitment-approach-promise { margin: 0 0 18px; color: #fff; font-family: var(--font-head); font-size: clamp(19px,2.2vw,25px); font-weight: 700; line-height: 1.35; }
     .recruitment-approach-content { background: #060e1f; }
     .recruitment-approach-sections { max-width: 1040px; display: grid; gap: 28px; }
@@ -967,6 +973,7 @@ function buildEntityPageCss() {
       .assess-trust-hero { padding-top: 88px; }
       .assess-trust-content { padding: 44px 18px 64px; }
       .assess-trust-product-links { flex-direction: column; gap: 14px; }
+      .recruitment-approach-hero { padding-inline: 18px; }
       .recruitment-approach-stage { grid-template-columns: 36px minmax(0,1fr); gap: 12px; padding: 20px; }
       .recruitment-approach-final-cta { align-items: flex-start; flex-direction: column; }
     }
@@ -987,7 +994,7 @@ function buildPageHtml(baseShellHtml, page) {
     description: page.metaDescription,
     canonical: page.canonical,
     jsonLd,
-    bodyHtml: `${buildEntityPageBody(page)}${page.slug === "our-recruitment-approach" ? buildFooterHtml() : ""}`,
+    bodyHtml: `${buildEntityNavbarHtml()}${buildEntityPageBody(page)}${page.slug === "our-recruitment-approach" ? buildFooterHtml() : ""}`,
     bodyDataAttr: `data-prerendered-entity="${escapeHtml(page.slug)}"`,
     social: page.social
       ? {

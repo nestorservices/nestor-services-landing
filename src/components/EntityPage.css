@@ -114,7 +114,20 @@
 }
 
 .recruitment-approach-hero .entity-page-title {
-  max-width: 900px;
+  max-width: min(100%, 900px);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.recruitment-approach-hero .container {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.recruitment-approach-hero .entity-page-intro {
+  max-width: min(100%, 760px);
+  min-width: 0;
+  overflow-wrap: anywhere;
 }
 
 .recruitment-approach-promise {
@@ -422,6 +435,10 @@
   .assess-trust-product-links {
     flex-direction: column;
     gap: 14px;
+  }
+
+  .recruitment-approach-hero {
+    padding-inline: 18px;
   }
 
   .recruitment-approach-stage {

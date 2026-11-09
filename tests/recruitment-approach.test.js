@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
+import React from "react";
+import { renderToString } from "react-dom/server";
+import { MemoryRouter } from "react-router-dom";
+import { createServer } from "vite";
 import { getEntityPage } from "../src/content/entityPages.js";
 
 const page = getEntityPage("our-recruitment-approach");
@@ -77,4 +81,60 @@ test("hydrated route labels use the same text nodes as prerendered HTML", async 
   assert.match(source, /\{`\$\{page\.approachLink\.label\} →`\}/);
   assert.doesNotMatch(source, />0\{index \+ 1\}<\/span>/);
   assert.doesNotMatch(source, />\{page\.approachLink\.label\} →/);
+});
+
+test("prerendered entity root matches the initial React navbar, page, and footer", async () => {
+  const vite = await createServer({
+    configFile: "./vite.config.js",
+    server: { middlewareMode: true, hmr: false },
+    appType: "custom",
+    logLevel: "silent",
+  });
+
+  try {
+    const [{ default: Navbar }, { default: EntityPage }] = await Promise.all([
+      vite.ssrLoadModule("/src/components/Navbar.jsx"),
+      vite.ssrLoadModule("/src/components/EntityPage.jsx"),
+    ]);
+    const html = await readFile("dist/our-recruitment-approach/index.html", "utf8");
+    const staticNavbar = html.match(/<nav class="navbar[^"]*">[\s\S]*?<\/nav>/)?.[0];
+    const staticMain = html.match(/<main class="entity-page recruitment-approach-page">[\s\S]*?<\/main>/)?.[0];
+    const staticFooter = html.match(/<footer class="landing-footer">[\s\S]*?<\/footer>/)?.[0];
+    const normalize = (markup) => markup
+      .replace(/>\s+</g, "><")
+      .replace(/&#x27;|&#39;/g, "&#39;")
+      .replace(/\s+\/>/g, '/>')
+      .trim();
+    const expected = renderToString(
+      React.createElement(
+        MemoryRouter,
+        { initialEntries: ["/our-recruitment-approach"] },
+        React.createElement(
+          React.Fragment,
+          null,
+          React.createElement(Navbar),
+          React.createElement(EntityPage, { page }),
+        ),
+      ),
+    );
+
+    assert.ok(staticNavbar, "prerender includes the shared product navbar");
+    assert.ok(staticMain, "prerender includes the recruitment approach page");
+    assert.ok(staticFooter, "prerender includes the shared footer");
+    assert.equal(normalize(`${staticNavbar}${staticMain}${staticFooter}`), normalize(expected));
+  } finally {
+    await vite.close();
+  }
+});
+
+test("recruitment hero copy can wrap within its viewport-sized container", async () => {
+  const css = await readFile("src/components/EntityPage.css", "utf8");
+  const prerender = await readFile("scripts/prerender-homepage.mjs", "utf8");
+
+  assert.match(css, /\.recruitment-approach-hero \.entity-page-title\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(css, /\.recruitment-approach-hero \.entity-page-intro\s*\{[^}]*overflow-wrap:\s*anywhere/s);
+  assert.match(css, /\.recruitment-approach-hero\s*\{\s*padding-inline:\s*18px/s);
+  assert.match(prerender, /\.recruitment-approach-hero \.entity-page-title \{[^}]*overflow-wrap:\s*anywhere/);
+  assert.match(prerender, /\.recruitment-approach-hero \.entity-page-intro \{[^}]*overflow-wrap:\s*anywhere/);
+  assert.match(prerender, /\.recruitment-approach-hero \{ padding-inline: 18px; \}/);
 });
