@@ -104,7 +104,11 @@ And if you're tired of paying **₹50 lakhs** a year for someone who didn't read
 
 ## Author Bio
 
-Shashank Malviya is the Founder of Nestor Hire, an AI-powered managed recruitment service. With 15 years of HR leadership experience across FMCG, tech, retail, and startups, he has worked with companies including Country Delight, Housing.com, PropEquity, and WNS. Connect on LinkedIn.
+Nestor Services is a Gurugram-based recruitment and talent acquisition company founded by Shashank Malviya, who brings over 15 years of experience in HR and talent acquisition.
+
+Built on the belief that hiring should go beyond keyword matching, Nestor combines industry-focused recruitment, recruiter judgement, and recruitment technology to identify relevant experience, transferable skills, and candidate potential that conventional resume screening may overlook.
+
+Its recruitment technology ecosystem includes Nestor Hire for candidate discovery and recruitment management, Nestor Assess for invitation-only technical evaluations, and Nestor Core, an HR operations platform currently in development and limited pilot.
 `;
 
 export const cta = {
