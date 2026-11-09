@@ -1,8 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { formatBlogDate } from "../lib/formatBlogDate";
 import { setCanonical } from "../lib/seo";
+import { content as recruitmentOutsourcingContent } from "../content/recruitment-outsourcing-vs-in-house-hiring.js";
 import "./BlogPost.css";
+
+const RECRUITMENT_OUTSOURCING_SLUG = "recruitment-outsourcing-vs-in-house-hiring";
 
 const contentRegistry = {
   "why-your-cv-might-never-get-read": () =>
@@ -52,14 +56,32 @@ function resolveSafeReturnTo(raw) {
 
 function renderInline(text) {
   return String(text || "")
-    .split(/(\*\*[^*]+\*\*)/g)
+    .split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g)
     .filter(Boolean)
     .map((part, index) => {
       if (part.startsWith("**") && part.endsWith("**")) {
         return <strong key={index}>{part.slice(2, -2)}</strong>;
       }
-      return <span key={index}>{part}</span>;
+      const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (link && isSafeArticleHref(link[2])) {
+        return <a key={index} href={link[2]}>{link[1]}</a>;
+      }
+      return part;
     });
+}
+
+function isSafeArticleHref(href) {
+  return /^\/(?!\/)/.test(href) || /^https:\/\/(?:[a-z0-9-]+\.)*nestorservices\.in(?:\/|$)/i.test(href);
+}
+
+function parseMarkdownTable(lines) {
+  if (lines.length < 3 || !lines[0].startsWith("|") || !lines[0].endsWith("|")) {
+    return null;
+  }
+  const rows = lines.map((line) => line.slice(1, -1).split("|").map((cell) => cell.trim()));
+  const isSeparator = rows[1].every((cell) => /^:?-{3,}:?$/.test(cell));
+  if (!isSeparator || rows.some((row) => row.length !== rows[0].length)) return null;
+  return { header: rows[0], body: rows.slice(2) };
 }
 
 function renderContent(text, onImageClick) {
@@ -70,6 +92,28 @@ function renderContent(text, onImageClick) {
       const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
       const isUnorderedList = lines.length > 0 && lines.every((line) => line.startsWith("- "));
       const isOrderedList = lines.length > 0 && lines.every((line) => /^\d+\. /.test(line));
+      const table = parseMarkdownTable(lines);
+
+      if (table) {
+        return (
+          <div key={i} className="bp-table-scroll" role="region" aria-label="Hiring model comparison" tabIndex="0">
+            <table className="bp-comparison-table">
+              <thead>
+                <tr>{table.header.map((cell, cellIndex) => <th key={cellIndex} scope="col">{renderInline(cell)}</th>)}</tr>
+              </thead>
+              <tbody>
+                {table.body.map((row, rowIndex) => (
+                  <tr key={rowIndex}>
+                    {row.map((cell, cellIndex) => cellIndex === 0
+                      ? <th key={cellIndex} scope="row">{renderInline(cell)}</th>
+                      : <td key={cellIndex}>{renderInline(cell)}</td>)}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        );
+      }
 
       if (isUnorderedList || isOrderedList) {
         const ListTag = isUnorderedList ? "ul" : "ol";
@@ -130,7 +174,9 @@ export default function BlogPost() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const location = useLocation();
-  const [articleContent, setArticleContent] = useState(null);
+  const [articleContent, setArticleContent] = useState(() =>
+    slug === RECRUITMENT_OUTSOURCING_SLUG ? recruitmentOutsourcingContent : null,
+  );
   const [articleCta, setArticleCta] = useState(null);
   const [lightboxImage, setLightboxImage] = useState(null);
   const ctaLink = useMemo(() => {
@@ -141,7 +187,9 @@ export default function BlogPost() {
   }, [articleCta, location.search]);
 
   const post = blogPosts.find((p) => p.slug === slug);
-  const relatedPosts = blogPosts.filter((entry) => entry.slug !== slug).slice(0, 2);
+  const relatedPosts = post?.relatedSlugs
+    ? post.relatedSlugs.map((relatedSlug) => blogPosts.find((entry) => entry.slug === relatedSlug)).filter(Boolean)
+    : blogPosts.filter((entry) => entry.slug !== slug).slice(0, 2);
 
   useEffect(() => {
     if (!post) {
@@ -153,6 +201,12 @@ export default function BlogPost() {
     const meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", post.metaDescription || post.excerpt);
     setCanonical(`https://www.nestorservices.in/blog/${post.slug}`);
+
+    if (slug === RECRUITMENT_OUTSOURCING_SLUG) {
+      setArticleContent(recruitmentOutsourcingContent);
+      setArticleCta(null);
+      return;
+    }
 
     const loader = contentRegistry[slug];
     if (loader) {
@@ -175,7 +229,7 @@ export default function BlogPost() {
   if (!post) return null;
 
   return (
-    <div className="bp-page">
+    <div className="bp-page" data-prerendered="blog-post">
       <div className="bp-back-wrap">
         <div className="bp-container">
           <Link to="/blog" className="bp-back">
@@ -195,12 +249,7 @@ export default function BlogPost() {
             <div className="bp-meta-text">
               <span className="bp-author">{post.author}</span>
               <span className="bp-meta-sub">
-                {new Date(post.date).toLocaleDateString("en-IN", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}{" "}
-                · {post.readTime}
+            {`${formatBlogDate(post.date)} · ${post.readTime}`}
               </span>
             </div>
           </div>
@@ -217,6 +266,7 @@ export default function BlogPost() {
         <div className="bp-container bp-container--narrow">
           {articleContent ? (
             <>
+              <p className="bp-para">{post.metaDescription || post.excerpt}</p>
               {renderContent(articleContent, (src, alt) => setLightboxImage({ src, alt }))}
 
               {articleCta && (
@@ -256,7 +306,7 @@ export default function BlogPost() {
                   <div className="bp-related-list">
                     {relatedPosts.map((entry) => (
                       <Link key={entry.slug} to={`/blog/${entry.slug}`} className="bp-related-link">
-                        {entry.title} →
+                        {`${entry.title} →`}
                       </Link>
                     ))}
                   </div>

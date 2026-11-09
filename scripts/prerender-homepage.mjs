@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { formatBlogDate } from "../src/lib/formatBlogDate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -98,19 +99,38 @@ function normalizeDescription(value, fallback = "") {
 }
 
 function toLocaleDate(dateString) {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  return formatBlogDate(dateString);
 }
 
 function renderInlineHtml(value) {
-  const escaped = escapeHtml(normalizeWhitespace(value));
-  return escaped.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  return normalizeWhitespace(value)
+    .split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g)
+    .filter(Boolean)
+    .map((part) => {
+      if (part.startsWith("**") && part.endsWith("**")) {
+        return `<strong>${escapeHtml(part.slice(2, -2))}</strong>`;
+      }
+      const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+      if (link && isSafeArticleHref(link[2])) {
+        return `<a href="${escapeHtml(link[2])}">${escapeHtml(link[1])}</a>`;
+      }
+      return escapeHtml(part);
+    })
+    .join("");
+}
+
+function isSafeArticleHref(href) {
+  return /^\/(?!\/)/.test(href) || /^https:\/\/(?:[a-z0-9-]+\.)*nestorservices\.in(?:\/|$)/i.test(href);
+}
+
+function parseMarkdownTable(lines) {
+  if (lines.length < 3 || !lines[0].startsWith("|") || !lines[0].endsWith("|")) {
+    return null;
+  }
+  const rows = lines.map((line) => line.slice(1, -1).split("|").map((cell) => cell.trim()));
+  const isSeparator = rows[1].every((cell) => /^:?-{3,}:?$/.test(cell));
+  if (!isSeparator || rows.some((row) => row.length !== rows[0].length)) return null;
+  return { header: rows[0], body: rows.slice(2) };
 }
 
 function parseImageToken(value) {
@@ -142,6 +162,14 @@ function renderContentHtml(content) {
       const lines = block.split("\n").map((line) => line.trim()).filter(Boolean);
       const isUnorderedList = lines.length > 0 && lines.every((line) => line.startsWith("- "));
       const isOrderedList = lines.length > 0 && lines.every((line) => /^\d+\. /.test(line));
+      const table = parseMarkdownTable(lines);
+      if (table) {
+        const header = table.header.map((cell) => `<th scope="col">${renderInlineHtml(cell)}</th>`).join("");
+        const rows = table.body.map((row) => `<tr>${row.map((cell, index) => index === 0
+          ? `<th scope="row">${renderInlineHtml(cell)}</th>`
+          : `<td>${renderInlineHtml(cell)}</td>`).join("")}</tr>`).join("");
+        return `<div class="bp-table-scroll" role="region" aria-label="Hiring model comparison" tabindex="0"><table class="bp-comparison-table"><thead><tr>${header}</tr></thead><tbody>${rows}</tbody></table></div>`;
+      }
       if (isUnorderedList || isOrderedList) {
         const tag = isUnorderedList ? "ul" : "ol";
         const marker = isUnorderedList ? /^- / : /^\d+\. /;
@@ -482,9 +510,8 @@ async function getArticleData(post) {
 
 function buildBlogPostJsonLd(post, canonical, description, content, imagePath) {
   const payload = {
-    "@context": "https://schema.org",
     "@type": "BlogPosting",
-    headline: post.metaTitle || post.title,
+    headline: post.schemaHeadline || post.metaTitle || post.title,
     description,
     url: canonical,
     mainEntityOfPage: canonical,
@@ -518,7 +545,23 @@ function buildBlogPostJsonLd(post, canonical, description, content, imagePath) {
     payload.articleBody = lead;
   }
 
-  return payload;
+  if (post.faqs?.length) {
+    return {
+      "@context": "https://schema.org",
+      "@graph": [
+        payload,
+        {
+          "@type": "FAQPage",
+          mainEntity: post.faqs.map(({ question, answer }) => ({
+            "@type": "Question",
+            name: question,
+            acceptedAnswer: { "@type": "Answer", text: answer },
+          })),
+        },
+      ],
+    };
+  }
+  return { "@context": "https://schema.org", ...payload };
 }
 
 function buildBlogPostBody(post, content, cta) {
@@ -528,7 +571,9 @@ function buildBlogPostBody(post, content, cta) {
     post.excerpt,
   );
   const date = toLocaleDate(post.date);
-  const relatedPosts = blogPosts.filter((entry) => entry.slug !== post.slug).slice(0, 2);
+  const relatedPosts = post.relatedSlugs
+    ? post.relatedSlugs.map((relatedSlug) => blogPosts.find((entry) => entry.slug === relatedSlug)).filter(Boolean)
+    : blogPosts.filter((entry) => entry.slug !== post.slug).slice(0, 2);
   const imagePath = extractImagePath(content);
   const articleBody = renderContentHtml(content);
   const ctaMarkup = cta
@@ -542,10 +587,7 @@ function buildBlogPostBody(post, content, cta) {
     : "";
   const relatedMarkup = relatedPosts
     .map(
-      (entry) => `
-                      <a href="/blog/${escapeHtml(entry.slug)}" class="bp-related-link">
-                        ${escapeHtml(entry.title)} →
-                      </a>`,
+      (entry) => `<a class="bp-related-link" href="/blog/${escapeHtml(entry.slug)}">${escapeHtml(entry.title)} →</a>`,
     )
     .join("\n");
 
@@ -555,28 +597,22 @@ function buildBlogPostBody(post, content, cta) {
     imagePath,
     jsonLd: buildBlogPostJsonLd(post, canonical, description, content, imagePath),
     body: `
-<div class="bp-page" data-prerendered="blog-post">
+${buildEntityNavbarHtml()}<div class="bp-page" data-prerendered="blog-post">
   <div class="bp-back-wrap">
     <div class="bp-container">
-      <a href="/blog" class="bp-back">
-        ← Back to Blog
-      </a>
+      <a class="bp-back" href="/blog">← Back to Blog</a>
     </div>
   </div>
 
   <header class="bp-header">
     <div class="bp-container">
-      <div class="bp-tag" style="color: ${escapeHtml(post.tagColor || "#2E7CF6")}">
-        ${escapeHtml(post.tag || "Blog")}
-      </div>
+      <div class="bp-tag" style="color:${escapeHtml(post.tagColor || "#2E7CF6")}">${escapeHtml(post.tag || "Blog")}</div>
       <h1 class="bp-title">${escapeHtml(post.title)}</h1>
       <div class="bp-meta">
         <div class="bp-avatar">SM</div>
         <div class="bp-meta-text">
           <span class="bp-author">${escapeHtml(post.author || "Nestor Services")}</span>
-          <span class="bp-meta-sub">
-            ${escapeHtml(date)}${post.readTime ? ` · ${escapeHtml(post.readTime)}` : ""}
-          </span>
+          <span class="bp-meta-sub">${escapeHtml(date)}${post.readTime ? ` · ${escapeHtml(post.readTime)}` : ""}</span>
         </div>
       </div>
     </div>
@@ -590,29 +626,21 @@ function buildBlogPostBody(post, content, cta) {
 
   <article class="bp-article">
     <div class="bp-container bp-container--narrow">
-      <p class="bp-para">${escapeHtml(description)}</p>
+      <p class="bp-para">${renderInlineHtml(description)}</p>
       ${articleBody}
       ${ctaMarkup}
 
       <div class="bp-ecosystem-grid">
         <div class="bp-cta-box bp-cta-box--ecosystem">
           <p class="bp-cta-label">Nestor Hire</p>
-          <p class="bp-cta-text">
-            Explore live roles and candidate experience on the higher-traffic Nestor Hire platform.
-          </p>
-          <a href="https://hire.nestorservices.in" class="bp-cta-btn">
-            Explore roles →
-          </a>
+          <p class="bp-cta-text">Explore live roles and candidate experience on the higher-traffic Nestor Hire platform.</p>
+          <a class="bp-cta-btn" href="https://hire.nestorservices.in">Explore roles →</a>
         </div>
 
         <div class="bp-cta-box bp-cta-box--ecosystem">
           <p class="bp-cta-label">Nestor Services</p>
-          <p class="bp-cta-text">
-            Visit the homepage to understand how Nestor Hire and Nestor Core connect.
-          </p>
-          <a href="https://www.nestorservices.in/" class="bp-cta-btn bp-cta-btn--secondary">
-            About Nestor Services →
-          </a>
+          <p class="bp-cta-text">Visit the homepage to understand how Nestor Hire and Nestor Core connect.</p>
+          <a class="bp-cta-btn bp-cta-btn--secondary" href="https://www.nestorservices.in/">About Nestor Services →</a>
         </div>
       </div>
 
@@ -629,9 +657,7 @@ ${relatedMarkup}
       <div class="bp-related">
         <h2 class="bp-heading">Continue reading</h2>
         <div class="bp-related-list">
-          <a href="/blog" class="bp-related-link">
-            Browse all articles →
-          </a>
+          <a class="bp-related-link" href="/blog">Browse all articles →</a>
         </div>
       </div>`
       }
@@ -640,12 +666,8 @@ ${relatedMarkup}
 
   <div class="bp-footer-nav">
     <div class="bp-container">
-      <a href="/blog" class="bp-back">
-        ← All articles
-      </a>
-      <a href="https://www.nestorservices.in/" class="bp-home-link">
-        www.nestorservices.in →
-      </a>
+      <a class="bp-back" href="/blog">← All articles</a>
+      <a class="bp-home-link" href="https://www.nestorservices.in/">www.nestorservices.in →</a>
     </div>
   </div>
 </div>`,

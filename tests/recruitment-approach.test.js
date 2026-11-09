@@ -54,7 +54,7 @@ test("public navigation links and sitemap include the new page without removing 
   assert.match(services, /mailto:shashank@nestorservices\.in/);
   assert.equal((sitemap.match(/<loc>https:\/\/www\.nestorservices\.in\/our-recruitment-approach<\/loc>/g) || []).length, 1);
   const sitemapUrls = sitemap.match(/<loc>([^<]+)<\/loc>/g) || [];
-  assert.equal(sitemapUrls.length, 15);
+  assert.equal(sitemapUrls.length, 16);
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
   assert.match(sitemap, /<loc>https:\/\/www\.nestorservices\.in\/recruitment-services<\/loc>/);
 });
