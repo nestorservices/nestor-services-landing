@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import { formatBlogDate } from "../src/lib/formatBlogDate.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -98,14 +99,7 @@ function normalizeDescription(value, fallback = "") {
 }
 
 function toLocaleDate(dateString) {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  if (Number.isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-IN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  });
+  return formatBlogDate(dateString);
 }
 
 function renderInlineHtml(value) {

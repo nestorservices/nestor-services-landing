@@ -5,6 +5,7 @@ import React from "react";
 import { renderToString } from "react-dom/server";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import { createServer } from "vite";
+import { formatBlogDate } from "../src/lib/formatBlogDate.js";
 import { blogPosts } from "../src/data/blogPosts.js";
 import { content } from "../src/content/recruitment-outsourcing-vs-in-house-hiring.js";
 
@@ -25,6 +26,22 @@ test("article source preserves the PDF's comparison, responsibilities, decision 
   const visibleFaqs = [...faqSection.matchAll(/\*\*(.+?)\*\*\s+([\s\S]*?)(?=\n\n|$)/g)]
     .map(([, question, answer]) => ({ question, answer: answer.trim() }));
   assert.deepEqual(visibleFaqs, post.faqs);
+});
+
+test("article publication date is stable across server and browser timezones", () => {
+  const originalTimezone = process.env.TZ;
+  try {
+    process.env.TZ = "UTC";
+    const serverDate = formatBlogDate(post.date);
+    process.env.TZ = "America/Los_Angeles";
+    const browserDate = formatBlogDate(post.date);
+    assert.equal(serverDate, "10 November 2026");
+    assert.equal(browserDate, serverDate);
+    assert.equal(formatBlogDate("not-a-date"), "");
+  } finally {
+    if (originalTimezone === undefined) delete process.env.TZ;
+    else process.env.TZ = originalTimezone;
+  }
 });
 
 test("prerender includes unique metadata, canonical, article and matching visible FAQ schema", async () => {

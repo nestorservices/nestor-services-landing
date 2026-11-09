@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useParams, Link, useNavigate, useLocation } from "react-router-dom";
 import { blogPosts } from "../data/blogPosts";
+import { formatBlogDate } from "../lib/formatBlogDate";
 import { setCanonical } from "../lib/seo";
 import { content as recruitmentOutsourcingContent } from "../content/recruitment-outsourcing-vs-in-house-hiring.js";
 import "./BlogPost.css";
@@ -248,11 +249,7 @@ export default function BlogPost() {
             <div className="bp-meta-text">
               <span className="bp-author">{post.author}</span>
               <span className="bp-meta-sub">
-            {`${new Date(post.date).toLocaleDateString("en-IN", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })} · ${post.readTime}`}
+            {`${formatBlogDate(post.date)} · ${post.readTime}`}
               </span>
             </div>
           </div>
