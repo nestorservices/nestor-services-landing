@@ -369,8 +369,12 @@ function buildHomepageBody() {
     <div class="landing-cta-box landing-cta-box--candidate reveal"><p class="landing-eyebrow">Candidates</p><h3>Looking for your next role?</h3><p>Browse current public openings on Nestor Hire and apply directly to roles that fit.</p><a class="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">Explore roles <span aria-hidden="true">→</span></a></div>
     <div class="landing-cta-box landing-cta-box--employer reveal"><p class="landing-eyebrow">Employers</p><h3>Share one role — the first&apos;s on us.</h3><p>Tell us about the role or HR operations support your team needs. We&apos;ll discuss a suitable scope.</p><a class="landing-button landing-button--primary" href="${escapeHtml(FIRST_ROLE_HREF)}">Share a role — free <span aria-hidden="true">→</span></a></div>
   </div></div></section>
-  <footer class="landing-footer"><div class="landing-wrap"><div class="landing-footer-top"><div class="landing-footer-brand"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /><a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a></div><nav class="landing-footer-links" aria-label="Footer"><a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a><a href="/nestor-core">Nestor Core</a><a href="/nestor-assess">Nestor Assess</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a></nav></div><p class="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p><div class="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div></div></footer>
+  ${buildFooterHtml()}
 </main>`;
+}
+
+function buildFooterHtml() {
+  return `<footer class="landing-footer"><div class="landing-wrap"><div class="landing-footer-top"><div class="landing-footer-brand"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /><a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a></div><nav class="landing-footer-links" aria-label="Footer"><a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a><a href="/nestor-core">Nestor Core</a><a href="/nestor-assess">Nestor Assess</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a></nav></div><p class="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p><div class="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div></div></footer>`;
 }
 
 function buildBlogIndexBody(posts) {
@@ -983,7 +987,7 @@ function buildPageHtml(baseShellHtml, page) {
     description: page.metaDescription,
     canonical: page.canonical,
     jsonLd,
-    bodyHtml: buildEntityPageBody(page),
+    bodyHtml: `${buildEntityPageBody(page)}${page.slug === "our-recruitment-approach" ? buildFooterHtml() : ""}`,
     bodyDataAttr: `data-prerendered-entity="${escapeHtml(page.slug)}"`,
     social: page.social
       ? {

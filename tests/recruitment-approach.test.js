@@ -54,3 +54,16 @@ test("public navigation links and sitemap include the new page without removing 
   assert.equal(new Set(sitemapUrls).size, sitemapUrls.length);
   assert.match(sitemap, /<loc>https:\/\/www\.nestorservices\.in\/recruitment-services<\/loc>/);
 });
+
+test("recruitment approach prerender reuses the site footer without adding it to other entity pages", async () => {
+  const approach = await readFile("dist/our-recruitment-approach/index.html", "utf8");
+  const assess = await readFile("dist/nestor-assess/index.html", "utf8");
+  const home = await readFile("dist/index.html", "utf8");
+  const footer = (html) => (html.match(/<footer class="landing-footer">/g) || []).length;
+
+  assert.equal(footer(approach), 1);
+  assert.match(approach, /<a href="https:\/\/hire\.nestorservices\.in\/jobs">Find a job<\/a>/);
+  assert.match(approach, /<a href="\/nestor-assess">Nestor Assess<\/a>/);
+  assert.equal(footer(home), 1);
+  assert.equal(footer(assess), 0);
+});

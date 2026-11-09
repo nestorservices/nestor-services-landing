@@ -1,6 +1,7 @@
 import "./EntityPage.css";
 import { useEffect } from "react";
 import { setCanonical } from "../lib/seo";
+import Footer from "./Footer";
 
 function escapeHtml(value) {
   return String(value)
@@ -75,48 +76,49 @@ function RecruitmentApproachPage({ page }) {
   }, [page]);
 
   return (
-    <main className="entity-page recruitment-approach-page">
-      <section className="entity-page-hero recruitment-approach-hero">
-        <div className="container">
-          <div className="entity-page-eyebrow">{page.heroLabel}</div>
-          <h1 className="entity-page-title">{page.heroTitle}</h1>
-          <p className="recruitment-approach-promise">{page.brandPromise}</p>
-          <p className="entity-page-intro">{page.intro}</p>
-          <div className="entity-page-actions">
-            <a href={page.cta.href} className="entity-page-cta">{page.cta.label}</a>
-            <a href="/recruitment-services" className="entity-page-link">Recruitment services</a>
-          </div>
-        </div>
-      </section>
-
-      <section className="entity-page-content recruitment-approach-content">
-        <div className="container recruitment-approach-sections">
-          <section className="recruitment-approach-panel" aria-labelledby="partnership-title">
-            <p className="recruitment-approach-kicker">A collaborative partnership</p>
-            <h2 className="entity-page-card-title" id="partnership-title">How we work with your team</h2>
-            <p className="entity-page-body">{page.partnershipIntro}</p>
-            <ul className="entity-page-list recruitment-approach-points">
-              {page.partnershipPoints.map((point) => <li key={point}>{point}</li>)}
-            </ul>
-          </section>
-
-          <section aria-labelledby="approach-stages-title">
-            <div className="recruitment-approach-section-heading">
-              <p className="recruitment-approach-kicker">From role context to employer review</p>
-              <h2 className="entity-page-card-title" id="approach-stages-title">Our recruitment approach</h2>
+    <>
+      <main className="entity-page recruitment-approach-page">
+        <section className="entity-page-hero recruitment-approach-hero">
+          <div className="container">
+            <div className="entity-page-eyebrow">{page.heroLabel}</div>
+            <h1 className="entity-page-title">{page.heroTitle}</h1>
+            <p className="recruitment-approach-promise">{page.brandPromise}</p>
+            <p className="entity-page-intro">{page.intro}</p>
+            <div className="entity-page-actions">
+              <a href={page.cta.href} className="entity-page-cta">{page.cta.label}</a>
+              <a href="/recruitment-services" className="entity-page-link">Recruitment services</a>
             </div>
-            <ol className="recruitment-approach-stages">
-              {page.stages.map((stage, index) => (
-                <li className="recruitment-approach-stage" key={stage.title}>
-                  <span className="recruitment-approach-stage-number">0{index + 1}</span>
-                  <div>
-                    <h3>{stage.title}</h3>
-                    <p>{stage.body}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
-          </section>
+          </div>
+        </section>
+
+        <section className="entity-page-content recruitment-approach-content">
+          <div className="container recruitment-approach-sections">
+            <section className="recruitment-approach-panel" aria-labelledby="partnership-title">
+              <p className="recruitment-approach-kicker">A collaborative partnership</p>
+              <h2 className="entity-page-card-title" id="partnership-title">How we work with your team</h2>
+              <p className="entity-page-body">{page.partnershipIntro}</p>
+              <ul className="entity-page-list recruitment-approach-points">
+                {page.partnershipPoints.map((point) => <li key={point}>{point}</li>)}
+              </ul>
+            </section>
+
+            <section aria-labelledby="approach-stages-title">
+              <div className="recruitment-approach-section-heading">
+                <p className="recruitment-approach-kicker">From role context to employer review</p>
+                <h2 className="entity-page-card-title" id="approach-stages-title">Our recruitment approach</h2>
+              </div>
+              <ol className="recruitment-approach-stages">
+                {page.stages.map((stage, index) => (
+                  <li className="recruitment-approach-stage" key={stage.title}>
+                    <span className="recruitment-approach-stage-number">0{index + 1}</span>
+                    <div>
+                      <h3>{stage.title}</h3>
+                      <p>{stage.body}</p>
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
 
           <section className="recruitment-approach-panel recruitment-approach-panel--contrast" aria-labelledby="beyond-cv-title">
             <p className="recruitment-approach-kicker">Context before forwarding</p>
@@ -168,9 +170,11 @@ function RecruitmentApproachPage({ page }) {
             </div>
             <a href={page.cta.href} className="entity-page-cta">{page.cta.label}</a>
           </section>
-        </div>
-      </section>
-    </main>
+          </div>
+        </section>
+      </main>
+      <Footer />
+    </>
   );
 }
 
