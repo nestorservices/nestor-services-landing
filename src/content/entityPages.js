@@ -122,7 +122,7 @@ export const entityPages = [
       "A mix of multiple-choice and short written questions relevant to your role.",
     ],
     ecosystemCopy:
-      "Nestor Assess is the assessment step within Nestor Services, alongside Nestor Hire (recruitment and hiring, for employers and recruiters) and Nestor Core (HR operations and payroll).",
+      "Nestor Assess is the assessment step within Nestor Services, alongside Nestor Hire (recruitment software for employers and recruiters) and Nestor Core (an HR operations product currently in development / limited pilot).",
     faqs: [
       {
         question: "Is Nestor Assess legitimate?",

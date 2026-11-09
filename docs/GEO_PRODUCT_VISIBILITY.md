@@ -1,6 +1,6 @@
 # GEO Product Visibility and Claim Register
 
-Last reviewed: 2026-11-09
+Last reviewed: 2026-11-10
 
 ## Purpose and evidence rules
 
@@ -18,6 +18,9 @@ whether code exists:
 - `PLANNED`: documented as intended or under development, but not verified as
   an available capability.
 - `UNVERIFIED`: evidence is insufficient to approve a public capability claim.
+- `VERIFIED_DEPLOYED_SOURCE`: the exact deployed source artifact was identified
+  and inspected for the capability, but authenticated production runtime
+  behavior has not been independently tested.
 
 Record the source and the date checked. A public description or source-code
 implementation alone does not prove end-to-end production availability.
@@ -51,7 +54,7 @@ expanding any claim.
 | Public job listing and candidate application entry | Nestor Hire | VERIFIED_PRODUCTION | Live public jobs listing and job/application routes previously verified; the Services homepage also links to current openings. | 2026-11-09 | YES | <https://hire.nestorservices.in/jobs> | 2026-11-09 |
 | Candidate discovery and recruiter-led recruitment management | Nestor Hire | VERIFIED_LIMITED | Production-facing descriptions and project context support candidate discovery and recruiter workflows; this review did not exercise authenticated recruiter operations. Avoid claims of autonomous decisions or guaranteed fit. | 2026-11-09 | YES, with recruiter-led wording | <https://hire.nestorservices.in/> | 2026-11-09 |
 | Resume parsing / extracted resume details | Nestor Hire | UNVERIFIED | Internal project documentation names a Resume Parser, but code or documentation is not sufficient proof of current production behavior. | Not verified in this review | NO, pending production evidence | <https://hire.nestorservices.in/> | 2026-11-09 |
-| Automated AI fitment score or automated hiring decision | Nestor Hire | UNVERIFIED | No approved evidence establishes an automatic fitment score or hiring decision. Do not describe matching language as such a feature. | Not verified in this review | NO | <https://hire.nestorservices.in/> | 2026-11-09 |
+| Requirement-specific candidate fitment scoring and ranking | Nestor Hire | VERIFIED_DEPLOYED_SOURCE | Exact deployed Cloud Run build-source archive for revision `nestor-backend-00678-qoq` (image digest `sha256:f41d2b0aa3a58b1e84abad7a65792c781465016b399e0330e31f6acff10d67d2`) was retrieved and inspected. `routes/matching.py` and `routes/requirements.py` call matching services; `services/matching_engine_v3.py` calculates numeric fitment scores and sorts candidates; `services/fitment_service.py` calculates and sorts numeric fitment-search scores; `services/requirement_match_service.py` ranks candidates for requirements. Supported dimensions include role alignment, skills, experience, and relevant industry/domain evidence. Location is used as a filter or requirement-specific evidence dimension. Do not imply compensation, notice period, or candidate intent contributes to these composite ranking scores. Deployed-source verification does not constitute a successful authenticated production functional test. | 2026-11-10 (deployed source inspected; authenticated runtime not tested) | YES, with requirement-specific and recruiter-led qualification | <https://hire.nestorservices.in/> | 2026-11-10 |
 | Invitation-only assessment access | Nestor Assess | VERIFIED_LIMITED | Public Services and Assess information identify invitation-required access; Assess operating documentation describes a controlled, human-supervised pilot. | 2026-11-09 | YES, explicitly invitation-based / limited where discussing availability | <https://www.nestorservices.in/nestor-assess>; <https://assess.nestorservices.in/> | 2026-11-09 |
 | Technical evaluation and recruiter review | Nestor Assess | VERIFIED_LIMITED | Controlled-pilot documentation describes role-specific evaluation and human recruiter review. This does not establish automated decisions, proctoring, or general availability. | 2026-11-09 | YES, with pilot/invitation context | <https://www.nestorservices.in/nestor-assess> | 2026-11-09 |
 | Python practical assessment path | Nestor Assess | VERIFIED_LIMITED | Assess pilot/security documentation records bounded Python evaluation in the controlled environment. Availability remains limited; no claim of broad public access. | 2026-11-09 | YES, only if clearly qualified as limited/pilot | <https://www.nestorservices.in/nestor-assess> | 2026-11-09 |
@@ -63,8 +66,9 @@ expanding any claim.
 
 Do not publicly claim, without new evidence and approval:
 
-- AI-generated fitment scores, autonomous candidate ranking, or automated
-  hiring decisions.
+- AI-generated fitment scores or automated hiring decisions. The deployed
+  source includes requirement-specific score calculation and ordering, but
+  recruiters review supporting evidence and decide candidate progression.
 - That every contextual factor in the recruitment philosophy is automatically
   evaluated.
 - Assessment proctoring, surveillance, guaranteed integrity, or automated
