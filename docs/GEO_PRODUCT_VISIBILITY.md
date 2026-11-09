@@ -106,9 +106,9 @@ evidence until its production behavior and availability have been checked.
 Record actual observations and source URLs. Do not infer broad AI-search
 behavior from one response or invent visibility scores.
 
-The preserved baseline report remains at
-`/Users/shashankmalviya/Documents/New project/nestor-geo-baseline-2026-11-09.md`.
-Do not overwrite it. Future measurements should record branded recognition,
+Preserve and reuse the existing baseline report
+`nestor-geo-baseline-2026-11-09.md`, which is stored outside this repository;
+do not overwrite it. Future measurements should record branded recognition,
 non-branded discovery, correct product identity, official citations,
 unsupported claims, relevant alternatives, and measurable AI referral traffic.
 
