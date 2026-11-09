@@ -58,7 +58,7 @@ export default function EntityPage({ page }) {
           </div>
           {page.approachLink && (
             <p className="entity-page-context-link">
-              <a href={page.approachLink.href}>{page.approachLink.label} →</a>
+              <a href={page.approachLink.href}>{`${page.approachLink.label} →`}</a>
             </p>
           )}
         </div>
@@ -110,7 +110,7 @@ function RecruitmentApproachPage({ page }) {
               <ol className="recruitment-approach-stages">
                 {page.stages.map((stage, index) => (
                   <li className="recruitment-approach-stage" key={stage.title}>
-                    <span className="recruitment-approach-stage-number">0{index + 1}</span>
+                    <span className="recruitment-approach-stage-number">{String(index + 1).padStart(2, "0")}</span>
                     <div>
                       <h3>{stage.title}</h3>
                       <p>{stage.body}</p>
@@ -137,7 +137,7 @@ function RecruitmentApproachPage({ page }) {
                 <article className="recruitment-approach-product" key={product.name}>
                   <h3>{product.name}</h3>
                   <p>{product.description}</p>
-                  <a href={product.href}>{product.linkLabel} →</a>
+                  <a href={product.href}>{`${product.linkLabel} →`}</a>
                 </article>
               ))}
             </div>
@@ -343,7 +343,7 @@ function renderRecruitmentApproachHtml(page) {
     <details class="recruitment-approach-faq-item"><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`).join("");
 
   return `
-<main class="entity-page recruitment-approach-page" data-prerendered="entity-page">
+<main class="entity-page recruitment-approach-page">
   <section class="entity-page-hero recruitment-approach-hero"><div class="container">
     <div class="entity-page-eyebrow">${escapeHtml(page.heroLabel)}</div>
     <h1 class="entity-page-title">${escapeHtml(page.heroTitle)}</h1>

@@ -710,7 +710,7 @@ function buildRecruitmentApproachPageBody(page) {
     <details class="recruitment-approach-faq-item"><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`).join("");
 
   return `
-<main class="entity-page recruitment-approach-page" data-prerendered="entity-page">
+<main class="entity-page recruitment-approach-page">
   <section class="entity-page-hero recruitment-approach-hero"><div class="container">
     <div class="entity-page-eyebrow">${escapeHtml(page.heroLabel)}</div><h1 class="entity-page-title">${escapeHtml(page.heroTitle)}</h1>
     <p class="recruitment-approach-promise">${escapeHtml(page.brandPromise)}</p><p class="entity-page-intro">${escapeHtml(page.intro)}</p>

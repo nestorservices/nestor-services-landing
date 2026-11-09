@@ -62,8 +62,19 @@ test("recruitment approach prerender reuses the site footer without adding it to
   const footer = (html) => (html.match(/<footer class="landing-footer">/g) || []).length;
 
   assert.equal(footer(approach), 1);
+  assert.doesNotMatch(approach, /<main[^>]+data-prerendered=/);
   assert.match(approach, /<a href="https:\/\/hire\.nestorservices\.in\/jobs">Find a job<\/a>/);
   assert.match(approach, /<a href="\/nestor-assess">Nestor Assess<\/a>/);
   assert.equal(footer(home), 1);
   assert.equal(footer(assess), 0);
+});
+
+test("hydrated route labels use the same text nodes as prerendered HTML", async () => {
+  const source = await readFile("src/components/EntityPage.jsx", "utf8");
+
+  assert.match(source, /String\(index \+ 1\)\.padStart\(2, "0"\)/);
+  assert.match(source, /\{`\$\{product\.linkLabel\} →`\}/);
+  assert.match(source, /\{`\$\{page\.approachLink\.label\} →`\}/);
+  assert.doesNotMatch(source, />0\{index \+ 1\}<\/span>/);
+  assert.doesNotMatch(source, />\{page\.approachLink\.label\} →/);
 });
