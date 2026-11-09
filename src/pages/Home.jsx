@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import Footer from "../components/Footer";
 import { candidates, products, employerTiers, empanelmentPoints, credibility, FIRST_ROLE_HREF, EMPANELMENT_HREF, HOMEPAGE_TITLE, HOMEPAGE_DESCRIPTION } from "../data/homepageContent";
 import { setCanonical } from "../lib/seo";
 import "./Home.css";
@@ -131,6 +132,7 @@ export default function Home() {
             <p className="landing-eyebrow">For employers and recruiters</p>
             <h2>Support that starts with your actual requirement.</h2>
             <p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p>
+            <p><a className="landing-text-link" href="/our-recruitment-approach">See how our recruitment partnership works <span aria-hidden="true">→</span></a></p>
           </div>
           <div className="landing-employer-spectrum">
             {employerTiers.map((item, index) => (
@@ -197,26 +199,7 @@ export default function Home() {
         </div>
       </section>
 
-      <footer className="landing-footer">
-        <div className="landing-wrap">
-          <div className="landing-footer-top">
-            <div className="landing-footer-brand">
-              <img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" />
-              <a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a>
-            </div>
-            <nav className="landing-footer-links" aria-label="Footer">
-              <a href="https://hire.nestorservices.in/jobs">Find a job</a>
-              <a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a>
-              <Link to="/nestor-core">Nestor Core</Link>
-              <Link to="/nestor-assess">Nestor Assess</Link>
-              <Link to="/blog">Blog</Link>
-              <Link to="/privacy">Privacy</Link>
-            </nav>
-          </div>
-          <p className="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p>
-          <div className="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div>
-        </div>
-      </footer>
+      <Footer />
     </main>
   );
 }

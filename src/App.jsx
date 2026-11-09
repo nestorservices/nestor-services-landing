@@ -14,6 +14,7 @@ export default function App() {
     "/nestor-core",
     "/nestor-assess",
     "/recruitment-services",
+    "/our-recruitment-approach",
     "/hr-operations-payroll",
   ];
 

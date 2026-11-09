@@ -103,6 +103,208 @@
   line-height: 1.8;
 }
 
+.entity-page-context-link {
+  margin: 28px 0 0;
+}
+
+.entity-page-context-link a {
+  color: #8db6ff;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.recruitment-approach-hero .entity-page-title {
+  max-width: min(100%, 900px);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.recruitment-approach-hero .container {
+  min-width: 0;
+  max-width: 100%;
+}
+
+.recruitment-approach-hero .entity-page-intro {
+  max-width: min(100%, 760px);
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.recruitment-approach-promise {
+  margin: 0 0 18px;
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-size: clamp(19px, 2.2vw, 25px);
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.recruitment-approach-content {
+  background: #060e1f;
+}
+
+.recruitment-approach-sections {
+  max-width: 1040px;
+  display: grid;
+  gap: 28px;
+}
+
+.recruitment-approach-panel,
+.recruitment-approach-faq {
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: #0f1e35;
+}
+
+.recruitment-approach-panel--contrast {
+  border-color: rgba(46, 124, 246, 0.35);
+  background: linear-gradient(140deg, #102747, #0f1e35 68%);
+}
+
+.recruitment-approach-kicker {
+  margin: 0 0 10px;
+  color: #8ba5c9;
+  font-family: var(--font-head);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.recruitment-approach-points {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.recruitment-approach-section-heading {
+  max-width: 780px;
+  margin-bottom: 18px;
+}
+
+.recruitment-approach-section-heading .entity-page-card-title,
+.recruitment-approach-final-cta h2 {
+  margin-bottom: 12px;
+}
+
+.recruitment-approach-stages {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recruitment-approach-stage {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  gap: 18px;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: #0f1e35;
+}
+
+.recruitment-approach-stage-number {
+  color: #60a5fa;
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.recruitment-approach-stage h3,
+.recruitment-approach-product h3 {
+  margin: 0 0 8px;
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.recruitment-approach-stage p,
+.recruitment-approach-product p,
+.recruitment-approach-final-cta p {
+  margin: 0;
+  color: #dce8fb;
+  line-height: 1.75;
+}
+
+.recruitment-approach-products {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.recruitment-approach-product {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 14px;
+  background: #0f1e35;
+}
+
+.recruitment-approach-product a {
+  margin-top: auto;
+  padding-top: 18px;
+  color: #8db6ff;
+  font-weight: 600;
+  text-underline-offset: 4px;
+}
+
+.recruitment-approach-faq-list {
+  display: grid;
+  gap: 10px;
+}
+
+.recruitment-approach-faq-item {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  background: rgba(6, 14, 31, 0.45);
+}
+
+.recruitment-approach-faq-item summary {
+  padding: 17px 20px;
+  color: #ffffff;
+  cursor: pointer;
+  font-family: var(--font-head);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.recruitment-approach-faq-item summary:focus-visible,
+.recruitment-approach-page a:focus-visible {
+  outline: 3px solid #8db6ff;
+  outline-offset: 3px;
+}
+
+.recruitment-approach-faq-item p {
+  margin: 0;
+  padding: 0 20px 18px;
+  color: #dce8fb;
+  line-height: 1.75;
+}
+
+.recruitment-approach-final-cta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 36px);
+  border: 1px solid rgba(46, 124, 246, 0.4);
+  border-radius: 16px;
+  background: linear-gradient(120deg, #102747, #0f1e35 72%);
+}
+
+.recruitment-approach-final-cta h2 {
+  color: #ffffff;
+  font-family: var(--font-head);
+  font-size: clamp(22px, 3vw, 30px);
+  line-height: 1.25;
+}
+
 .assess-trust-hero .entity-page-intro {
   max-width: 700px;
 }
@@ -215,6 +417,10 @@
   .entity-page-grid {
     grid-template-columns: 1fr;
   }
+
+  .recruitment-approach-products {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 600px) {
@@ -229,5 +435,20 @@
   .assess-trust-product-links {
     flex-direction: column;
     gap: 14px;
+  }
+
+  .recruitment-approach-hero {
+    padding-inline: 18px;
+  }
+
+  .recruitment-approach-stage {
+    grid-template-columns: 36px minmax(0, 1fr);
+    gap: 12px;
+    padding: 20px;
+  }
+
+  .recruitment-approach-final-cta {
+    align-items: flex-start;
+    flex-direction: column;
   }
 }

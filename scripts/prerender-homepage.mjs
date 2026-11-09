@@ -357,7 +357,7 @@ function buildHomepageBody() {
     </div>
   </div></section>
   <section class="landing-band" id="employers"><div class="landing-wrap">
-    <div class="landing-section-head reveal"><p class="landing-eyebrow">For employers and recruiters</p><h2>Support that starts with your actual requirement.</h2><p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p></div>
+    <div class="landing-section-head reveal"><p class="landing-eyebrow">For employers and recruiters</p><h2>Support that starts with your actual requirement.</h2><p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p><p><a class="landing-text-link" href="/our-recruitment-approach">See how our recruitment partnership works <span aria-hidden="true">→</span></a></p></div>
     <div class="landing-employer-spectrum">${employerTiers.map((item, index) => `<article class="landing-employer-tier${index === 0 ? " landing-employer-tier--lead" : ""}">${item.freeLabel ? `<span class="landing-employer-free">${escapeHtml(item.freeLabel)}</span>` : ""}<div class="landing-employer-step">${escapeHtml(item.step)}</div><h3>${escapeHtml(item.title)}</h3><p>${escapeHtml(item.body)}</p></article>`).join("")}</div>
     <div class="landing-empanelment reveal"><h3>One HR generalist can&apos;t be an expert at everything. Empanel with Nestor.</h3><div class="landing-empanelment-columns"><p>Recruitment, assessments, payroll and HR operations require different expertise. Instead of expecting one generalist to manage everything, work with Nestor as your extended HR team. You focus on running your business while we handle the people side — as little or as much as you need.</p><ul class="landing-empanelment-checklist">${empanelmentPoints.map((point) => `<li>${escapeHtml(point)}</li>`).join("")}</ul></div><div class="landing-empanelment-cta"><a class="landing-button landing-button--primary" href="${escapeHtml(EMPANELMENT_HREF)}">Talk about empanelment</a></div></div>
   </div></section>
@@ -369,8 +369,16 @@ function buildHomepageBody() {
     <div class="landing-cta-box landing-cta-box--candidate reveal"><p class="landing-eyebrow">Candidates</p><h3>Looking for your next role?</h3><p>Browse current public openings on Nestor Hire and apply directly to roles that fit.</p><a class="landing-button landing-button--primary" href="https://hire.nestorservices.in/jobs">Explore roles <span aria-hidden="true">→</span></a></div>
     <div class="landing-cta-box landing-cta-box--employer reveal"><p class="landing-eyebrow">Employers</p><h3>Share one role — the first&apos;s on us.</h3><p>Tell us about the role or HR operations support your team needs. We&apos;ll discuss a suitable scope.</p><a class="landing-button landing-button--primary" href="${escapeHtml(FIRST_ROLE_HREF)}">Share a role — free <span aria-hidden="true">→</span></a></div>
   </div></div></section>
-  <footer class="landing-footer"><div class="landing-wrap"><div class="landing-footer-top"><div class="landing-footer-brand"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /><a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a></div><nav class="landing-footer-links" aria-label="Footer"><a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a><a href="/nestor-core">Nestor Core</a><a href="/nestor-assess">Nestor Assess</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a></nav></div><p class="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p><div class="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div></div></footer>
+  ${buildFooterHtml()}
 </main>`;
+}
+
+function buildFooterHtml() {
+  return `<footer class="landing-footer"><div class="landing-wrap"><div class="landing-footer-top"><div class="landing-footer-brand"><img src="/nestor-services-logo.png" alt="Nestor Services — Your Workforce Partner" /><a href="mailto:shashank@nestorservices.in">Contact Nestor Services</a></div><nav class="landing-footer-links" aria-label="Footer"><a href="https://hire.nestorservices.in/jobs">Find a job</a><a href="https://hire.nestorservices.in" target="_blank" rel="noopener noreferrer">Nestor Hire</a><a href="/nestor-core">Nestor Core</a><a href="/nestor-assess">Nestor Assess</a><a href="/blog">Blog</a><a href="/privacy">Privacy</a></nav></div><p class="landing-footer-legal">Nestor Services is an India-based recruitment and talent acquisition business supporting employers and candidates. Nestor Core is currently in development / pilot.</p><div class="landing-footer-bottom">© 2026 Nestor Services · Gurugram, India</div></div></footer>`;
+}
+
+function buildEntityNavbarHtml() {
+  return `<nav class="navbar "><div class="navbar-inner"><a class="navbar-logo" href="/"><img src="/nestor-services-logo.png" alt="Nestor Services" class="navbar-logo-image"/></a><div class="navbar-links " id="product-navigation"><a href="https://hire.nestorservices.in" class="navbar-link navbar-link--product navbar-link--hire" target="_blank" rel="noopener noreferrer"><span class="navbar-pip navbar-pip--blue"></span>Hire</a><a href="https://core.nestorservices.in/login" class="navbar-link navbar-link--product navbar-link--core" target="_blank" rel="noopener noreferrer"><span class="navbar-pip navbar-pip--teal"></span>Core</a><a href="/nestor-assess" class="navbar-link navbar-link--product navbar-link--assess"><span class="navbar-pip navbar-pip--assess"></span>Assess</a><a class="navbar-link" href="/blog">Blog</a><a href="mailto:shashank@nestorservices.in" class="navbar-cta">Get in touch</a></div><button class="navbar-burger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="product-navigation"><span class=""></span><span class=""></span><span class=""></span></button></div></nav>`;
 }
 
 function buildBlogIndexBody(posts) {
@@ -648,6 +656,9 @@ function buildEntityPageBody(page) {
   if (page.slug === "nestor-assess") {
     return buildAssessTrustPageBody(page);
   }
+  if (page.slug === "our-recruitment-approach") {
+    return buildRecruitmentApproachPageBody(page);
+  }
 
   const sectionsHtml = page.sections
     .map((section) => {
@@ -687,8 +698,37 @@ function buildEntityPageBody(page) {
       <div class="entity-page-grid">
         ${sectionsHtml}
       </div>
+      ${page.approachLink ? `<p class="entity-page-context-link"><a href="${escapeHtml(page.approachLink.href)}">${escapeHtml(page.approachLink.label)} →</a></p>` : ""}
     </div>
   </section>
+</main>`;
+}
+
+function buildRecruitmentApproachPageBody(page) {
+  const points = page.partnershipPoints.map((point) => `<li>${escapeHtml(point)}</li>`).join("");
+  const stages = page.stages.map((stage, index) => `
+    <li class="recruitment-approach-stage"><span class="recruitment-approach-stage-number">0${index + 1}</span><div><h3>${escapeHtml(stage.title)}</h3><p>${escapeHtml(stage.body)}</p></div></li>`).join("");
+  const products = page.products.map((product) => `
+    <article class="recruitment-approach-product"><h3>${escapeHtml(product.name)}</h3><p>${escapeHtml(product.description)}</p><a href="${escapeHtml(product.href)}">${escapeHtml(product.linkLabel)} →</a></article>`).join("");
+  const faqs = page.faqs.map(({ question, answer }) => `
+    <details class="recruitment-approach-faq-item"><summary>${escapeHtml(question)}</summary><p>${escapeHtml(answer)}</p></details>`).join("");
+
+  return `
+<main class="entity-page recruitment-approach-page">
+  <section class="entity-page-hero recruitment-approach-hero"><div class="container">
+    <div class="entity-page-eyebrow">${escapeHtml(page.heroLabel)}</div><h1 class="entity-page-title">${escapeHtml(page.heroTitle)}</h1>
+    <p class="recruitment-approach-promise">${escapeHtml(page.brandPromise)}</p><p class="entity-page-intro">${escapeHtml(page.intro)}</p>
+    <div class="entity-page-actions"><a href="${escapeHtml(page.cta.href)}" class="entity-page-cta">${escapeHtml(page.cta.label)}</a><a href="/recruitment-services" class="entity-page-link">Recruitment services</a></div>
+  </div></section>
+  <section class="entity-page-content recruitment-approach-content"><div class="container recruitment-approach-sections">
+    <section class="recruitment-approach-panel" aria-labelledby="partnership-title"><p class="recruitment-approach-kicker">A collaborative partnership</p><h2 class="entity-page-card-title" id="partnership-title">How we work with your team</h2><p class="entity-page-body">${escapeHtml(page.partnershipIntro)}</p><ul class="entity-page-list recruitment-approach-points">${points}</ul></section>
+    <section aria-labelledby="approach-stages-title"><div class="recruitment-approach-section-heading"><p class="recruitment-approach-kicker">From role context to employer review</p><h2 class="entity-page-card-title" id="approach-stages-title">Our recruitment approach</h2></div><ol class="recruitment-approach-stages">${stages}</ol></section>
+    <section class="recruitment-approach-panel recruitment-approach-panel--contrast" aria-labelledby="beyond-cv-title"><p class="recruitment-approach-kicker">Context before forwarding</p><h2 class="entity-page-card-title" id="beyond-cv-title">More than CV forwarding</h2><p class="entity-page-body">${escapeHtml(page.workflowIntro)}</p></section>
+    <section aria-labelledby="technology-title"><div class="recruitment-approach-section-heading"><p class="recruitment-approach-kicker">Tools in service of the team</p><h2 class="entity-page-card-title" id="technology-title">Technology that supports people</h2><p class="entity-page-body">${escapeHtml(page.technologyIntro)}</p></div><div class="recruitment-approach-products">${products}</div></section>
+    <section class="recruitment-approach-panel" aria-labelledby="flexible-title"><p class="recruitment-approach-kicker">Different roles, considered individually</p><h2 class="entity-page-card-title" id="flexible-title">Flexible across industries and functions</h2><p class="entity-page-body">${escapeHtml(page.flexibilityCopy)}</p></section>
+    <section class="recruitment-approach-faq" aria-labelledby="recruitment-faq-title"><p class="recruitment-approach-kicker">Employer questions</p><h2 class="entity-page-card-title" id="recruitment-faq-title">Frequently asked questions</h2><div class="recruitment-approach-faq-list">${faqs}</div></section>
+    <section class="recruitment-approach-final-cta" aria-labelledby="recruitment-final-title"><div><p class="recruitment-approach-kicker">Start with the requirement</p><h2 id="recruitment-final-title">${escapeHtml(page.finalCtaTitle)}</h2><p>${escapeHtml(page.finalCtaCopy)}</p></div><a href="${escapeHtml(page.cta.href)}" class="entity-page-cta">${escapeHtml(page.cta.label)}</a></section>
+  </div></section>
 </main>`;
 }
 
@@ -877,6 +917,35 @@ function buildEntityPageCss() {
       color: #dce8fb;
       line-height: 1.8;
     }
+    .entity-page-context-link { margin: 28px 0 0; }
+    .entity-page-context-link a { color: #8db6ff; font-weight: 600; text-underline-offset: 4px; }
+    .recruitment-approach-hero .container { min-width: 0; max-width: 100%; }
+    .recruitment-approach-hero .entity-page-title { max-width: min(100%,900px); min-width: 0; overflow-wrap: anywhere; }
+    .recruitment-approach-hero .entity-page-intro { max-width: min(100%,760px); min-width: 0; overflow-wrap: anywhere; }
+    .recruitment-approach-promise { margin: 0 0 18px; color: #fff; font-family: var(--font-head); font-size: clamp(19px,2.2vw,25px); font-weight: 700; line-height: 1.35; }
+    .recruitment-approach-content { background: #060e1f; }
+    .recruitment-approach-sections { max-width: 1040px; display: grid; gap: 28px; }
+    .recruitment-approach-panel, .recruitment-approach-faq { padding: clamp(24px,4vw,36px); border: 1px solid rgba(255,255,255,.1); border-radius: 16px; background: #0f1e35; }
+    .recruitment-approach-panel--contrast { border-color: rgba(46,124,246,.35); background: linear-gradient(140deg,#102747,#0f1e35 68%); }
+    .recruitment-approach-kicker { margin: 0 0 10px; color: #8ba5c9; font-family: var(--font-head); font-size: 11px; font-weight: 700; letter-spacing: 1.6px; text-transform: uppercase; }
+    .recruitment-approach-points { display: grid; gap: 8px; margin-top: 18px; }
+    .recruitment-approach-section-heading { max-width: 780px; margin-bottom: 18px; }
+    .recruitment-approach-section-heading .entity-page-card-title, .recruitment-approach-final-cta h2 { margin-bottom: 12px; }
+    .recruitment-approach-stages { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+    .recruitment-approach-stage { display: grid; grid-template-columns: 52px minmax(0,1fr); gap: 18px; padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #0f1e35; }
+    .recruitment-approach-stage-number { color: #60a5fa; font-family: var(--font-head); font-size: 18px; font-weight: 800; }
+    .recruitment-approach-stage h3, .recruitment-approach-product h3 { margin: 0 0 8px; color: #fff; font-family: var(--font-head); font-size: 18px; line-height: 1.35; }
+    .recruitment-approach-stage p, .recruitment-approach-product p, .recruitment-approach-final-cta p { margin: 0; color: #dce8fb; line-height: 1.75; }
+    .recruitment-approach-products { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 16px; }
+    .recruitment-approach-product { display: flex; flex-direction: column; align-items: flex-start; padding: 24px; border: 1px solid rgba(255,255,255,.1); border-radius: 14px; background: #0f1e35; }
+    .recruitment-approach-product a { margin-top: auto; padding-top: 18px; color: #8db6ff; font-weight: 600; text-underline-offset: 4px; }
+    .recruitment-approach-faq-list { display: grid; gap: 10px; }
+    .recruitment-approach-faq-item { border: 1px solid rgba(255,255,255,.1); border-radius: 10px; background: rgba(6,14,31,.45); }
+    .recruitment-approach-faq-item summary { padding: 17px 20px; color: #fff; cursor: pointer; font-family: var(--font-head); font-weight: 600; line-height: 1.5; }
+    .recruitment-approach-faq-item summary:focus-visible, .recruitment-approach-page a:focus-visible { outline: 3px solid #8db6ff; outline-offset: 3px; }
+    .recruitment-approach-faq-item p { margin: 0; padding: 0 20px 18px; color: #dce8fb; line-height: 1.75; }
+    .recruitment-approach-final-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: clamp(24px,4vw,36px); border: 1px solid rgba(46,124,246,.4); border-radius: 16px; background: linear-gradient(120deg,#102747,#0f1e35 72%); }
+    .recruitment-approach-final-cta h2 { color: #fff; font-family: var(--font-head); font-size: clamp(22px,3vw,30px); line-height: 1.25; }
     .assess-trust-hero .entity-page-intro { max-width: 700px; }
     .assess-trust-caption { margin: 10px 0 0; color: #8ba5c9; font-size: 13px; }
     .assess-trust-content { background: #060e1f; }
@@ -898,11 +967,15 @@ function buildEntityPageCss() {
       .entity-page-grid {
         grid-template-columns: 1fr;
       }
+      .recruitment-approach-products { grid-template-columns: 1fr; }
     }
     @media (max-width: 600px) {
       .assess-trust-hero { padding-top: 88px; }
       .assess-trust-content { padding: 44px 18px 64px; }
       .assess-trust-product-links { flex-direction: column; gap: 14px; }
+      .recruitment-approach-hero { padding-inline: 18px; }
+      .recruitment-approach-stage { grid-template-columns: 36px minmax(0,1fr); gap: 12px; padding: 20px; }
+      .recruitment-approach-final-cta { align-items: flex-start; flex-direction: column; }
     }
   </style>`;
 }
@@ -921,7 +994,7 @@ function buildPageHtml(baseShellHtml, page) {
     description: page.metaDescription,
     canonical: page.canonical,
     jsonLd,
-    bodyHtml: buildEntityPageBody(page),
+    bodyHtml: `${buildEntityNavbarHtml()}${buildEntityPageBody(page)}${page.slug === "our-recruitment-approach" ? buildFooterHtml() : ""}`,
     bodyDataAttr: `data-prerendered-entity="${escapeHtml(page.slug)}"`,
     social: page.social
       ? {
