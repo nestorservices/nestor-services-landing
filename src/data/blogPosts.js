@@ -3,6 +3,54 @@
 
 export const blogPosts = [
   {
+    slug: "recruitment-outsourcing-vs-in-house-hiring",
+    title: "Recruitment Outsourcing vs In-House Hiring: How an Embedded Talent Acquisition Partner Works",
+    excerpt:
+      "In-house team, recruitment agency or embedded talent acquisition partner? How each works, and how to choose for your hiring needs.",
+    author: "Shashank Malviya",
+    date: "2026-11-10",
+    readTime: "7 min read",
+    tag: "Recruitment Insights",
+    tagColor: "#2E7CF6",
+    metaTitle: "Recruitment Outsourcing vs In-House Hiring",
+    schemaHeadline:
+      "Recruitment Outsourcing vs In-House Hiring: How an Embedded Talent Acquisition Partner Works",
+    metaDescription:
+      "In-house team, recruitment agency or embedded talent acquisition partner? How each works, and how to choose for your hiring needs.",
+    ogTitle:
+      "Recruitment Outsourcing vs In-House Hiring: How an Embedded Talent Acquisition Partner Works",
+    ogDescription:
+      "Compare in-house hiring, recruitment agencies and embedded talent acquisition partnerships, then choose the model that fits your hiring needs.",
+    relatedSlugs: ["recruitment-agency-two-team-problem"],
+    faqs: [
+      {
+        question: "What is embedded talent acquisition?",
+        answer:
+          "It is an arrangement where an external recruitment team works closely with your HR function on agreed hiring activities, such as understanding roles, screening, coordination and feedback, instead of only sending resumes for each vacancy.",
+      },
+      {
+        question: "How is it different from a recruitment agency?",
+        answer:
+          "An agency typically sources and presents candidates for specific vacancies. An embedded partner takes part in understanding the role, reviewing candidate fit and keeping the process moving, with responsibilities agreed in advance.",
+      },
+      {
+        question: "Is outsourcing recruitment cheaper than an in-house team?",
+        answer:
+          "It depends on volume and predictability. For occasional or uneven hiring, external support often avoids the fixed cost of full-time recruiters. For steady, high-volume hiring, an in-house team may make more sense. Many employers use both.",
+      },
+      {
+        question: "Do we lose control of hiring decisions?",
+        answer:
+          "No. A partner supplies screening information and candidate context. Your authorised hiring stakeholders make the final decisions.",
+      },
+      {
+        question: "When should we choose an embedded partner?",
+        answer:
+          "When you are hiring for several roles at once, your requirements need refining, or your internal team needs extra capacity but you want closer coordination than a vacancy-by-vacancy agency engagement offers.",
+      },
+    ],
+  },
+  {
     slug: "why-your-cv-might-never-get-read",
     title: "Why Your CV Might Never Get Read — Even If You're Qualified",
     excerpt:
