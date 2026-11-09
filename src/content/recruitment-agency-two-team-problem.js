@@ -45,9 +45,7 @@ The founder or agency head? Already in the next business development meeting. Yo
 
 ## What This Is Actually Costing You
 
-Let's talk numbers — because this is where the conversation gets uncomfortable.
-
-If your company hires 50 people a year at an average CTC of ₹12 LPA, a typical recruitment agency charges **8 to 10 percent** per hire. That's **₹1 lakh per hire**. **₹50 lakhs** a year.
+Consider an illustration: if a company hires 50 people in a year at an average CTC of ₹12 LPA, and an assumed recruitment fee is 8 to 10 percent per hire, the fees would total about ₹48–60 lakhs. This is a hypothetical calculation, not a claim about typical market rates; actual fees and terms vary by provider and agreement.
 
 For what you actually receive:
 
@@ -84,13 +82,7 @@ Good recruitment partnership looks like this:
 
 ## The Nestor Hire Approach
 
-This is exactly why I built Nestor Hire as a managed recruitment service — not a traditional agency.
-
-No business development team chasing the next logo. No junior recruiters managing 20 roles simultaneously. No per-hire commission structure that rewards speed over quality.
-
-A flat managed service fee. Full accountability. One team that understands your business end to end.
-
-For what a traditional agency charges in a year, you can run a fully managed recruitment operation at less than half the cost — with someone who operates like a member of your own HR team.
+Nestor Services provides recruitment and talent acquisition services. Nestor Hire is recruitment software for candidate discovery and recruitment workflow support; it is not itself the recruitment service. The software supports recruiter-led work, while recruiters and hiring teams remain responsible for evaluating candidates and making decisions.
 
 ## Conclusion
 
