@@ -131,6 +131,7 @@ export default function Home() {
             <p className="landing-eyebrow">For employers and recruiters</p>
             <h2>Support that starts with your actual requirement.</h2>
             <p>Discuss recruitment services, per-hire support, managed hiring, or HR operations support without a one-size-fits-all promise.</p>
+            <p><a className="landing-text-link" href="/our-recruitment-approach">See how our recruitment partnership works <span aria-hidden="true">→</span></a></p>
           </div>
           <div className="landing-employer-spectrum">
             {employerTiers.map((item, index) => (
